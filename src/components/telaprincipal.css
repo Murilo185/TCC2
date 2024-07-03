@@ -1,0 +1,93 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: lightgray;
+    margin: 0pc;
+    padding: 0pc;
+}
+
+#busca{
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+#column-wrapper {
+    text-align: center; /* Centraliza o conteúdo inline */
+}
+  
+#containner {
+    width: 100%; /* Ajuste conforme necessário */
+    display: flex; /* Permite centralizar com text-align */
+    flex-wrap: wrap;
+    margin: 0 auto;
+    justify-content: center;
+}
+
+.nomeProduto{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+    color: purple;
+    font-weight: 800;
+}
+
+.Descricao{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+}
+span{
+    font-size: 15px;
+    color: green;
+}
+
+#containner>div{
+    
+    flex-direction: column;
+    width: 40%;
+    padding-bottom: 20px;
+    padding-top: 10px;
+    margin: 2px 2px;
+    background-color: white;
+    justify-content: flex-start;
+    align-items: center;
+    border-radius: 10px;
+    display: flex;
+}
+
+#containner >div>a>img{
+    background-color: white;
+    width: 100px;
+    border-radius: 10px;
+}
+
+
+#whatsapp{
+    width: 50px;
+    margin-left: 300px;
+}
+
+#Rodape{
+    background-color: purple;
+    height: 100px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0px;
+    padding: 0px;
+}
+
+#IconesContato{
+    justify-self: center;
+}
+#IconesContato>img{
+    justify-content: center;
+    margin: 0px;
+    width: 40px;
+}
