@@ -10,9 +10,6 @@ import Img7 from '../assets/caneca.png'
 import Cabecalho from "./cabecalho"
 import Footer from "./Footer"
 
-
-
-
 export default function Produto(){
     const {product}=useParams()
 
