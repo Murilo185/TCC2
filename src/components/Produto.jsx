@@ -12,6 +12,7 @@ import Footer from "./Footer"
 
 
 
+
 export default function Produto(){
     const {product}=useParams()
 
