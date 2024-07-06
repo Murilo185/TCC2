@@ -8,6 +8,8 @@ import {
 import Login from './components/LoginRegistro.jsx';
 import TelaPrincipal from './components/telaprincipal.jsx'
 import Produto from './components/Produto.jsx';
+import SignIn from './components/signin.jsx';
+import SignUp from './components/signup.jsx';
 
 
 const router = createBrowserRouter([
@@ -18,6 +20,14 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />
+  },
+  {
+    path: "/sign-in",
+    element: <SignIn />
+  },
+  {
+    path: "/sign-up",
+    element: <SignUp />
   },
   {
     path: "/produto/:product",
