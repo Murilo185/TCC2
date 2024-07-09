@@ -8,7 +8,7 @@ app.use(cors())
 const port = 3000
 
 const user_name = 'Murilo'
-const password = 'PhE5XXcpknuhBLXV'
+const password = '13k1fFcVRFXyGjLK'
 
 //MODELO DO OBJETO DO BANCO DE DADOS
 const Person = mongoose.model('Person', {
@@ -21,10 +21,6 @@ const Person = mongoose.model('Person', {
         required: true
     },
     password: {
-        type: String,
-        required: false
-    },
-    img: {
         type: String,
         required: false
     }
@@ -57,7 +53,6 @@ app.post("/register", async (req, res) => {
     const name = req.body.name
     const email = req.body.email
     const password = req.body.password
-    const img = req.body.img
 
     //VERIFICA SE OS CAMPOS FORAM PASSADOS OU NÃO
     if (!name){
@@ -74,17 +69,12 @@ app.post("/register", async (req, res) => {
         res.send("Senha não corresponde.")
         return
     }
-    //VERIFICA SE OS CAMPOS FORAM PASSADOS OU NÃO
-    if (!img){
-        img = "n tem foto"
-    }
 
     //CRIA UM NOVO USUÁRIO COM BASE NO BANCO DE DADOS
     const person = new Person({
         name: name,
         email: email,
         password: password,
-        img: img,
     })
 
     //SALVA NO BANCO DE DADOS O USUÁRIO

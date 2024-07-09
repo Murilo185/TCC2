@@ -8,30 +8,25 @@ export default function SignIn() {
 
     function handleInputEmail(e) {
         setEmailValue(e.target.value)
-        console.log(emailValue)
     }
     
     function handleInputPassword(e) {
         setPasswordValue(e.target.value)
-        console.log(password)
     }
-
-    function users(){
-        axios.get(`http://localhost:3000/users`)
-            .then(function (response) {
-                console.log(response.data);
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-    }
+    //rodolfoGay@gmail.com
 
     function signIn(){
         axios.get(`http://localhost:3000/login/${emailValue}`)
             .then(function (response) {
+                setEmailValue('')
+                setPasswordValue('')
+                
+                alert(`${response.data.name}`)
                 console.log(response.data);
             })
             .catch(function (error) {
+                alert('Erro interno no servidor')
+                
                 console.log(error);
             })
     }
@@ -41,11 +36,13 @@ export default function SignIn() {
             <h1 className="mt-[50px] mb-[14px] w-full text-left text-[22px] font-bold text-[#733A8E]">Faça login com sua conta</h1>
             <p className="mb-[20px] w-full text-left text-[20px] text-[#808080]">é bom ter você de volta</p>
 
-            <form className="w-full flex flex-col justify-center" onSubmit={(e) => {
-                e.preventDefault()
-                
-                users()
-            }}>
+            <form
+                className="w-full flex flex-col justify-center"
+                onSubmit={(e) => {
+                    e.preventDefault()
+                    signIn()
+                }}
+            >
                 <label className="capitalize  text-[18px] w-full font-bold mb-[4px] text-[#733a8E]">email</label>
                 <input
                     className="text-[18px] text-[#000000] placeholder:text-[#E6E6E6] border border-[#E6E6E6] p-2 py-3 rounded-[10px] mb-[30px] focus:outline-none"
