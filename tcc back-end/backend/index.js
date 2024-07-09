@@ -30,6 +30,15 @@ const Person = mongoose.model('Person', {
     }
 });
 
+//ROTA PARA PEGAR TODOS OS USUÁRIOS
+app.get("/users", async (req, res) => {
+    //PROCURA POR UM USUARIO COM O CAMPO ESPECIFICADO
+    const person = await Person.find()
+
+    //RETORNA OS DADOS PARA FEEDBACK DO USUÁRIO
+    return res.send(person)
+})
+
 //ROTA DE LOGIN FEITA PARA  FAZER LOGIN
 app.get("/login/:email",  async (req, res) => {
     //PEGA OS DADOS PELA REQUISIÇÃO
