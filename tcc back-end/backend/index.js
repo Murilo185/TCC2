@@ -1,3 +1,4 @@
+//IMPORTAÇÃO DAS BIBLIOTECAS
 const express = require("express")
 const mongoose = require('mongoose')
 const cors = require('cors')
@@ -7,6 +8,7 @@ app.use(express.json())
 app.use(cors())
 const port = 3000
 
+//CONFIGURAÇÕES DO MONGODB
 const user_name = 'Murilo'
 const password = '13k1fFcVRFXyGjLK'
 
@@ -28,14 +30,14 @@ const Person = mongoose.model('Person', {
 
 //ROTA PARA PEGAR TODOS OS USUÁRIOS
 app.get("/users", async (req, res) => {
-    //PROCURA POR UM USUARIO COM O CAMPO ESPECIFICADO
+    //LISTA TODOS OS USUÁRIOS DO BANCO DE DADOS
     const person = await Person.find()
 
     //RETORNA OS DADOS PARA FEEDBACK DO USUÁRIO
     return res.send(person)
 })
 
-//ROTA DE LOGIN FEITA PARA  FAZER LOGIN
+//ROTA PARA PEGAR USUÁRIO ESPECIFICO
 app.get("/login/:email",  async (req, res) => {
     //PEGA OS DADOS PELA REQUISIÇÃO
     const email = req.params.email
@@ -84,7 +86,177 @@ app.post("/register", async (req, res) => {
     return res.send(person)
 })
 
+//MODELO DO OBJETO DO BANCO DE DADOS
+const Product = mongoose.model('Product', {
+    name: {
+        type: String,
+        required: false
+    },
+    category: {
+        type: String,
+        required: true
+    },
+    price: {
+        type: String,
+        required: false
+    }
+});
+
+//ROTA DE REGISTRO FEITA PARA REGISTRAR PRODUTO
+app.post("/product/register", async (req, res) => {
+    //PEGA OS DADOS DA REQUISIÇÃO
+    const name = req.body.name
+    const category = req.body.category
+    const price = req.body.price
+
+    //VERIFICA SE OS CAMPOS FORAM PASSADOS OU NÃO
+    if (!name){
+        res.send("Nome não correspondente.")
+        return
+    }
+    //VERIFICA SE OS CAMPOS FORAM PASSADOS OU NÃO
+    if (!category){
+        res.send("Categoria não correspondente.")
+        return
+    }
+    //VERIFICA SE OS CAMPOS FORAM PASSADOS OU NÃO
+    if (!price){
+        res.send("Senha não correspondente.")
+        return
+    }
+
+    //CRIA UM NOVO USUÁRIO COM BASE NO BANCO DE DADOS
+    const product = new Product({
+        name: name,
+        category: category,
+        price: price,
+    })
+
+    //SALVA NO BANCO DE DADOS O USUÁRIO
+    await product.save()
+
+    //RETORNA OS DADOS PARA FEEDBACK DO USUÁRIO
+    return res.send(product)
+})
+
+//ROTA PARA PEGAR TODOS OS PRODUTO
+app.get("/products", async (req, res) => {
+    //LISTA TODOS OS PRODUTOS DO BANCO DE DADOS
+    const products = await Product.find()
+
+    //RETORNA OS DADOS PARA FEEDBACK DO USUÁRIO
+    return res.send(products)
+})
+
+//ROTA PARA PEGAR PRODUTO ESPECIFICO
+app.get("/product/:name",  async (req, res) => {
+    //PEGA OS DADOS PELA REQUISIÇÃO
+    const name = req.params.name
+
+    //PROCURA POR UM PRODUTO COM O CAMPO ESPECIFICADO
+    const person = await Person.findOne({ name: name })
+
+    //RETORNA OS DADOS PARA FEEDBACK DO USUÁRIO
+    return res.send(person)
+})
+
+//MODELO DO OBJETO DO BANCO DE DADOS
+const Order = mongoose.model('Order', {
+    client_name: {
+        type: String,
+        required: false
+    },
+    client_address: {
+        type: String,
+        required: false
+    },
+    payment_mode: {
+        type: String,
+        required: false
+    },
+    data: {
+        type: String,
+        required: true
+    },
+    print: {
+        type: String,
+        required: false
+    }
+});
+
+//ROTA PARA PEGAR TODOS OS PEDIDOS
+app.get("/orders", async (req, res) => {
+    //LISTA TODOS OS PEDIDOS DOS USUÁRIOS DO BANCO DE DADOS
+    const order = await Order.find()
+
+    //RETORNA OS DADOS PARA FEEDBACK DO USUÁRIO
+    return res.send(order)
+})
+
+//ROTA PARA PEGAR PEDIDO ESPECIFICO
+app.get("/order/:client_name",  async (req, res) => {
+    //PEGA OS DADOS PELA REQUISIÇÃO
+    const client_name = req.params.client_name
+
+    //PROCURA PELOS PEDIDOS DOCLIENTE COM O CAMPO ESPECIFICADO
+    const order = await Order.findOne({ client_name: client_name })
+
+    //RETORNA OS DADOS PARA FEEDBACK DO USUÁRIO
+    return res.send(order)
+})
+
+//ROTA DE REGISTRO FEITA PARA REGISTRAR PEDIDO
+app.post("/order/register", async (req, res) => {
+    //PEGA OS DADOS DA REQUISIÇÃO
+    const client_name = req.body.client_name
+    const client_address = req.body.client_address
+    const payment_mode = req.body.payment_mode
+    const data = req.body.data
+    const print = req.body.print
+
+    //VERIFICA SE OS CAMPOS FORAM PASSADOS OU NÃO
+    if (!client_name){
+        res.send("Nome não correspondente.")
+        return
+    }
+    //VERIFICA SE OS CAMPOS FORAM PASSADOS OU NÃO
+    if (!client_address){
+        res.send("Endereço não correspondente.")
+        return
+    }
+    //VERIFICA SE OS CAMPOS FORAM PASSADOS OU NÃO
+    if (!payment_mode){
+        res.send("Modo de pagamento não correspondente.")
+        return
+    }
+    //VERIFICA SE OS CAMPOS FORAM PASSADOS OU NÃO
+    if (!data){
+        res.send("Data não correspondente.")
+        return
+    }
+    //VERIFICA SE OS CAMPOS FORAM PASSADOS OU NÃO
+    if (!print){
+        res.send("Estampa não correspondente.")
+        return
+    }
+
+    //CRIA UM NOVO PEDIDO COM BASE NO BANCO DE DADOS
+    const order = new Order({
+        client_name: client_name,
+        client_address: client_address,
+        payment_mode: payment_mode,
+        data: data,
+        print: print,
+    })
+
+    //SALVA NO BANCO DE DADOS O USUÁRIO
+    await order.save()
+
+    //RETORNA OS DADOS PARA FEEDBACK DO USUÁRIO
+    return res.send(order)
+})
+
 app.listen(port, () => {
     mongoose.connect(`mongodb+srv://${user_name}:${password}@bdpresente.fttzn1n.mongodb.net/?retryWrites=true&w=majority&appName=bdpresente`)
-    console.log('app rodando')
+    console.log('servidor rodou Raul rolou, servidor desceu Raul comeu')
 })
