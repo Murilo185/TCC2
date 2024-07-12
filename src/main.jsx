@@ -11,7 +11,6 @@ import Produto from './components/Produto.jsx';
 import SignIn from './components/signin.jsx';
 import SignUp from './components/signup.jsx';
 
-
 const router = createBrowserRouter([
   {
     path: "/",
