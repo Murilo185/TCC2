@@ -1,0 +1,32 @@
+
+.carousel-item img {
+    width: 200px; /* Largura da imagem */
+    height: auto; /* Mantém a proporção */
+    margin: 0 auto; /* Centraliza a imagem horizontalmente */
+  }
+ 
+
+  /* No seu arquivo CSS */
+.carousel-indicators [data-bs-target] {
+    background-color: transparent; /* Remove a cor de fundo padrão */
+    border: 2px solid #fff; /* Adiciona uma borda branca */
+  }
+  .carousel-item img {
+    width: 100%; /* Ocupa toda a largura do contêiner */
+    height: auto; /* Mantém a proporção da imagem */
+  }
+  #whatsapp{
+    position: absolute;
+  }
+
+  .carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: #333; /* Cor de fundo da seta (ajuste conforme necessário) */
+  filter: invert(1);     /* Inverte as cores da seta para torná-la visível */
+}
+
+/* Estilos para o hover (opcional) */
+.carousel-control-prev:hover .carousel-control-prev-icon,
+.carousel-control-next:hover .carousel-control-next-icon {
+  background-color: #555; /* Cor mais escura no hover */
+}

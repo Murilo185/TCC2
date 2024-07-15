@@ -1,20 +1,16 @@
 *{
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+#titprodutos{
+    display: flex;
+    width: 100%;
+}
 body{
-    background-color: lightgray;
     margin: 0pc;
     padding: 0pc;
-}
-
-#busca{
-    display: block;
-    margin: 0 auto;
-    margin-bottom: 20px;
-    margin-top: 20px;
 }
 
 #column-wrapper {
@@ -27,6 +23,7 @@ body{
     flex-wrap: wrap;
     margin: 0 auto;
     justify-content: center;
+    background-color: rgba(231, 229, 236, 1);
 }
 
 .nomeProduto{
@@ -53,11 +50,12 @@ span{
     padding-bottom: 20px;
     padding-top: 10px;
     margin: 2px 2px;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: bla;
     justify-content: flex-start;
     align-items: center;
     border-radius: 10px;
     display: flex;
+    background-color: rgb(172, 171, 171);
 }
 
 #containner >div>a>img{

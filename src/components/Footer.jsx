@@ -21,10 +21,6 @@ export default function Footer(){
             <p className='text-white text-[14px] font-semibold mb-1'>Está com duvidas?</p>
 
             <p className='text-white text-[14px] font-semibold mb-5'>clique <Link to='/' className='text-[#D171FF] text-[20px]'>aqui</Link> e tentaremos te ajudar!</p>
-
-            <div className='w-full bg-white flex items-center justify-center relative py-5'>
-                <img className='w-[26%]' src={logo} alt="" />
-            </div>
         </div>
     )
 }

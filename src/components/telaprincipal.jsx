@@ -9,6 +9,7 @@ import agenda from '../assets/agenda.png'
 import chaveiro from '../assets/almochaveiro.png'
 import whatsapp from '../assets/whatsapp.svg'
 import Footer from './Footer.jsx';
+import UncontrolledExample from './carrossell.jsx'
 
 import { Link } from 'react-router-dom'
 
@@ -17,8 +18,13 @@ export default function TelaPrincipal (){
         <>
             <Cabecalho />
 
-            <input type="text" className='block mx-auto mb-[20px] mt-[20px]' />
-                
+            <UncontrolledExample />
+            
+            <div className='flex flex-row items-center justify-center bg-[#e7e5ec]'>
+                <h2 className='pr-[20px] c-[purple] text-purple-950'>Produtos</h2>
+                <div className='h-[2px] bg-[purple] flex-grow-[1]'> </div>
+            </div>
+
             <div id="containner" className='w-0'>
 
                 <div id="camisa">
