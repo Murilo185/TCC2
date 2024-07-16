@@ -9,6 +9,8 @@ import Img6 from '../assets/camisa.png'
 import Img7 from '../assets/caneca.png'
 import Cabecalho from "./cabecalho"
 import Footer from "./Footer"
+import './Produto.css';
+import { Link } from 'react-router-dom';
 
 export default function Produto(){
     const {product}=useParams()
@@ -20,7 +22,7 @@ export default function Produto(){
             <Cabecalho />
             <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
 
-                    <div className="flex item-center justify-center p-7 bg-[#ffffff6e] mt-7 w-[80%] rounded-[12px]">
+                    <div className="flex item-center justify-center p-7 bg-[#f1f1f1] mt-7 w-[80%] rounded-[12px]">
                         {product == 'agenda' && (<img src={Img1} className="w-[400px]" />) }
                         {product == 'chaveiro' && (<img src={Img2} className="w-[400px]" />) }
                         {product == 'almofada' && (<img src={Img3} className="w-[400px]" />) }
@@ -44,9 +46,11 @@ export default function Produto(){
                         {product == 'agenda' && '14,90'}
                     </p>
 
-                    <div className='bg-[#3B7A58] text-white w-[80%] flex items-center justify-center py-4 font-bold text-[18px] rounded-[8px]'>
-                        Personalize seu produto
-                    </div>
+                    <Link to="/PersonalizarProduto/agenda">
+                        <div className='bg-[#3B7A58] text-white w-[80%] flex items-center justify-center py-4 font-bold text-[18px] rounded-[8px]'>
+                            Personalize seu produto
+                        </div>
+                    </Link>
 
                     <p className="capitalize text-[#733A8E] font-bold text-left w-[80%] text-[24px] mt-5 mb-2">
                         descrição

@@ -1,10 +1,7 @@
 
-.carousel-item img {
-    width: 200px; /* Largura da imagem */
-    height: auto; /* Mantém a proporção */
-    margin: 0 auto; /* Centraliza a imagem horizontalmente */
+carousel .item {
+  height: 300px;
   }
- 
 
   /* No seu arquivo CSS */
 .carousel-indicators [data-bs-target] {
@@ -12,8 +9,9 @@
     border: 2px solid #fff; /* Adiciona uma borda branca */
   }
   .carousel-item img {
-    width: 100%; /* Ocupa toda a largura do contêiner */
+    width: 50pc; /* Ocupa toda a largura do contêiner */
     height: auto; /* Mantém a proporção da imagem */
+    margin: auto;
   }
   #whatsapp{
     position: absolute;
