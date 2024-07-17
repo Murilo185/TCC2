@@ -11,7 +11,6 @@ import Produto from './components/Produto.jsx';
 import SignIn from './components/signin.jsx';
 import SignUp from './components/signup.jsx';
 import PersonalizarProduto from './components/PersonalizarProduto.jsx';
-
 const router = createBrowserRouter([
   {
     path: "/",
@@ -36,13 +35,16 @@ const router = createBrowserRouter([
   {
     path:"/PersonalizarProduto/:product",
     element: <PersonalizarProduto />
-  }
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
-    
+    {//<CartContextProvider>
+    }
+      <RouterProvider router={router} />
+    {//</CartContextProvider>
+    }
   </React.StrictMode>,
 )
 

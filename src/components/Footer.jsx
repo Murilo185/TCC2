@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import logo from '../../public/logosemtexto.png'
 import { AiOutlineMail, AiOutlineInstagram, AiOutlineFacebook } from "react-icons/ai";
 
 export default function Footer(){
@@ -8,7 +7,7 @@ export default function Footer(){
         
             <h1 className='text-white text-[20px] font-semibold mb-3'>Venha nos visitar!</h1>
             
-            <p className='text-white text-[14px] mb-5'>Rio Acima, Jundiaí - State of São Paulo, 13215-841</p>
+            <p className='text-white text-[14px] mb-5'>Rio Acima, Jundiaí - São Paulo, 13215-841</p>
             
             <h2 className='text-white text-[20px] font-semibold mb-1 capitalize'>contatos</h2>
             
