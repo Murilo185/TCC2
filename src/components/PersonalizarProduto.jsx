@@ -1,6 +1,6 @@
 import Cabecalho from "./cabecalho";
 import Footer from "./Footer";
-import estampa1 from '../assets/figma_icon.png';
+
 import Dropdown from 'react-bootstrap/Dropdown';
 // eslint-disable-next-line no-unused-vars
 import React, { useContext, useState, useRef } from 'react';
@@ -9,7 +9,8 @@ import { useParams } from 'react-router-dom';
 
 export default function PersonalizarProduto() {
     
-  const { addProductToCart, removeProductFromCart } = useContext(CartContext);
+  const [corSelecionada, setCorSelecionada] = useState(null); // Inicialmente nenhuma cor selecionada
+  const { addProductToCart } = useContext(CartContext);
   const [preco, setPreco] = useState(0);
   const [click, setClick] = useState(false);
   const [quantidade, setQuantidade] = useState(1);
@@ -20,7 +21,8 @@ export default function PersonalizarProduto() {
 
   // Lógica para determinar os produtos com base no parâmetro da rota (product)
   const produtos = product === 'camisa' ? [
-    { nome: 'Algodão', preco: 39.90, imagem: "/src/assets/camisa.png" },
+    { nome: 'Poliester', preco: 39.90, imagem: "/src/assets/camisa.png" },
+    
     // ... outros tipos de camisas
   ] : product === 'caneca' ? [
     { nome: 'Porcelana', preco: 10.0, imagem: "/src/assets/canecaPorcelana.png" },
@@ -62,14 +64,14 @@ const estampasPreProntas = [
 
 function handleSubmit() {
   const produtoSelecionado = produtos.find((produto) => produto.preco === preco);
-  if (produtoSelecionado || imagemSelecionada) { // Verifica se há produto ou estampa
+  if (produtoSelecionado && corSelecionada || imagemSelecionada) { // Verifica se há produto ou estampa
     addProductToCart({
       tipoProduto: produtoSelecionado ? produtoSelecionado.nome : 'Produto com Estampa',
       quantidade,
       precoTotal: preco * quantidade,
       imagem: imagemSelecionada || produtoSelecionado.imagem,
       id: produtoSelecionado ? produtoSelecionado.nome : Date.now() // ID único para estampas
-    });
+    }, corSelecionada);
   } else {
     console.log("Nenhum produto ou estampa selecionado.");
   }
@@ -91,33 +93,43 @@ function handleSubmit() {
       <Cabecalho />
       
 
-      <h1 className="text-center">Vamos criar seu {product}!</h1>
+      <h1 className="text-center">Vamos criar sua {product}!</h1>
       <div className='h-[2px] bg-[purple] flex-grow-[1]'></div>
       <br />
 
       <div className="bg-[#999999]">
         <p>estampa</p>
-        <div className="flex">
+        <div className="flex items-center justify-center">
           <div>
-            <Dropdown>
-              <Dropdown.Toggle variant="success" id="dropdown-basic">
-                <p>Sua estampa</p> 
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <img
-                  src={imagemSelecionada || estampa1} 
-                  alt=""
-                  className="w-16 h-16 object-cover cursor-pointer"
-                  onClick={() => inputFileRef.current.click()}
-                />
-                <input
-                  type="file"
-                  ref={inputFileRef}
-                  style={{ display: 'none' }}
-                  onChange={handleImageUpload}
-                />
-              </Dropdown.Menu>
-            </Dropdown>
+          <Dropdown>
+  <Dropdown.Toggle variant="success" id="dropdown-basic">
+    <p>Sua estampa</p>
+  </Dropdown.Toggle>
+  <Dropdown.Menu>
+    {!imagemSelecionada && ( // Exibir botão apenas se não houver imagem
+      <button
+        onClick={() => inputFileRef.current.click()}
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" // Estilização com Tailwind CSS
+      >
+        Enviar sua imagem aqui
+      </button>
+    )}
+    {imagemSelecionada && ( // Exibir imagem se houver
+      <img
+        src={imagemSelecionada}
+        alt=""
+        className="w-16 h-16 object-cover cursor-pointer"
+        onClick={() => inputFileRef.current.click()}
+      />
+    )}
+    <input
+      type="file"
+      ref={inputFileRef}
+      style={{ display: 'none' }}
+      onChange={handleImageUpload}
+    />
+  </Dropdown.Menu>
+</Dropdown>
           </div>
           <div className=" bg-white">
             <div>
@@ -140,9 +152,24 @@ function handleSubmit() {
   </Dropdown.Menu>
 </Dropdown>
             </div>
+            
           </div>
+          
         </div>
+        {estampaSelecionada || imagemSelecionada ? (
+  <div className="mt-4">
+    <h2 className="text-lg font-semibold text-center">Sua Arte:</h2>
+    <div className="flex justify-center">
+      <img
+        src={estampaSelecionada?.imagem || imagemSelecionada}
+        alt="Estampa Selecionada"
+        className="w-48 h-48 object-cover pb-3"
+      />
+    </div>
+  </div>
+) : null}
       </div>
+      
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-2">
         {produtos.map((produto) => (
@@ -188,19 +215,26 @@ function handleSubmit() {
       <p className="mt-4 text-center">
         Preço total: R$ {(preco * quantidade).toFixed(2)}
       </p>
-
-      {estampaSelecionada || imagemSelecionada ? (
-  <div className="mt-4">
-    <h2 className="text-lg font-semibold text-center">Sua Arte:</h2>
-    <div className="flex justify-center">
-      <img
-        src={estampaSelecionada?.imagem || imagemSelecionada}
-        alt="Estampa Selecionada"
-        className="w-48 h-48 object-cover"
-      />
-    </div>
-  </div>
-) : null}
+      {product === 'camisa' && ( // Exibir apenas se for a página da camisa
+      <div className="mt-4">
+        <p className="text-center">Cor:</p>
+        <div className="flex justify-center space-x-4">
+          {['Branco', 'Preto', 'Verde', 'Vermelho'].map((cor) => (
+            <label key={cor} className="flex items-center space-x-2 cursor-pointer">
+              <input
+                type="radio"
+                name="cor"
+                value={cor}
+                checked={corSelecionada === cor}
+                onChange={() => setCorSelecionada(cor)}
+              />
+              <span>{cor}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+    )}
+      
       <div className="flex items-center justify-center" onClick={handleSubmit}>
         <button className="bg-[purple] rounded">
           Adicionar ao carrinho

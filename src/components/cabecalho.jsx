@@ -1,6 +1,5 @@
 import logo from '../assets/logo.png';
 import { Link } from 'react-router-dom';
-import { IoIosNotificationsOutline } from 'react-icons/io';
 import { CiUser, CiShoppingCart } from 'react-icons/ci';
 import { useContext, useState, useRef, useEffect } from 'react';
 import { CartContext } from '../contexts/cartContext.jsx';
@@ -38,9 +37,6 @@ export default function Cabecalho() {
           <img src={logo} className='w-40' alt="Logo da loja" />
         </Link>
 
-        <div className='flex h-full items-center justify-end'>
-          <IoIosNotificationsOutline className='w-[40px] h-auto text-[#733A8E]' />
-
           <Link to="/login">
             <CiUser className='w-[40px] h-auto text-[#733A8E]' />
           </Link>
@@ -64,6 +60,7 @@ export default function Cabecalho() {
                           <p className="font-medium">{item.tipoProduto}</p>
                           <p className="text-sm text-gray-500">
                             {item.quantidade} x R$ {(item.precoTotal / item.quantidade).toFixed(2)} = R$ {item.precoTotal.toFixed(2)}
+                            {item.cor && <p className="text-sm text-gray-500">Cor: {item.cor}</p>} 
                           </p>
                         </div>
                         <button onClick={() => removeFromCart(item.id)}> {/* Botão para remover */}
@@ -78,6 +75,6 @@ export default function Cabecalho() {
           </div>
         </div>
       </div>
-    </div>
-  );
-}
+    
+  
+          )}
