@@ -16,6 +16,7 @@ export default function PersonalizarProduto() {
   const [imagemSelecionada, setImagemSelecionada] = useState(null);
   const inputFileRef = useRef(null);
   const { product } = useParams();
+  const [estampaSelecionada, setEstampaSelecionada] = useState(null);
 
   // Lógica para determinar os produtos com base no parâmetro da rota (product)
   const produtos = product === 'camisa' ? [
@@ -128,7 +129,10 @@ function handleSubmit() {
     {estampasPreProntas.map((estampa) => (
       <Dropdown.Item
         key={estampa.nome}
-        onClick={() => setImagemSelecionada(estampa.imagem)}
+        onClick={() => {
+          setImagemSelecionada(estampa.imagem);
+          setEstampaSelecionada(estampa); // Atualiza o estado da estampa selecionada
+        }}
       >
         <img src={estampa.imagem} alt={estampa.nome} />
       </Dropdown.Item>
@@ -185,6 +189,18 @@ function handleSubmit() {
         Preço total: R$ {(preco * quantidade).toFixed(2)}
       </p>
 
+      {estampaSelecionada || imagemSelecionada ? (
+  <div className="mt-4">
+    <h2 className="text-lg font-semibold text-center">Sua Arte:</h2>
+    <div className="flex justify-center">
+      <img
+        src={estampaSelecionada?.imagem || imagemSelecionada}
+        alt="Estampa Selecionada"
+        className="w-48 h-48 object-cover"
+      />
+    </div>
+  </div>
+) : null}
       <div className="flex items-center justify-center" onClick={handleSubmit}>
         <button className="bg-[purple] rounded">
           Adicionar ao carrinho
