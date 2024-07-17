@@ -13,11 +13,16 @@ import SignUp from './components/signup.jsx';
 import PersonalizarProduto from './components/PersonalizarProduto.jsx';
 
 import { CartProvider } from './contexts/cartContext.jsx';
+import Cabecalho from './components/cabecalho.jsx';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <TelaPrincipal />
+    element: 
+    <>
+    <TelaPrincipal />
+    <Cabecalho />
+    </>
   },
   {
     path: "/login",
@@ -44,7 +49,7 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <CartProvider> 
-      <RouterProvider router={router} />
+        <RouterProvider router={router} />
     </CartProvider>
   </React.StrictMode>,
 );

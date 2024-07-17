@@ -1,21 +1,22 @@
-// contexts/CartContext.jsx
-// eslint-disable-next-line no-unused-vars
-import React, { createContext, useState } from 'react';
+import { createContext, useState } from 'react';
 
 export const CartContext = createContext();
 
-// eslint-disable-next-line react/prop-types
-export const CartProvider = ({ children }) => {
+export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
 
-  const addProductToCart = (product) => {
-    
-    setCartItems([...cartItems, product]);
+  const addProductToCart = (item) => {
+    setCartItems([...cartItems, item]);
+  };
 
+  // Função para remover item do carrinho
+  const removeFromCart = (itemId) => {
+    setCartItems(cartItems.filter(item => item.id !== itemId)); // Filtra o item a ser removido
   };
 
   return (
-    <CartContext.Provider value={{ cartItems, addProductToCart, setCartItems }}> 
+    <CartContext.Provider value={{ cartItems, addProductToCart, removeFromCart }}>
       {children}
     </CartContext.Provider>
-)};
+  );
+}

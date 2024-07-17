@@ -4,10 +4,13 @@ import { IoIosNotificationsOutline } from 'react-icons/io';
 import { CiUser, CiShoppingCart } from 'react-icons/ci';
 import { useContext, useState, useRef, useEffect } from 'react';
 import { CartContext } from '../contexts/cartContext.jsx';
-import RemoverDoCarrinho from './RemoverDoCarrinho.jsx';
+import { MdClose } from 'react-icons/md'; // Ícone de 
+// eslint-disable-next-line no-unused-vars
+
 
 export default function Cabecalho() {
-  const { cartItems, removeProductFromCart } = useContext(CartContext);
+  const { removeFromCart } = useContext(CartContext);
+  const { cartItems } = useContext(CartContext); // Desestrutura aqui
   const [showCart, setShowCart] = useState(false);
   const cartRef = useRef(null);
 
@@ -55,7 +58,7 @@ export default function Cabecalho() {
                 ) : (
                   <ul className="divide-y divide-gray-200">
                     {cartItems.map((item, index) => (
-                      <li key={index} className="py-2 flex items-center">
+                      <li key={index} className="py-2 flex items-center justify-between">
                         <img src={item.imagem} alt={item.tipoProduto} className="w-10 h-10 mr-2" />
                         <div>
                           <p className="font-medium">{item.tipoProduto}</p>
@@ -63,7 +66,9 @@ export default function Cabecalho() {
                             {item.quantidade} x R$ {(item.precoTotal / item.quantidade).toFixed(2)} = R$ {item.precoTotal.toFixed(2)}
                           </p>
                         </div>
-                        <RemoverDoCarrinho productId={item.id} /> {/* Botão para remover o item */}
+                        <button onClick={() => removeFromCart(item.id)}> {/* Botão para remover */}
+                  <MdClose className="w-5 h-5 text-red-500 hover:text-red-700" />
+                </button>
                       </li>
                     ))}
                   </ul>
