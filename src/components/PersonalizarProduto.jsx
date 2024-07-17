@@ -7,8 +7,9 @@ import React, { useContext, useState, useRef } from 'react';
 import { CartContext } from "../contexts/cartContext";
 import { useParams } from 'react-router-dom';
 
+
 export default function PersonalizarProduto() {
-    
+
   const [corSelecionada, setCorSelecionada] = useState(null); // Inicialmente nenhuma cor selecionada
   const { addProductToCart } = useContext(CartContext);
   const [preco, setPreco] = useState(0);
@@ -22,7 +23,7 @@ export default function PersonalizarProduto() {
   // Lógica para determinar os produtos com base no parâmetro da rota (product)
   const produtos = product === 'camisa' ? [
     { nome: 'Poliester', preco: 39.90, imagem: "/src/assets/camisa.png" },
-    
+
     // ... outros tipos de camisas
   ] : product === 'caneca' ? [
     { nome: 'Porcelana', preco: 10.0, imagem: "/src/assets/canecaPorcelana.png" },
@@ -56,26 +57,31 @@ export default function PersonalizarProduto() {
   };
 
   // Adicione este array no topo do seu componente PersonalizarProduto
-const estampasPreProntas = [
-  { nome: 'Estampa 1', imagem: '/src/assets/estampasProntas/caneca1.jpg' },
-  { nome: 'Estampa 2', imagem: '/src/assets/estampasProntas/caneca2.jpg' },
-  // ...
-];
-
-function handleSubmit() {
-  const produtoSelecionado = produtos.find((produto) => produto.preco === preco);
-  if (produtoSelecionado && corSelecionada || imagemSelecionada) { // Verifica se há produto ou estampa
-    addProductToCart({
-      tipoProduto: produtoSelecionado ? produtoSelecionado.nome : 'Produto com Estampa',
-      quantidade,
-      precoTotal: preco * quantidade,
-      imagem: imagemSelecionada || produtoSelecionado.imagem,
-      id: produtoSelecionado ? produtoSelecionado.nome : Date.now() // ID único para estampas
-    }, corSelecionada);
-  } else {
-    console.log("Nenhum produto ou estampa selecionado.");
+  const estampasPreProntas = [
+    { nome: 'Estampa 1', imagem: '/src/assets/estampasProntas/caneca1.jpg' },
+    { nome: 'Estampa 2', imagem: '/src/assets/estampasProntas/caneca2.jpg' },
+    // ...
+  ];
+  function generateUniqueId() {
+    const timestamp = Date.now().toString(36); // Converte para base 36 (letras e números)
+    const randomNum = Math.random().toString(36).substr(2, 5); // Gera 5 caracteres aleatórios
+    return `${timestamp}-${randomNum}`;
   }
-}
+
+  function handleSubmit() {
+    const produtoSelecionado = produtos.find((produto) => produto.preco === preco);
+    if (produtoSelecionado && corSelecionada || imagemSelecionada) { // Verifica se há produto ou estampa
+      addProductToCart({
+        tipoProduto: produtoSelecionado ? produtoSelecionado.nome : 'Produto com Estampa',
+        quantidade,
+        precoTotal: preco * quantidade,
+        imagem: imagemSelecionada || produtoSelecionado.imagem,
+        id: generateUniqueId(), // ID único para estampas
+      }, corSelecionada);
+    } else {
+      console.log("Nenhum produto ou estampa selecionado.");
+    }
+  }
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -91,7 +97,7 @@ function handleSubmit() {
   return (
     <>
       <Cabecalho />
-      
+
 
       <h1 className="text-center">Vamos criar sua {product}!</h1>
       <div className='h-[2px] bg-[purple] flex-grow-[1]'></div>
@@ -101,140 +107,159 @@ function handleSubmit() {
         <p>estampa</p>
         <div className="flex items-center justify-center">
           <div>
-          <Dropdown>
-  <Dropdown.Toggle variant="success" id="dropdown-basic">
-    <p>Sua estampa</p>
-  </Dropdown.Toggle>
-  <Dropdown.Menu>
-    {!imagemSelecionada && ( // Exibir botão apenas se não houver imagem
-      <button
-        onClick={() => inputFileRef.current.click()}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" // Estilização com Tailwind CSS
-      >
-        Enviar sua imagem aqui
-      </button>
-    )}
-    {imagemSelecionada && ( // Exibir imagem se houver
-      <img
-        src={imagemSelecionada}
-        alt=""
-        className="w-16 h-16 object-cover cursor-pointer"
-        onClick={() => inputFileRef.current.click()}
-      />
-    )}
-    <input
-      type="file"
-      ref={inputFileRef}
-      style={{ display: 'none' }}
-      onChange={handleImageUpload}
-    />
-  </Dropdown.Menu>
-</Dropdown>
+            <Dropdown>
+              <Dropdown.Toggle variant="success" id="dropdown-basic">
+                <p>Sua estampa</p>
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                {!imagemSelecionada && ( // Exibir botão apenas se não houver imagem
+                  <button
+                    onClick={() => inputFileRef.current.click()}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" // Estilização com Tailwind CSS
+                  >
+                    Enviar sua imagem aqui
+                  </button>
+                )}
+                {imagemSelecionada && ( // Exibir imagem se houver
+                  <img
+                    src={imagemSelecionada}
+                    alt=""
+                    className="w-16 h-16 object-cover cursor-pointer"
+                    onClick={() => inputFileRef.current.click()}
+                  />
+                )}
+                <input
+                  type="file"
+                  ref={inputFileRef}
+                  style={{ display: 'none' }}
+                  onChange={handleImageUpload}
+                />
+              </Dropdown.Menu>
+            </Dropdown>
           </div>
           <div className=" bg-white">
             <div>
-            <Dropdown>
-  <Dropdown.Toggle variant="success" id="dropdown-basic">
-    <p>Estampa pré-pronta</p>
-  </Dropdown.Toggle>
-  <Dropdown.Menu>
-    {estampasPreProntas.map((estampa) => (
-      <Dropdown.Item
-        key={estampa.nome}
-        onClick={() => {
-          setImagemSelecionada(estampa.imagem);
-          setEstampaSelecionada(estampa); // Atualiza o estado da estampa selecionada
-        }}
-      >
-        <img src={estampa.imagem} alt={estampa.nome} />
-      </Dropdown.Item>
-    ))}
-  </Dropdown.Menu>
-</Dropdown>
+              <Dropdown>
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                  <p>Estampa pré-pronta</p>
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {estampasPreProntas.map((estampa) => (
+                    <Dropdown.Item
+                      key={estampa.nome}
+                      onClick={() => {
+                        setImagemSelecionada(estampa.imagem);
+                        setEstampaSelecionada(estampa); // Atualiza o estado da estampa selecionada
+                      }}
+                    >
+                      <img src={estampa.imagem} alt={estampa.nome} />
+                    </Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
             </div>
-            
+
           </div>
-          
+
         </div>
         {estampaSelecionada || imagemSelecionada ? (
-  <div className="mt-4">
-    <h2 className="text-lg font-semibold text-center">Sua Arte:</h2>
-    <div className="flex justify-center">
-      <img
-        src={estampaSelecionada?.imagem || imagemSelecionada}
-        alt="Estampa Selecionada"
-        className="w-48 h-48 object-cover pb-3"
-      />
-    </div>
-  </div>
-) : null}
+          <div className="mt-4">
+            <h2 className="text-lg font-semibold text-center">Sua Arte:</h2>
+            <div className="flex justify-center">
+              <img
+                src={estampaSelecionada?.imagem || imagemSelecionada}
+                alt="Estampa Selecionada"
+                className="w-48 h-48 object-cover pb-3"
+              />
+            </div>
+          </div>
+        ) : null}
       </div>
-      
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-2">
+
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-2 justify-center">
         {produtos.map((produto) => (
-          <div
+          <div // Container principal do produto
             key={produto.nome}
-            className={`transition-all duration-[100ms] rounded-lg p-4 cursor-pointer ${preco === produto.preco ? "border-green-950 border-[10px]" : "border-black border-2"}`}
+            className={`
+        transition-all duration-[150ms] rounded-lg cursor-pointer relative
+        ${preco === produto.preco ? "border-green-950 border-[5px]" : "border-black border-2"}
+      `}
             onClick={() => handleProdutoClick(produto.preco)}
           >
-            <img src={produto.imagem} alt="" />
-            <p className="text-center">{produto.nome}</p>
-            <p className="text-center">{produto.preco}</p>
+            <div className="bg-white rounded-t-md border-b border-gray-300"> {/* Adiciona border-b border-gray-300 */}
+              <img src={produto.imagem} alt="" className="rounded-t-md" />
+            </div>
+            <div className="bg-white rounded-b-md p-2 text-center">
+              <p className="text-center font-medium">{produto.nome}</p>
+              <p className="text-center">R$ {produto.preco.toFixed(2)}</p>
+            </div>
           </div>
         ))}
       </div>
 
       <div className="mt-4">
-        <p className="text-center">Quantidade:</p>
-        <div className="grid grid-cols-3 gap-4 ">
-          {[1, 10, 15, 20, 50].map((qtd) => (
-            <div
-              key={qtd}
-              className={`rounded-lg p-2 cursor-pointer border-2 h-[40px] ${quantidade === qtd ? 'border-green-950' : ''}`}
-              onClick={() => handleQuantidadeClick(qtd)}
-            >
-              {qtd}
-            </div>
-          ))}
-          <div 
-            className={`border-2 rounded-lg p-2 cursor-pointer text-[10px] ${click === true ? 'border-green-950' : ""}`}
-            onClick={() => {
-              const outraQuantidade = prompt("Digite a quantidade desejada:");
-              if (outraQuantidade && !isNaN(outraQuantidade)) {
-                setQuantidade(parseInt(outraQuantidade, 10));
-                setClick(true);
-              }
-            }}
-          >
-            Outras quantidades
-          </div>
-        </div>
+  <p className="text-center">Quantidade:</p>
+  <div className="grid grid-cols-3 gap-4 items-center transition-all duration-[1500ms]">
+    {[1, 10, 15, 20, 50].map((qtd) => (
+      <button
+        key={qtd}
+        className={`
+          px-4 py-3 rounded-md border flex items-center justify-center
+          ${quantidade === qtd ? 'bg-purple-500 text-white' : 'bg-white text-gray-800'} 
+          hover:bg-purple-600 hover:text-white
+        `}
+        onClick={() => handleQuantidadeClick(qtd)}
+      >
+        {qtd}
+      </button>
+    ))}
+    {/* Botão "+" adicionado de volta */}
+    <button 
+      className={`
+        px-6 py-3 rounded-md border 
+        ${click === true ? 'bg-purple-500 text-white' : 'bg-white text-gray-800'} 
+        hover:bg-purple-600 hover:text-white
+        text-2xl font-bold
+      `}
+      onClick={() => {
+        const outraQuantidade = prompt("Digite a quantidade desejada:");
+        if (outraQuantidade && !isNaN(outraQuantidade)) {
+          setQuantidade(parseInt(outraQuantidade, 10));
+          setClick(true);
+        }
+      }}
+    >
+      +
+    </button>
+  </div>
       </div>
 
       <p className="mt-4 text-center">
-        Preço total: R$ {(preco * quantidade).toFixed(2)}
+        <span className="bg-gray-200 font-bold rounded-md px-4 py-2"> {/* Estilização */}
+          <span className="text-purple-600" >Valor total</span>: R$ {(preco * quantidade).toFixed(2)}
+        </span>
       </p>
       {product === 'camisa' && ( // Exibir apenas se for a página da camisa
-      <div className="mt-4">
-        <p className="text-center">Cor:</p>
-        <div className="flex justify-center space-x-4">
-          {['Branco', 'Preto', 'Verde', 'Vermelho'].map((cor) => (
-            <label key={cor} className="flex items-center space-x-2 cursor-pointer">
-              <input
-                type="radio"
-                name="cor"
-                value={cor}
-                checked={corSelecionada === cor}
-                onChange={() => setCorSelecionada(cor)}
-              />
-              <span>{cor}</span>
-            </label>
-          ))}
+        <div className="mt-4">
+          <p className="text-center">Cor:</p>
+          <div className="flex justify-center space-x-4">
+            {['Branco', 'Preto', 'Verde', 'Vermelho'].map((cor) => (
+              <label key={cor} className="flex items-center space-x-2 cursor-pointer">
+                <input
+                  type="radio"
+                  name="cor"
+                  value={cor}
+                  checked={corSelecionada === cor}
+                  onChange={() => setCorSelecionada(cor)}
+                />
+                <span>{cor}</span>
+              </label>
+            ))}
+          </div>
         </div>
-      </div>
-    )}
-      
+      )}
+
       <div className="flex items-center justify-center" onClick={handleSubmit}>
         <button className="bg-[purple] rounded">
           Adicionar ao carrinho
