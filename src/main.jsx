@@ -11,6 +11,9 @@ import Produto from './components/Produto.jsx';
 import SignIn from './components/signin.jsx';
 import SignUp from './components/signup.jsx';
 import PersonalizarProduto from './components/PersonalizarProduto.jsx';
+
+import { CartProvider } from './contexts/cartContext.jsx';
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -40,11 +43,9 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    {//<CartContextProvider>
-    }
+    <CartProvider> 
       <RouterProvider router={router} />
-    {//</CartContextProvider>
-    }
+    </CartProvider>
   </React.StrictMode>,
-)
+);
 
