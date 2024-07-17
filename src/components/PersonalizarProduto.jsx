@@ -5,11 +5,14 @@ import estampa1 from '../assets/figma_icon.png'
 import estampa2 from '../assets/estampa2.png'
 import Dropdown from 'react-bootstrap/Dropdown';
 // eslint-disable-next-line no-unused-vars
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useRef } from 'react';
+import Produto from "./Produto";
 {//import { CartContext } from "../contexts/cart";
 }
-export default function PersonalizarProduto() {
 
+
+export default function PersonalizarProduto() {
+    
     {//const {addProductToCart}=useContext(CartContext)
     }
     const [preco, setPreco] = useState(0); // Estado para armazenar o preço
@@ -33,6 +36,33 @@ export default function PersonalizarProduto() {
         setClick(false)
     };
 
+    function handleSubmit() {
+        const produtoSelecionado = produtos.find((produto) => produto.preco === preco);
+        if (produtoSelecionado) {
+          console.log(
+            "Tipo produto: " + produtoSelecionado.nome,
+            "Quantidade: " + quantidade,
+            "Preço total: " + preco * quantidade,
+            "Imagem:", imagemSelecionada // Adiciona a imagem ao console
+          );
+        } else {
+          console.log("Nenhum produto selecionado.");
+        }
+      }
+      const [imagemSelecionada, setImagemSelecionada] = useState(null); // Estado para a imagem
+  const inputFileRef = useRef(null); // Referência para o input de arquivo
+
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setImagemSelecionada(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
     return (
         <>
             <Cabecalho />
@@ -46,18 +76,26 @@ export default function PersonalizarProduto() {
                 <p>estampa</p>
                 <div className="flex">
                     <div>
-                        <Dropdown>
-                            <Dropdown.Toggle variant="success" id="dropdown-basic">
-                                <p>
-                                    Sua estampa
-
-                                </p>
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu>
-                                <img src={estampa1} alt="" />
-                                <input type="file" name="" id="" />
-                            </Dropdown.Menu>
-                        </Dropdown>
+                    <Dropdown>
+        <Dropdown.Toggle variant="success" id="dropdown-basic">
+          <p>Sua estampa</p> {/* Removemos a exibição da imagem aqui */}
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+          {/* Imagem placeholder dentro do menu */}
+          <img
+            src={imagemSelecionada || estampa1} // Exibe a imagem selecionada ou a padrão
+            alt=""
+            className="w-16 h-16 object-cover cursor-pointer"
+            onClick={() => inputFileRef.current.click()}
+          />
+          <input
+            type="file"
+            ref={inputFileRef}
+            style={{ display: 'none' }}
+            onChange={handleImageUpload}
+          />
+        </Dropdown.Menu>
+      </Dropdown>
                     </div>
                     <div className=" bg-white">
 
@@ -132,7 +170,7 @@ export default function PersonalizarProduto() {
             </p>
             {//<button onClick={() => addProductToCart(produtos)}>Adicionar ao carrinho</button>}}
             }
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center" onClick={handleSubmit}>
                 <button className="bg-[purple] rounded">
                     Adicionar ao carrinho
                 </button>
