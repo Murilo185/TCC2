@@ -1,7 +1,6 @@
 import Cabecalho from "./cabecalho";
 import Footer from "./Footer";
 import estampa1 from '../assets/figma_icon.png';
-import estampa2 from '../assets/estampa2.png';
 import Dropdown from 'react-bootstrap/Dropdown';
 // eslint-disable-next-line no-unused-vars
 import React, { useContext, useState, useRef } from 'react';
@@ -53,22 +52,27 @@ export default function PersonalizarProduto() {
     setClick(false);
   };
 
-  function handleSubmit() {
-    const produtoSelecionado = produtos.find((produto) => produto.preco === preco);
-    if (produtoSelecionado) {
-      addProductToCart({
-        tipoProduto: produtoSelecionado.nome,
-        quantidade,
-        precoTotal: preco * quantidade,
-        imagem: imagemSelecionada || produtoSelecionado.imagem,
-        id: produtoSelecionado.nome 
-      });
+  // Adicione este array no topo do seu componente PersonalizarProduto
+const estampasPreProntas = [
+  { nome: 'Estampa 1', imagem: '/src/assets/estampasProntas/caneca1.jpg' },
+  { nome: 'Estampa 2', imagem: '/src/assets/estampasProntas/caneca2.jpg' },
+  // ...
+];
 
-      removeProductFromCart(produtoSelecionado.nome); 
-    } else {
-      console.log("Nenhum produto selecionado.");
-    }
+function handleSubmit() {
+  const produtoSelecionado = produtos.find((produto) => produto.preco === preco);
+  if (produtoSelecionado || imagemSelecionada) { // Verifica se há produto ou estampa
+    addProductToCart({
+      tipoProduto: produtoSelecionado ? produtoSelecionado.nome : 'Produto com Estampa',
+      quantidade,
+      precoTotal: preco * quantidade,
+      imagem: imagemSelecionada || produtoSelecionado.imagem,
+      id: produtoSelecionado ? produtoSelecionado.nome : Date.now() // ID único para estampas
+    });
+  } else {
+    console.log("Nenhum produto ou estampa selecionado.");
   }
+}
 
   const handleImageUpload = (event) => {
     const file = event.target.files[0];
@@ -84,6 +88,7 @@ export default function PersonalizarProduto() {
   return (
     <>
       <Cabecalho />
+      
 
       <h1 className="text-center">Vamos criar seu {product}!</h1>
       <div className='h-[2px] bg-[purple] flex-grow-[1]'></div>
@@ -115,14 +120,21 @@ export default function PersonalizarProduto() {
           </div>
           <div className=" bg-white">
             <div>
-              <Dropdown>
-                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                  <p>Estampa pré-pronta</p>
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <img src={estampa2} alt="" />
-                </Dropdown.Menu>
-              </Dropdown>
+            <Dropdown>
+  <Dropdown.Toggle variant="success" id="dropdown-basic">
+    <p>Estampa pré-pronta</p>
+  </Dropdown.Toggle>
+  <Dropdown.Menu>
+    {estampasPreProntas.map((estampa) => (
+      <Dropdown.Item
+        key={estampa.nome}
+        onClick={() => setImagemSelecionada(estampa.imagem)}
+      >
+        <img src={estampa.imagem} alt={estampa.nome} />
+      </Dropdown.Item>
+    ))}
+  </Dropdown.Menu>
+</Dropdown>
             </div>
           </div>
         </div>
