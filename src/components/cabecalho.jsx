@@ -1,13 +1,13 @@
 import logo from '../assets/logo.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { CiUser, CiShoppingCart } from 'react-icons/ci';
 import { useContext, useState, useRef, useEffect } from 'react';
 import { CartContext } from '../contexts/cartContext.jsx';
 import { MdClose } from 'react-icons/md'; 
 
 export default function Cabecalho() {
-  const { removeFromCart } = useContext(CartContext);
-  const { cartItems } = useContext(CartContext); 
+  const navigate = useNavigate();
+  const { removeFromCart, cartItems } = useContext(CartContext); 
   const [showCart, setShowCart] = useState(false);
   const cartRef = useRef(null);
 
@@ -26,7 +26,7 @@ export default function Cabecalho() {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []);
+  }, [cartItems.length]);
 
   return (
     <div className='w-full flex flex-col justify-center items-center relative'>
@@ -53,21 +53,24 @@ export default function Cabecalho() {
                 ) : (
                   <ul className="divide-y divide-gray-200">
                     {cartItems.map((item, index) => (
-                      <Link to={`/item/${item.id}`} key={index}> 
-                        <li className="py-2 flex items-center justify-between">
-                          <img src={item.imagem} alt={item.tipoProduto} className="w-10 h-10 mr-2" />
-                          <div>
-                            <p className="font-medium">{item.tipoProduto}</p>
-                            <p className="text-sm text-gray-500">
-                              {item.quantidade} x R$ {(item.precoTotal / item.quantidade).toFixed(2)} = R$ {item.precoTotal.toFixed(2)}
-                              {item.cor && <p className="text-sm text-gray-500">Cor: {item.cor}</p>} 
-                            </p>
-                          </div>
-                          <button onClick={() => removeFromCart(item.id)}> 
-                            <MdClose className="w-5 h-5 text-red-500 hover:text-red-700" />
-                          </button>
-                        </li>
-                      </Link>
+                      <li className="py-2 flex items-center justify-between" key={index}>
+                        <div className="flex items-center"> 
+                          <Link to={`/item/${item.id}`} onClick={(e) => { e.preventDefault(); navigate(`/item/${item.id}`); }}> 
+                            <img src={item.imagem} alt={item.tipoProduto} className="w-10 h-10 mr-2" />
+                            <div>
+                              <p className="font-medium">{item.tipoProduto}</p>
+                              <p className="text-sm text-gray-500">
+                                {item.quantidade} x R$ {(item.precoTotal / item.quantidade).toFixed(2)} = R$ {item.precoTotal.toFixed(2)}
+                                {item.cor && <p className="text-sm text-gray-500">Cor: {item.cor}</p>} 
+                              </p>
+                            </div>
+                          </Link>
+                        </div>
+
+                        <button onClick={() => removeFromCart(item.id)}> 
+                          <MdClose className="w-5 h-5 text-red-500 hover:text-red-700" />
+                        </button>
+                      </li>
                     ))}
                   </ul>
                 )}
