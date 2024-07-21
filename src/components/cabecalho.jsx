@@ -36,7 +36,7 @@ export default function Cabecalho() {
         </Link>
         
         <div className='flex h-full items-center justify-end'>
-          <Link to="/login">
+          <Link to="/sign-up">
             <CiUser className='w-[40px] h-auto text-[#733A8E]' />
           </Link>
 

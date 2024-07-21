@@ -19,7 +19,6 @@ const router = createBrowserRouter([
     element: 
     <>
     <TelaPrincipal />
-    <Cabecalho />
     </>
   },
   {

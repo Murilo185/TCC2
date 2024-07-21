@@ -10,7 +10,7 @@ const port = 3000
 
 //CONFIGURAÇÕES DO MONGODB
 const user_name = 'Murilo'
-const password = '13k1fFcVRFXyGjLK'
+const password = '3DjPv6bFfK6MCg5h'
 
 //MODELO DO OBJETO DO BANCO DE DADOS
 const Person = mongoose.model('Person', {
@@ -258,5 +258,5 @@ app.post("/order/register", async (req, res) => {
 
 app.listen(port, () => {
     mongoose.connect(`mongodb+srv://${user_name}:${password}@bdpresente.fttzn1n.mongodb.net/?retryWrites=true&w=majority&appName=bdpresente`)
-    console.log('servidor rodou Raul rolou, servidor desceu Raul comeu')
+    console.log(`rodando no ${port} `)
 })

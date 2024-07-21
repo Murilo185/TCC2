@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import Cabecalho from './cabecalho'
 
 export default function SignIn() {
 
@@ -32,6 +33,8 @@ export default function SignIn() {
     }
 
     return(
+        <>
+        <Cabecalho />
         <div className="w-full px-[10%] h-screen bg-white flex flex-col items-center justify-start">
             <h1 className="mt-[50px] mb-[14px] w-full text-left text-[22px] font-bold text-[#733A8E]">Faça login com sua conta</h1>
             <p className="mb-[20px] w-full text-left text-[20px] text-[#808080]">é bom ter você de volta</p>
@@ -81,5 +84,6 @@ export default function SignIn() {
 
             </form>
         </div>
+        </>
     )
 }

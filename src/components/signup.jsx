@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios'
+import Cabecalho from './cabecalho'
 
 export default function SignUp() {
 
@@ -42,6 +43,8 @@ export default function SignUp() {
     }
 
     return(
+        <>
+        <Cabecalho />
         <div className="w-full px-[10%] h-screen bg-white flex flex-col items-center justify-start">
             <h1 className="mt-[50px] mb-[14px] w-full text-left text-[22px] font-bold text-[#733A8E]">Crie sua conta</h1>
             <p className="mb-[20px] w-full text-left text-[20px] text-[#808080]">Vamos criar sua conta</p>
@@ -94,10 +97,11 @@ export default function SignUp() {
                     Faça login com google
                 </div>
 
-                <p className="mt-[40px] mb-[60px] text-center w-full text-[#733a8e]">Já tem uma conta <span href="#" className="text-[#3B7A58]">Entre</span>
+                <p className="mt-[40px] mb-[60px] text-center w-full text-[#733a8e]">Já tem uma conta <span className="text-[#3B7A58]"><a href="./sign-in">Entre</a></span>
                 </p>
 
             </form>
         </div>
+        </>
     )
 }
