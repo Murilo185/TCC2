@@ -6,6 +6,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import React, { useContext, useState, useRef } from 'react';
 import { CartContext } from "../contexts/cartContext";
 import { useParams } from 'react-router-dom';
+import Quantidade from "./Quantidade";
 
 
 export default function PersonalizarProduto() {
@@ -198,67 +199,71 @@ export default function PersonalizarProduto() {
         ))}
       </div>
 
-      <div className="mt-4">
-  <p className="text-center">Quantidade:</p>
-  <div className="grid grid-cols-3 gap-4 items-center transition-all duration-[1500ms]">
-    {[1, 10, 15, 20, 50].map((qtd) => (
-      <button
-        key={qtd}
-        className={`
-          px-4 py-3 rounded-md border flex items-center justify-center
-          ${quantidade === qtd ? 'bg-purple-500 text-white' : 'bg-white text-gray-800'} 
-          hover:bg-purple-600 hover:text-white
-        `}
-        onClick={() => handleQuantidadeClick(qtd)}
-      >
-        {qtd}
-      </button>
-    ))}
-    {/* Botão "+" adicionado de volta */}
-    <button 
-      className={`
-        px-6 py-3 rounded-md border 
-        ${click === true ? 'bg-purple-500 text-white' : 'bg-white text-gray-800'} 
-        hover:bg-purple-600 hover:text-white
-        text-2xl font-bold
-      `}
-      onClick={() => {
-        const outraQuantidade = prompt("Digite a quantidade desejada:");
-        if (outraQuantidade && !isNaN(outraQuantidade)) {
-          setQuantidade(parseInt(outraQuantidade, 10));
-          setClick(true);
-        }
-      }}
-    >
-      +
-    </button>
-  </div>
-      </div>
+      {product === 'camisa' && ( // Exibir apenas se for a página da camisa
+        <>
+          <Dropdown>
+            <Dropdown.Toggle variant="success" id="dropdown-basic">
+              <p>Tamanhos</p>
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+
+              <Dropdown.Item>
+                <p>P</p>
+              </Dropdown.Item>
+              <Dropdown.Item>
+                <p>M</p>
+              </Dropdown.Item>
+
+
+            </Dropdown.Menu>
+          </Dropdown>
+
+          <Dropdown>
+            <Dropdown.Item>
+              <p>Branco</p>
+            </Dropdown.Item>
+            <Dropdown.Item>
+              <p>Preto</p>
+            </Dropdown.Item>
+            <Dropdown.Item>
+              <p>Verde</p>
+            </Dropdown.Item>
+            <Dropdown.Item onClick={}>
+              <p>Vermelho</p>
+            </Dropdown.Item>
+          </Dropdown>
+
+          <div className="mt-4">
+            <p className="text-center">Cor:</p>
+            <div className="flex justify-center space-x-4">
+              {['Branco', 'Preto', 'Verde', 'Vermelho'].map((cor) => (
+                <label key={cor} className="flex items-center space-x-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="cor"
+                    value={cor}
+                    checked={corSelecionada === cor}
+                    onChange={() => setCorSelecionada(cor)}
+                  />
+                  <span>{cor}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+
+
+      <Quantidade />
 
       <p className="mt-4 text-center">
         <span className="bg-gray-200 font-bold rounded-md px-4 py-2"> {/* Estilização */}
           <span className="text-purple-600" >Valor total</span>: R$ {(preco * quantidade).toFixed(2)}
         </span>
       </p>
-      {product === 'camisa' && ( // Exibir apenas se for a página da camisa
-        <div className="mt-4">
-          <p className="text-center">Cor:</p>
-          <div className="flex justify-center space-x-4">
-            {['Branco', 'Preto', 'Verde', 'Vermelho'].map((cor) => (
-              <label key={cor} className="flex items-center space-x-2 cursor-pointer">
-                <input
-                  type="radio"
-                  name="cor"
-                  value={cor}
-                  checked={corSelecionada === cor}
-                  onChange={() => setCorSelecionada(cor)}
-                />
-                <span>{cor}</span>
-              </label>
-            ))}
-          </div>
-        </div>
-      )}
+
+
+
 
       <div className="flex items-center justify-center" onClick={handleSubmit}>
         <button className="bg-[purple] rounded">
