@@ -28,13 +28,28 @@ export default function Cabecalho() {
     };
   }, [cartItems.length]);
 
+  function handleFinalizarPedido() {
+    let mensagem = "Olá, gostaria de fazer um pedido:\n\n";
+
+    cartItems.forEach((item) => {
+      mensagem += `* ${item.tipoProduto} (${item.cor}, ${item.tamanho}) - ${item.quantidade}x R$${item.precoTotal.toFixed(2)}\n`;
+    });
+
+    mensagem += `\nTotal: R$${cartItems.reduce((total, item) => total + item.precoTotal, 0).toFixed(2)}`;
+
+    const numeroTelefone = "5511939460815"; // Substitua pelo número da empresa
+    const mensagemCodificada = encodeURIComponent(mensagem);
+
+    window.location.href = `https://wa.me/${numeroTelefone}?text=${mensagemCodificada}`;
+  }
+
   return (
     <div className='w-full flex flex-col justify-center items-center relative'>
       <div className='w-full flex justify-between bg-white py-3 px-5'>
         <Link to="/">
           <img src={logo} className='w-40' alt="Logo da loja" />
         </Link>
-
+        
         <div className='flex h-full items-center justify-end'>
           <Link to="/sign-up">
             <CiUser className='w-[40px] h-auto text-[#733A8E]' />
@@ -42,7 +57,7 @@ export default function Cabecalho() {
 
           <div onClick={toggleCart} className="relative cursor-pointer">
             <CiShoppingCart className='w-[40px] h-auto text-[#733A8E]' />
-            {showCart && (
+            {showCart && ( 
               <div
                 ref={cartRef}
                 className="absolute top-full right-0 bg-white shadow-md rounded-md p-2 min-w-[300px] z-10"
@@ -51,29 +66,34 @@ export default function Cabecalho() {
                 {cartItems.length === 0 ? (
                   <p>Seu carrinho está vazio.</p>
                 ) : (
-                  <ul className="divide-y divide-gray-200">
-                    {cartItems.map((item, index) => (
-                      <li className="py-2 flex items-center justify-between" key={index}>
-                        <div className="flex items-center">
-                          <Link to={`/item/${item.id}`} onClick={(e) => { e.preventDefault(); navigate(`/item/${item.id}`); }}>
-                            <img src={item.imagem} alt={item.tipoProduto} className="w-10 h-10 mr-2" />
-                            <div>
-                              <p className="font-medium">{item.tipoProduto}</p>
-                              <p className="text-sm text-gray-500">
-                                {item.quantidade} x R$ {(item.precoTotal / item.quantidade).toFixed(2)} = R$ {item.precoTotal.toFixed(2)}
-                                {item.cor && <span className="ml-2 text-gray-700">Cor: {item.cor}</span>}
-                                {item.tamanho && <span className="ml-2 text-gray-700">Tamanho: {item.tamanho}</span>} {/* Exibe o tamanho se existir */}
-                              </p>
-                            </div>
-                          </Link>
-                        </div>
+                  <>
+                    <ul className="divide-y divide-gray-200">
+                      {cartItems.map((item, index) => (
+                        <li className="py-2 flex items-center justify-between" key={index}>
+                          <div className="flex items-center"> 
+                            <Link to={`/item/${item.id}`} onClick={(e) => { e.preventDefault(); navigate(`/item/${item.id}`); }}> 
+                              <img src={item.imagem} alt={item.tipoProduto} className="w-10 h-10 mr-2" />
+                              <div>
+                                <p className="font-medium">{item.tipoProduto}</p>
+                                <p className="text-sm text-gray-500">
+                                  {item.quantidade} x R$ {(item.precoTotal / item.quantidade).toFixed(2)} = R$ {item.precoTotal.toFixed(2)}
+                                  {item.cor && <span className="ml-2 text-gray-700">Cor: {item.cor}</span>}
+                                  {item.tamanho && <span className="ml-2 text-gray-700">Tamanho: {item.tamanho}</span>} 
+                                </p>
+                              </div>
+                            </Link>
+                          </div>
 
-                        <button onClick={() => removeFromCart(item.id)}>
-                          <MdClose className="w-5 h-5 text-red-500 hover:text-red-700" />
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
+                          <button onClick={() => removeFromCart(item.id)}> 
+                            <MdClose className="w-5 h-5 text-red-500 hover:text-red-700" />
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                    <button onClick={handleFinalizarPedido} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-2 w-full">
+                      Finalizar Pedido
+                    </button>
+                  </>
                 )}
               </div>
             )}

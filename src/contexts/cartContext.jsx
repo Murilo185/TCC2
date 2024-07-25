@@ -4,11 +4,11 @@ export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
-
-  const addProductToCart = (product, cor = null, tamanho = null) => {
+  const [numeroTelefone, setNumeroTelefone] = useState("5511939460815"); // Número no contexto
+  const addProductToCart = (product) => { // Removemos os parâmetros cor e tamanho
     setCartItems((prevItems) => {
       const existingItem = prevItems.find(
-        (item) => item.id === product.id && item.cor === cor && item.tamanho === tamanho
+        (item) => item.id === product.id && item.cor === product.cor && item.tamanho === product.tamanho
       );
 
       if (existingItem) {
@@ -18,7 +18,7 @@ export const CartProvider = ({ children }) => {
             : item
         );
       } else {
-        return [...prevItems, { ...product, cor, tamanho }];
+        return [...prevItems, product]; // Adiciona o objeto product completo
       }
     });
   };
@@ -28,7 +28,12 @@ export const CartProvider = ({ children }) => {
   };
 
   return (
-    <CartContext.Provider value={{ cartItems, addProductToCart, removeFromCart }}>
+    <CartContext.Provider value={{ 
+      cartItems, 
+      addProductToCart, 
+      removeFromCart,
+      numeroTelefone, // Adicione o número ao contexto
+    }}>
       {children}
     </CartContext.Provider>
   );

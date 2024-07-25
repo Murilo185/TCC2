@@ -81,38 +81,29 @@ export default function PersonalizarProduto() {
 
   function handleSubmit() {
     const produtoSelecionado = produtos.find((produto) => produto.preco === preco);
-  
-    if (product === 'camisa') { // Verifica se é a página de personalização de camisa
-      if (produtoSelecionado && corSelecionada && tamanhoSelecionado) {
-        // Adicione o produto ao carrinho, pois todos os itens foram selecionados
-        addProductToCart(
-          {
-            tipoProduto: produtoSelecionado.nome,
-            quantidade,
-            precoTotal: preco * quantidade,
-            imagem: imagemSelecionada || produtoSelecionado.imagem,
-            id: generateUniqueId(),
-          },
-          corSelecionada,
-          tamanhoSelecionado
-        );
-      } else {
-        console.log("Por favor, selecione um produto, cor e tamanho.");
+
+    if (produtoSelecionado) {
+      const productToAdd = {
+        tipoProduto: produtoSelecionado.nome,
+        quantidade,
+        precoTotal: preco * quantidade,
+        imagem: imagemSelecionada || produtoSelecionado.imagem,
+        id: generateUniqueId(),
+      };
+
+      if (product === 'camisa') {
+        if (corSelecionada && tamanhoSelecionado) {
+          productToAdd.cor = corSelecionada;
+          productToAdd.tamanho = tamanhoSelecionado;
+        } else {
+          console.log("Por favor, selecione uma cor e um tamanho para a camisa.");
+          return; // Impede que o produto seja adicionado se faltar cor ou tamanho
+        }
       }
-    } else { // Para outros produtos, não requer cor e tamanho
-      if (produtoSelecionado) {
-        addProductToCart(
-          {
-            tipoProduto: produtoSelecionado.nome,
-            quantidade,
-            precoTotal: preco * quantidade,
-            imagem: imagemSelecionada || produtoSelecionado.imagem,
-            id: generateUniqueId(),
-          }
-        );
-      } else {
-        console.log("Por favor, selecione um produto.");
-      }
+
+      addProductToCart(productToAdd); // Adiciona o produto ao carrinho
+    } else {
+      console.log("Por favor, selecione um produto.");
     }
   }
 
