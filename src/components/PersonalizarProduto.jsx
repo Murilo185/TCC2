@@ -8,14 +8,22 @@ import { CartContext } from "../contexts/cartContext";
 import { useParams } from 'react-router-dom';
 import Quantidade from "./Quantidade";
 
+import { QuantidadeContext } from "../contexts/quantidadeContext"; // Importe o contexto
+
 
 export default function PersonalizarProduto() {
+  const { quantidade, setQuantidade } = useContext(QuantidadeContext); // Consuma o contexto
+
+  
+
+  
+
+  
 
   const [corSelecionada, setCorSelecionada] = useState(null); // Inicialmente nenhuma cor selecionada
   const { addProductToCart } = useContext(CartContext);
   const [preco, setPreco] = useState(0);
   const [click, setClick] = useState(false);
-  const [quantidade, setQuantidade] = useState(1);
   const [imagemSelecionada, setImagemSelecionada] = useState(null);
   const inputFileRef = useRef(null);
   const { product } = useParams();
@@ -227,8 +235,8 @@ export default function PersonalizarProduto() {
             </Dropdown.Item>
             <Dropdown.Item>
               <p>Verde</p>
-            </Dropdown.Item>
-            <Dropdown.Item onClick={}>
+            </ Dropdown.Item>
+            <Dropdown.Item>
               <p>Vermelho</p>
             </Dropdown.Item>
           </Dropdown>

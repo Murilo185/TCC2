@@ -60,7 +60,7 @@ export default function Cabecalho() {
                             <div>
                               <p className="font-medium">{item.tipoProduto}</p>
                               <p className="text-sm text-gray-500">
-                                {item.quantidade} x R$ {(item.precoTotal / item.quantidade).toFixed(2)} = R$ {item.precoTotal.toFixed(2)}
+                                {item.quantidade} x R$ {item.precoTotal.toFixed(2)} = R$ {item.precoTotal.toFixed(2)}
                                 {item.cor && <p className="text-sm text-gray-500">Cor: {item.cor}</p>} 
                               </p>
                             </div>

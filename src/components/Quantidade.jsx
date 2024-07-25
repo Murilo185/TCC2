@@ -1,11 +1,16 @@
 import React, { useContext, useState, useRef } from 'react';
+import { QuantidadeContext } from "../contexts/quantidadeContext"; // Importe o contexto
+
 
 export default function Quantidade() {
-    const [quantidade, setQuantidade] = useState(1);
+
+    const { quantidade, setQuantidade } = useContext(QuantidadeContext); // Consuma o contexto
+  
     const handleQuantidadeClick = (novaQuantidade) => {
-        setQuantidade(novaQuantidade);
-        setClick(false);
+      setQuantidade(novaQuantidade);
+      setClick(false); 
     };
+
     const [click, setClick] = useState(false);
     return (
         <div className="mt-4">

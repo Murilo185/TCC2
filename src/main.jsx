@@ -12,14 +12,15 @@ import PersonalizarProduto from './components/PersonalizarProduto.jsx';
 import { CartProvider } from './contexts/cartContext.jsx';
 import Cabecalho from './components/cabecalho.jsx';
 import DetalheItemCarrinho from './components/DetalheItemCarrinho.jsx';
+import { QuantidadeProvider } from './contexts/quantidadeContext.jsx';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: 
-    <>
-    <TelaPrincipal />
-    </>
+    element:
+      <>
+        <TelaPrincipal />
+      </>
   },
   {
     path: "/login",
@@ -38,7 +39,7 @@ const router = createBrowserRouter([
     element: <Produto />
   },
   {
-    path:"/PersonalizarProduto/:product",
+    path: "/PersonalizarProduto/:product",
     element: <PersonalizarProduto />
   },
   {
@@ -48,9 +49,11 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <CartProvider> 
-      <RouterProvider router={router} />
-    </CartProvider>
-  </React.StrictMode>,
+  <QuantidadeProvider>
+    <React.StrictMode>
+      <CartProvider>
+        <RouterProvider router={router} />
+      </CartProvider>
+    </React.StrictMode>
+  </QuantidadeProvider>,
 );
