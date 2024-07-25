@@ -1,23 +1,30 @@
-import { createContext, useState } from 'react';
+import React, { createContext, useState } from 'react';
 
 export const CartContext = createContext();
 
-export function CartProvider({ children }) {
+export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
 
-  const addProductToCart = (item, corSelecionada) => {
-    setCartItems([
-      ...cartItems,
-      {
-        ...item,
-        cor: corSelecionada, // Use corSelecionada aqui
-      },
-    ]);
+  const addProductToCart = (product, cor = null, tamanho = null) => {
+    setCartItems((prevItems) => {
+      const existingItem = prevItems.find(
+        (item) => item.id === product.id && item.cor === cor && item.tamanho === tamanho
+      );
+
+      if (existingItem) {
+        return prevItems.map((item) =>
+          item === existingItem
+            ? { ...item, quantidade: item.quantidade + product.quantidade }
+            : item
+        );
+      } else {
+        return [...prevItems, { ...product, cor, tamanho }];
+      }
+    });
   };
 
-  // Função para remover item do carrinho
   const removeFromCart = (itemId) => {
-    setCartItems(cartItems.filter(item => item.id !== itemId));
+    setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
   };
 
   return (
@@ -25,4 +32,4 @@ export function CartProvider({ children }) {
       {children}
     </CartContext.Provider>
   );
-}
+};

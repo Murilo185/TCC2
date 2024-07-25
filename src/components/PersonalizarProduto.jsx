@@ -7,18 +7,20 @@ import React, { useContext, useState, useRef } from 'react';
 import { CartContext } from "../contexts/cartContext";
 import { useParams } from 'react-router-dom';
 import Quantidade from "./Quantidade";
-
+import azulejo from '../assets/azulejo.png';
 import { QuantidadeContext } from "../contexts/quantidadeContext"; // Importe o contexto
 
 
 export default function PersonalizarProduto() {
   const { quantidade, setQuantidade } = useContext(QuantidadeContext); // Consuma o contexto
 
-  
 
-  
+  const [tamanhoSelecionado, setTamanhoSelecionado] = useState(null);
+  const tamanhosDisponiveis = ['P', 'M', 'G', 'GG']; // Tamanhos de camisa disponíveis
 
-  
+  const coresDisponiveis = ['Branco', 'Preto', 'Verde', 'Vermelho', 'Azul', 'Amarelo']; 
+
+
 
   const [corSelecionada, setCorSelecionada] = useState(null); // Inicialmente nenhuma cor selecionada
   const { addProductToCart } = useContext(CartContext);
@@ -31,11 +33,11 @@ export default function PersonalizarProduto() {
 
   // Lógica para determinar os produtos com base no parâmetro da rota (product)
   const produtos = product === 'camisa' ? [
-    { nome: 'Poliester', preco: 39.90, imagem: "/src/assets/camisa.png" },
+    { nome: 'Poliester', preco: 39.90, imagem: "/camisa.png" }, 
 
     // ... outros tipos de camisas
   ] : product === 'caneca' ? [
-    { nome: 'Porcelana', preco: 10.0, imagem: "/src/assets/canecaPorcelana.png" },
+    { nome: 'Porcelana', preco: 10.0, imagem: "/caneca_coracao.jpeg" },
     { nome: 'Plástico', preco: 8.0, imagem: "/src/assets/caneca_transparente.webp" },
     { nome: 'Mágica', preco: 15.0, imagem: "/src/assets/canecaMagica.png" },
     { nome: 'Colher', preco: 12.0, imagem: "/src/assets/canecaColher.webp" },
@@ -79,16 +81,38 @@ export default function PersonalizarProduto() {
 
   function handleSubmit() {
     const produtoSelecionado = produtos.find((produto) => produto.preco === preco);
-    if (produtoSelecionado && corSelecionada || imagemSelecionada) { // Verifica se há produto ou estampa
-      addProductToCart({
-        tipoProduto: produtoSelecionado ? produtoSelecionado.nome : 'Produto com Estampa',
-        quantidade,
-        precoTotal: preco * quantidade,
-        imagem: imagemSelecionada || produtoSelecionado.imagem,
-        id: generateUniqueId(), // ID único para estampas
-      }, corSelecionada);
-    } else {
-      console.log("Nenhum produto ou estampa selecionado.");
+  
+    if (product === 'camisa') { // Verifica se é a página de personalização de camisa
+      if (produtoSelecionado && corSelecionada && tamanhoSelecionado) {
+        // Adicione o produto ao carrinho, pois todos os itens foram selecionados
+        addProductToCart(
+          {
+            tipoProduto: produtoSelecionado.nome,
+            quantidade,
+            precoTotal: preco * quantidade,
+            imagem: imagemSelecionada || produtoSelecionado.imagem,
+            id: generateUniqueId(),
+          },
+          corSelecionada,
+          tamanhoSelecionado
+        );
+      } else {
+        console.log("Por favor, selecione um produto, cor e tamanho.");
+      }
+    } else { // Para outros produtos, não requer cor e tamanho
+      if (produtoSelecionado) {
+        addProductToCart(
+          {
+            tipoProduto: produtoSelecionado.nome,
+            quantidade,
+            precoTotal: preco * quantidade,
+            imagem: imagemSelecionada || produtoSelecionado.imagem,
+            id: generateUniqueId(),
+          }
+        );
+      } else {
+        console.log("Por favor, selecione um produto.");
+      }
     }
   }
 
@@ -210,54 +234,30 @@ export default function PersonalizarProduto() {
       {product === 'camisa' && ( // Exibir apenas se for a página da camisa
         <>
           <Dropdown>
-            <Dropdown.Toggle variant="success" id="dropdown-basic">
-              <p>Tamanhos</p>
+            <Dropdown.Toggle variant="success" id="dropdown-tamanho">
+              {tamanhoSelecionado || "Selecione um tamanho"}
             </Dropdown.Toggle>
             <Dropdown.Menu>
-
-              <Dropdown.Item>
-                <p>P</p>
-              </Dropdown.Item>
-              <Dropdown.Item>
-                <p>M</p>
-              </Dropdown.Item>
-
-
+              {tamanhosDisponiveis.map((tamanho) => (
+                <Dropdown.Item key={tamanho} onClick={() => setTamanhoSelecionado(tamanho)}>
+                  {tamanho}
+                </Dropdown.Item>
+              ))}
             </Dropdown.Menu>
           </Dropdown>
 
-          <Dropdown>
-            <Dropdown.Item>
-              <p>Branco</p>
+          <Dropdown> {/* Dropdown para cores */}
+        <Dropdown.Toggle variant="success" id="dropdown-cor">
+          {corSelecionada || "Selecione uma cor"}
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+          {coresDisponiveis.map((cor) => (
+            <Dropdown.Item key={cor} onClick={() => setCorSelecionada(cor)}>
+              {cor}
             </Dropdown.Item>
-            <Dropdown.Item>
-              <p>Preto</p>
-            </Dropdown.Item>
-            <Dropdown.Item>
-              <p>Verde</p>
-            </ Dropdown.Item>
-            <Dropdown.Item>
-              <p>Vermelho</p>
-            </Dropdown.Item>
-          </Dropdown>
-
-          <div className="mt-4">
-            <p className="text-center">Cor:</p>
-            <div className="flex justify-center space-x-4">
-              {['Branco', 'Preto', 'Verde', 'Vermelho'].map((cor) => (
-                <label key={cor} className="flex items-center space-x-2 cursor-pointer">
-                  <input
-                    type="radio"
-                    name="cor"
-                    value={cor}
-                    checked={corSelecionada === cor}
-                    onChange={() => setCorSelecionada(cor)}
-                  />
-                  <span>{cor}</span>
-                </label>
-              ))}
-            </div>
-          </div>
+          ))}
+        </Dropdown.Menu>
+      </Dropdown>
         </>
       )}
 

@@ -3,11 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { CiUser, CiShoppingCart } from 'react-icons/ci';
 import { useContext, useState, useRef, useEffect } from 'react';
 import { CartContext } from '../contexts/cartContext.jsx';
-import { MdClose } from 'react-icons/md'; 
+import { MdClose } from 'react-icons/md';
 
 export default function Cabecalho() {
   const navigate = useNavigate();
-  const { removeFromCart, cartItems } = useContext(CartContext); 
+  const { removeFromCart, cartItems } = useContext(CartContext);
   const [showCart, setShowCart] = useState(false);
   const cartRef = useRef(null);
 
@@ -34,7 +34,7 @@ export default function Cabecalho() {
         <Link to="/">
           <img src={logo} className='w-40' alt="Logo da loja" />
         </Link>
-        
+
         <div className='flex h-full items-center justify-end'>
           <Link to="/sign-up">
             <CiUser className='w-[40px] h-auto text-[#733A8E]' />
@@ -42,7 +42,7 @@ export default function Cabecalho() {
 
           <div onClick={toggleCart} className="relative cursor-pointer">
             <CiShoppingCart className='w-[40px] h-auto text-[#733A8E]' />
-            {showCart && ( 
+            {showCart && (
               <div
                 ref={cartRef}
                 className="absolute top-full right-0 bg-white shadow-md rounded-md p-2 min-w-[300px] z-10"
@@ -54,20 +54,21 @@ export default function Cabecalho() {
                   <ul className="divide-y divide-gray-200">
                     {cartItems.map((item, index) => (
                       <li className="py-2 flex items-center justify-between" key={index}>
-                        <div className="flex items-center"> 
-                          <Link to={`/item/${item.id}`} onClick={(e) => { e.preventDefault(); navigate(`/item/${item.id}`); }}> 
+                        <div className="flex items-center">
+                          <Link to={`/item/${item.id}`} onClick={(e) => { e.preventDefault(); navigate(`/item/${item.id}`); }}>
                             <img src={item.imagem} alt={item.tipoProduto} className="w-10 h-10 mr-2" />
                             <div>
                               <p className="font-medium">{item.tipoProduto}</p>
                               <p className="text-sm text-gray-500">
-                                {item.quantidade} x R$ {item.precoTotal.toFixed(2)} = R$ {item.precoTotal.toFixed(2)}
-                                {item.cor && <p className="text-sm text-gray-500">Cor: {item.cor}</p>} 
+                                {item.quantidade} x R$ {(item.precoTotal / item.quantidade).toFixed(2)} = R$ {item.precoTotal.toFixed(2)}
+                                {item.cor && <span className="ml-2 text-gray-700">Cor: {item.cor}</span>}
+                                {item.tamanho && <span className="ml-2 text-gray-700">Tamanho: {item.tamanho}</span>} {/* Exibe o tamanho se existir */}
                               </p>
                             </div>
                           </Link>
                         </div>
 
-                        <button onClick={() => removeFromCart(item.id)}> 
+                        <button onClick={() => removeFromCart(item.id)}>
                           <MdClose className="w-5 h-5 text-red-500 hover:text-red-700" />
                         </button>
                       </li>
