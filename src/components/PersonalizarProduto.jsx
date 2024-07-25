@@ -38,9 +38,9 @@ export default function PersonalizarProduto() {
     // ... outros tipos de camisas
   ] : product === 'caneca' ? [
     { nome: 'Porcelana', preco: 10.0, imagem: "/canecaPorcelana.png" },
-    { nome: 'Plástico', preco: 8.0, imagem: "caneca_transparente.webp" },
-    { nome: 'Mágica', preco: 15.0, imagem: "canecaMagica.png" },
-    { nome: 'Colher', preco: 12.0, imagem: "canecaColher.webp" },
+    { nome: 'Plástico', preco: 8.0, imagem: "/caneca_transparente.webp" },
+    { nome: 'Mágica', preco: 15.0, imagem: "/canecaMagica.png" },
+    { nome: 'Colher', preco: 12.0, imagem: "/canecaColher.webp" },
   ] : product === 'almofada' ? [
     { nome: 'Almofada de algodão', preco: 19.90, imagem: "/src/assets/almofada.png" },
     // ... outros tipos de almofadas
