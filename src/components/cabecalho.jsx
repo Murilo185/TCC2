@@ -48,9 +48,25 @@ export default function Cabecalho() {
   }, [cartItems]); // Depende do cartItems
 
   function handleFinalizarPedido() {
-    // Lógica para enviar a mensagem via WhatsApp
-    const numeroTelefone = "5511939460815"; 
+    let mensagem = "Olá, gostaria de fazer um pedido:\n\n";
+    let imageUrl;
+
+    cartItems.forEach((item) => {
+      mensagem += `* ${item.tipoProduto} (${item.cor}, ${item.tamanho}) - ${item.quantidade}x R$${item.precoTotal.toFixed(2)}\n`;
+
+      if (item.imagemPublicId) {
+        imageUrl = `https://res.cloudinary.com/dwgjwhkui/image/upload/${item.imagemPublicId}`; // URL da imagem no Cloudinary
+        mensagem += `   Imagem da estampa: ${imageUrl}\n`;
+      }
+
+      mensagem += "\n";
+    });
+
+    mensagem += `\nTotal: R$${cartItems.reduce((total, item) => total + item.precoTotal, 0).toFixed(2)}`;
+
+    const numeroTelefone = "5511939460815"; // Substitua pelo número da empresa
     const mensagemCodificada = encodeURIComponent(mensagem);
+
     window.location.href = `https://wa.me/${numeroTelefone}?text=${mensagemCodificada}`;
   }
 
