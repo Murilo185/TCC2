@@ -10,6 +10,7 @@ export default function Cabecalho() {
   const { removeFromCart, cartItems } = useContext(CartContext);
   const [showCart, setShowCart] = useState(false);
   const cartRef = useRef(null);
+  const [mensagem, setMensagem] = useState("Olá, gostaria de fazer um pedido AAAAAAAA:\n\n"); // Estado para a mensagem
 
   const toggleCart = () => {
     setShowCart(!showCart);
@@ -24,22 +25,32 @@ export default function Cabecalho() {
   useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('mousedown',
+ handleClickOutside);  
+
     };
-  }, [cartItems.length]);
+  }, [cartItems]);
+
+  useEffect(() => { // Efeito para atualizar a mensagem quando o carrinho muda
+    let novaMensagem = "Gostaria de fazer um pedido:";
+    cartItems.forEach((item) => {
+      novaMensagem += `* ${item.tipoProduto} (${item.cor}, ${item.tamanho}) - ${item.quantidade}x R$${item.precoTotal.toFixed(2)}\n`;
+
+      if (item.imagemPublicId) { 
+        const imageUrl = `https://res.cloudinary.com/dwgjwhkui/image/upload/${item.imagemPublicId}`; // URL da imagem no Cloudinary
+        novaMensagem += `   Imagem da estampa: ${imageUrl}\n`;
+      }
+
+      novaMensagem += "\n";
+    });
+    novaMensagem += `\nTotal: R$${cartItems.reduce((total, item) => total + item.precoTotal, 0).toFixed(2)}`;
+    setMensagem(novaMensagem); 
+  }, [cartItems]); // Depende do cartItems
 
   function handleFinalizarPedido() {
-    let mensagem = "Olá, gostaria de fazer um pedido:\n\n";
-
-    cartItems.forEach((item) => {
-      mensagem += `* ${item.tipoProduto} (${item.cor}, ${item.tamanho}) - ${item.quantidade}x R$${item.precoTotal.toFixed(2)}\n`;
-    });
-
-    mensagem += `\nTotal: R$${cartItems.reduce((total, item) => total + item.precoTotal, 0).toFixed(2)}`;
-
-    const numeroTelefone = "5511939460815"; // Substitua pelo número da empresa
+    // Lógica para enviar a mensagem via WhatsApp
+    const numeroTelefone = "5511939460815"; 
     const mensagemCodificada = encodeURIComponent(mensagem);
-
     window.location.href = `https://wa.me/${numeroTelefone}?text=${mensagemCodificada}`;
   }
 

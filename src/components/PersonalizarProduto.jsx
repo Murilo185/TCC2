@@ -1,14 +1,12 @@
-import Cabecalho from "./cabecalho";
-import Footer from "./Footer";
-
-import Dropdown from 'react-bootstrap/Dropdown';
-// eslint-disable-next-line no-unused-vars
 import React, { useContext, useState, useRef } from 'react';
 import { CartContext } from "../contexts/cartContext";
 import { useParams } from 'react-router-dom';
 import Quantidade from "./Quantidade";
-import azulejo from '../assets/azulejo.png';
-import { QuantidadeContext } from "../contexts/quantidadeContext"; // Importe o contexto
+import { QuantidadeContext } from "../contexts/quantidadeContext";
+import Cabecalho from "./cabecalho";
+import Footer from "./Footer";
+import Dropdown from 'react-bootstrap/Dropdown';
+import { Image, Transformation } from 'cloudinary-react';
 
 
 export default function PersonalizarProduto() {
@@ -62,22 +60,41 @@ export default function PersonalizarProduto() {
     setPreco(produtoPreco);
   };
 
-  const handleQuantidadeClick = (novaQuantidade) => {
-    setQuantidade(novaQuantidade);
-    setClick(false);
-  };
-
   // Adicione este array no topo do seu componente PersonalizarProduto
   const estampasPreProntas = [
     { nome: 'Estampa 1', imagem: '/src/assets/estampasProntas/caneca1.jpg' },
     { nome: 'Estampa 2', imagem: '/src/assets/estampasProntas/caneca2.jpg' },
     // ...
   ];
-  function generateUniqueId() {
-    const timestamp = Date.now().toString(36); // Converte para base 36 (letras e números)
-    const randomNum = Math.random().toString(36).substr(2, 5); // Gera 5 caracteres aleatórios
-    return `${timestamp}-${randomNum}`;
-  }
+
+
+  const [imagemPublicId, setImagemPublicId] = useState(null);
+
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('upload_preset','preset1'); // Substitua pelo nome do seu Upload Preset
+
+      try {
+        const response = await fetch(
+          `https://api.cloudinary.com/v1_1/dwgjwhkui/image/upload`, // Substitua pelo seu Cloud Name
+          {
+            method: 'POST',
+            body: formData,
+          }
+        );
+
+        const data = await response.json();
+        setImagemSelecionada(data.secure_url);
+        setImagemPublicId(data.public_id);
+      } catch (error) {
+        console.error("Erro ao fazer upload da imagem:", error);
+      }
+    }
+  };
 
   function handleSubmit() {
     const produtoSelecionado = produtos.find((produto) => produto.preco === preco);
@@ -87,36 +104,54 @@ export default function PersonalizarProduto() {
         tipoProduto: produtoSelecionado.nome,
         quantidade,
         precoTotal: preco * quantidade,
-        imagem: imagemSelecionada || produtoSelecionado.imagem,
+        imagem: produtoSelecionado.imagem, 
+        imagemPublicId: imagemPublicId, // Adiciona o Public ID da imagem
         id: generateUniqueId(),
+        cor: corSelecionada,
+        tamanho: tamanhoSelecionado
       };
 
       if (product === 'camisa') {
         if (corSelecionada && tamanhoSelecionado) {
-          productToAdd.cor = corSelecionada;
-          productToAdd.tamanho = tamanhoSelecionado;
+          // ... (lógica para camisas)
         } else {
           console.log("Por favor, selecione uma cor e um tamanho para a camisa.");
-          return; // Impede que o produto seja adicionado se faltar cor ou tamanho
+          return; 
         }
       }
 
-      addProductToCart(productToAdd); // Adiciona o produto ao carrinho
+      addProductToCart(productToAdd); 
     } else {
       console.log("Por favor, selecione um produto.");
     }
   }
 
-  const handleImageUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setImagemSelecionada(e.target.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
+  // ... (resto do seu código JSX) ...
+
+  {imagemSelecionada && (
+    <Image
+      cloudName="dwgjwhkui" // Substitua pelo seu Cloud Name
+      publicId={imagemPublicId}
+      width="300"
+      crop="scale"
+    >
+      <Transformation quality="auto" fetchFormat="auto" />
+    </Image>
+  )}
+
+
+
+
+
+
+
+  function generateUniqueId() {
+    const timestamp = Date.now().toString(36); // Converte para base 36 (letras e números)
+    const randomNum = Math.random().toString(36).substr(2, 5); // Gera 5 caracteres aleatórios
+    return `${timestamp}-${randomNum}`;
+  }
+
+  
 
   return (
     <>

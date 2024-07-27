@@ -5,10 +5,10 @@ import { QuantidadeContext } from "../contexts/quantidadeContext"; // Importe o 
 export default function Quantidade() {
 
     const { quantidade, setQuantidade } = useContext(QuantidadeContext); // Consuma o contexto
-  
+
     const handleQuantidadeClick = (novaQuantidade) => {
-      setQuantidade(novaQuantidade);
-      setClick(false); 
+        setQuantidade(novaQuantidade);
+        setClick(false);
     };
 
     const [click, setClick] = useState(false);
