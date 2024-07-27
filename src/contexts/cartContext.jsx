@@ -3,36 +3,50 @@ import React, { createContext, useState } from 'react';
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
+  const [showModal, setShowModal] = useState(false);
   const [cartItems, setCartItems] = useState([]);
-  const [numeroTelefone, setNumeroTelefone] = useState("5511939460815"); // Número no contexto
-  const addProductToCart = (product) => { // Removemos os parâmetros cor e tamanho
+
+  const [showNotification, setShowNotification] = useState(false);
+
+  const addProductToCart = (product) => {
     setCartItems((prevItems) => {
       const existingItem = prevItems.find(
-        (item) => item.id === product.id && item.cor === product.cor && item.tamanho === product.tamanho
+        (item) =>
+          item.id === product.id &&
+          item.cor === product.cor &&
+          item.tamanho === product.tamanho
       );
 
       if (existingItem) {
-        return prevItems.map((item) =>
+        const updatedItems = prevItems.map((item) =>
           item === existingItem
             ? { ...item, quantidade: item.quantidade + product.quantidade }
             : item
         );
+        setShowNotification(true); // Atualiza dentro do callback
+        setTimeout(() => setShowNotification(false), 3000);
+        return updatedItems;
       } else {
-        return [...prevItems, product]; // Adiciona o objeto product completo
+        setShowNotification(true); // Atualiza dentro do callback
+        setTimeout(() => setShowNotification(false), 3000);
+        return [...prevItems, product];
       }
     });
+    setShowModal(true); // Mostra o modal
   };
 
   const removeFromCart = (itemId) => {
     setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
   };
+  const handleCloseModal = () => setShowModal(false); // Função para fechar o modal
 
   return (
     <CartContext.Provider value={{ 
       cartItems, 
       addProductToCart, 
-      removeFromCart,
-      numeroTelefone, // Adicione o número ao contexto
+      removeFromCart, 
+      showModal, // Adiciona o estado showModal ao contexto
+      handleCloseModal // Adiciona a função handleCloseModal ao contexto
     }}>
       {children}
     </CartContext.Provider>

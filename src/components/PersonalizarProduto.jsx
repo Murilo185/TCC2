@@ -7,6 +7,8 @@ import Cabecalho from "./cabecalho";
 import Footer from "./Footer";
 import Dropdown from 'react-bootstrap/Dropdown';
 import { Image, Transformation } from 'cloudinary-react';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button'; 
 
 
 export default function PersonalizarProduto() {
@@ -28,6 +30,7 @@ export default function PersonalizarProduto() {
   const inputFileRef = useRef(null);
   const { product } = useParams();
   const [estampaSelecionada, setEstampaSelecionada] = useState(null);
+  const { showModal, handleCloseModal } = useContext(CartContext);
 
   // Lógica para determinar os produtos com base no parâmetro da rota (product)
   const produtos = product === 'camisa' ? [
@@ -135,6 +138,7 @@ export default function PersonalizarProduto() {
     }
   };
 
+  const { showNotification } = useContext(CartContext);
 
   function handleSubmit() {
     const produtoSelecionado = produtos.find((produto) => produto.preco === preco);
@@ -165,7 +169,11 @@ export default function PersonalizarProduto() {
       console.log("Por favor, selecione um produto.");
     }
   }
-
+  {showNotification && ( // Exibe a notificação se showNotification for true
+    <div className="fixed bottom-4 right-4 bg-green-500 text-white py-2 px-4 rounded-md">
+      Item adicionado ao carrinho!
+    </div>
+  )}
   // ... (resto do seu código JSX) ...
 
   {imagemSelecionada && (
@@ -196,7 +204,17 @@ export default function PersonalizarProduto() {
   return (
     <>
       <Cabecalho />
-
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Produto Adicionado!</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>O item foi adicionado ao seu carrinho.</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Fechar
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
       <h1 className="text-center">Vamos criar sua {product}!</h1>
       <div className='h-[2px] bg-[purple] flex-grow-[1]'></div>

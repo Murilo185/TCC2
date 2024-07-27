@@ -64,7 +64,7 @@ export default function Cabecalho() {
 
     mensagem += `\nTotal: R$${cartItems.reduce((total, item) => total + item.precoTotal, 0).toFixed(2)}`;
 
-    const numeroTelefone = "5511939460815"; // Substitua pelo número da empresa
+    const numeroTelefone = "5511947492920"; // Substitua pelo número da empresa
     const mensagemCodificada = encodeURIComponent(mensagem);
 
     window.location.href = `https://wa.me/${numeroTelefone}?text=${mensagemCodificada}`;
