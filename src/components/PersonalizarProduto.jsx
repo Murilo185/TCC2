@@ -95,6 +95,46 @@ export default function PersonalizarProduto() {
       }
     }
   };
+  const handleEstampaPreProntaClick = async (estampa) => {
+    setImagemSelecionada(estampa.imagem);
+    setEstampaSelecionada(estampa);
+
+    try {
+      // Envia a imagem pré-pronta para o Cloudinary
+      const response = await fetch(estampa.imagem);
+
+      if (!response.ok) {
+        throw new Error(`Erro ao buscar imagem: ${response.status} ${response.statusText}`);
+      }
+
+      const blob = await response.blob();
+      const file = new File([blob], 'estampa.jpg', { type: 'image/jpeg' }); // Cria um objeto File
+
+      const formData = new FormData();
+      formData.append('file', file); 
+      formData.append('upload_preset', 'preset1'); // Substitua pelo seu Upload Preset
+
+      const uploadResponse = await fetch(
+        `https://api.cloudinary.com/v1_1/dwgjwhkui/image/upload`, // Substitua pelo seu Cloud Name
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
+
+      if (!uploadResponse.ok) {
+        throw new Error(`Erro no upload: ${uploadResponse.status} ${uploadResponse.statusText}`);
+      }
+
+      const data = await uploadResponse.json();
+      setImagemPublicId(data.public_id); 
+    } catch (error) {
+      console.error("Erro ao enviar a imagem pré-pronta:", error);
+      // Aqui você pode adicionar um alerta para o usuário, por exemplo:
+      alert("Ocorreu um erro ao selecionar a estampa pré-pronta. Por favor, tente novamente.");
+    }
+  };
+
 
   function handleSubmit() {
     const produtoSelecionado = produtos.find((produto) => produto.preco === preco);
@@ -198,24 +238,21 @@ export default function PersonalizarProduto() {
           </div>
           <div className=" bg-white">
             <div>
-              <Dropdown>
-                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                  <p>Estampa pré-pronta</p>
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  {estampasPreProntas.map((estampa) => (
-                    <Dropdown.Item
-                      key={estampa.nome}
-                      onClick={() => {
-                        setImagemSelecionada(estampa.imagem);
-                        setEstampaSelecionada(estampa); // Atualiza o estado da estampa selecionada
-                      }}
-                    >
-                      <img src={estampa.imagem} alt={estampa.nome} />
-                    </Dropdown.Item>
-                  ))}
-                </Dropdown.Menu>
-              </Dropdown>
+            <Dropdown>
+              <Dropdown.Toggle variant="success" id="dropdown-basic">
+                <p>Estampa pré-pronta</p>
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                {estampasPreProntas.map((estampa) => (
+                  <Dropdown.Item
+                    key={estampa.nome}
+                    onClick={() => handleEstampaPreProntaClick(estampa)} // Chama a função ao clicar
+                  >
+                    <img src={estampa.imagem} alt={estampa.nome} />
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
             </div>
 
           </div>
