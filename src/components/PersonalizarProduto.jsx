@@ -12,7 +12,7 @@ import Button from 'react-bootstrap/Button';
 
 
 export default function PersonalizarProduto() {
-  const { quantidade, setQuantidade } = useContext(QuantidadeContext); // Consuma o contexto
+  const { quantidade } = useContext(QuantidadeContext); // Consuma o contexto
 
 
   const [tamanhoSelecionado, setTamanhoSelecionado] = useState(null);
@@ -25,7 +25,6 @@ export default function PersonalizarProduto() {
   const [corSelecionada, setCorSelecionada] = useState(null); // Inicialmente nenhuma cor selecionada
   const { addProductToCart } = useContext(CartContext);
   const [preco, setPreco] = useState(0);
-  const [click, setClick] = useState(false);
   const [imagemSelecionada, setImagemSelecionada] = useState(null);
   const inputFileRef = useRef(null);
   const { product } = useParams();
@@ -62,14 +61,15 @@ export default function PersonalizarProduto() {
   const handleProdutoClick = (produtoPreco) => {
     setPreco(produtoPreco);
   };
-
+  
   // Adicione este array no topo do seu componente PersonalizarProduto
   const estampasPreProntas = [
     { nome: 'Estampa 1', imagem: '/src/assets/estampasProntas/caneca1.jpg' },
     { nome: 'Estampa 2', imagem: '/src/assets/estampasProntas/caneca2.jpg' },
     // ...
   ];
-
+  const [setShowModal] = useState(false);
+  const [showNotification, setShowNotification] = useState(false);
 
   const [imagemPublicId, setImagemPublicId] = useState(null);
 
@@ -89,36 +89,37 @@ export default function PersonalizarProduto() {
             body: formData,
           }
         );
-
+        if (!response.ok) { // Verifica se a resposta não foi bem-sucedida
+          throw new Error(`Erro no upload: ${response.status} ${response.statusText}`);
+        }
         const data = await response.json();
         setImagemSelecionada(data.secure_url);
         setImagemPublicId(data.public_id);
+        
       } catch (error) {
         console.error("Erro ao fazer upload da imagem:", error);
+        // Lide com o erro de forma mais amigável para o usuário (ex: exibindo um alerta)
       }
     }
   };
-  const handleEstampaPreProntaClick = async (estampa) => {
-    setImagemSelecionada(estampa.imagem);
-    setEstampaSelecionada(estampa);
 
+  const handleEstampaPreProntaClick = async (estampa) => {
     try {
       // Envia a imagem pré-pronta para o Cloudinary
       const response = await fetch(estampa.imagem);
-
       if (!response.ok) {
         throw new Error(`Erro ao buscar imagem: ${response.status} ${response.statusText}`);
       }
 
       const blob = await response.blob();
-      const file = new File([blob], 'estampa.jpg', { type: 'image/jpeg' }); // Cria um objeto File
+      const file = new File([blob], 'estampa.jpg', { type: 'image/jpeg' });
 
       const formData = new FormData();
-      formData.append('file', file); 
-      formData.append('upload_preset', 'preset1'); // Substitua pelo seu Upload Preset
+      formData.append('file', file);
+      formData.append('upload_preset', 'preset1');
 
       const uploadResponse = await fetch(
-        `https://api.cloudinary.com/v1_1/dwgjwhkui/image/upload`, // Substitua pelo seu Cloud Name
+        `https://api.cloudinary.com/v1_1/dwgjwhkui/image/upload`,
         {
           method: 'POST',
           body: formData,
@@ -128,17 +129,16 @@ export default function PersonalizarProduto() {
       if (!uploadResponse.ok) {
         throw new Error(`Erro no upload: ${uploadResponse.status} ${uploadResponse.statusText}`);
       }
-
+      
       const data = await uploadResponse.json();
-      setImagemPublicId(data.public_id); 
+      setImagemSelecionada(data.secure_url); // Atualiza o estado com a URL da imagem
+      setImagemPublicId(data.public_id); // Atualiza o estado com o public_id da imagem
+      
     } catch (error) {
       console.error("Erro ao enviar a imagem pré-pronta:", error);
-      // Aqui você pode adicionar um alerta para o usuário, por exemplo:
       alert("Ocorreu um erro ao selecionar a estampa pré-pronta. Por favor, tente novamente.");
     }
   };
-
-  const { showNotification } = useContext(CartContext);
 
   function handleSubmit() {
     const produtoSelecionado = produtos.find((produto) => produto.preco === preco);
@@ -148,8 +148,8 @@ export default function PersonalizarProduto() {
         tipoProduto: produtoSelecionado.nome,
         quantidade,
         precoTotal: preco * quantidade,
-        imagem: produtoSelecionado.imagem, 
-        imagemPublicId: imagemPublicId, // Adiciona o Public ID da imagem
+        imagem: imagemSelecionada,
+        imagemPublicId: imagemPublicId,
         id: generateUniqueId(),
         cor: corSelecionada,
         tamanho: tamanhoSelecionado
@@ -163,8 +163,8 @@ export default function PersonalizarProduto() {
           return; 
         }
       }
-
-      addProductToCart(productToAdd); 
+      addProductToCart(productToAdd);
+      setShowModal(true);
     } else {
       console.log("Por favor, selecione um produto.");
     }

@@ -41,13 +41,7 @@ export const CartProvider = ({ children }) => {
   const handleCloseModal = () => setShowModal(false); // Função para fechar o modal
 
   return (
-    <CartContext.Provider value={{ 
-      cartItems, 
-      addProductToCart, 
-      removeFromCart, 
-      showModal, // Adiciona o estado showModal ao contexto
-      handleCloseModal // Adiciona a função handleCloseModal ao contexto
-    }}>
+    <CartContext.Provider value={{ cartItems, addProductToCart, removeFromCart, showModal, handleCloseModal, showNotification }}> 
       {children}
     </CartContext.Provider>
   );
