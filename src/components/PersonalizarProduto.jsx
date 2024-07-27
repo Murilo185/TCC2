@@ -136,14 +136,7 @@ export default function PersonalizarProduto() {
     setImagemSelecionada(estampa.imagem);
     setEstampaSelecionada(estampa);
 
-    if (product === 'camisa') {
-      if (corSelecionada && tamanhoSelecionado) {
-        // ... (lógica para camisas)
-      } else {
-        console.log("Por favor, selecione uma cor e um tamanho para a camisa.");
-        return;
-      }
-    }
+    // Envia a imagem pré-pronta para o Cloudinary
     try {
       const response = await fetch(estampa.imagem);
       const blob = await response.blob();
@@ -151,7 +144,7 @@ export default function PersonalizarProduto() {
     } catch (error) {
       console.error("Erro ao obter a imagem pré-pronta:", error);
     }
-  }
+  };
 
 
 
