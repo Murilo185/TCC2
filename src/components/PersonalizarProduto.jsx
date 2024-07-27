@@ -16,7 +16,7 @@ export default function PersonalizarProduto() {
   const [tamanhoSelecionado, setTamanhoSelecionado] = useState(null);
   const tamanhosDisponiveis = ['P', 'M', 'G', 'GG']; // Tamanhos de camisa disponíveis
 
-  const coresDisponiveis = ['Branco', 'Preto', 'Verde', 'Vermelho', 'Azul', 'Amarelo']; 
+  const coresDisponiveis = ['Branco', 'Preto', 'Verde', 'Vermelho', 'Azul', 'Amarelo'];
 
 
 
@@ -31,7 +31,7 @@ export default function PersonalizarProduto() {
 
   // Lógica para determinar os produtos com base no parâmetro da rota (product)
   const produtos = product === 'camisa' ? [
-    { nome: 'Poliester', preco: 39.90, imagem: "/camisa.png" }, 
+    { nome: 'Poliester', preco: 39.90, imagem: "/camisa.png" },
 
     // ... outros tipos de camisas
   ] : product === 'caneca' ? [
@@ -70,17 +70,15 @@ export default function PersonalizarProduto() {
 
   const [imagemPublicId, setImagemPublicId] = useState(null);
 
-  const handleImageUpload = async (event) => {
-    const file = event.target.files[0];
-
+  const handleImageUpload = async (file) => { // Modificamos para receber um arquivo
     if (file) {
       const formData = new FormData();
       formData.append('file', file);
-      formData.append('upload_preset','preset1'); // Substitua pelo nome do seu Upload Preset
+      formData.append('upload_preset', 'preset1');
 
       try {
         const response = await fetch(
-          `https://api.cloudinary.com/v1_1/dwgjwhkui/image/upload`, // Substitua pelo seu Cloud Name
+          `https://api.cloudinary.com/v1_1/dwgjwhkui/image/upload`,
           {
             method: 'POST',
             body: formData,
@@ -104,23 +102,15 @@ export default function PersonalizarProduto() {
         tipoProduto: produtoSelecionado.nome,
         quantidade,
         precoTotal: preco * quantidade,
-        imagem: produtoSelecionado.imagem, 
-        imagemPublicId: imagemPublicId, // Adiciona o Public ID da imagem
+        imagem: imagemSelecionada,
+        imagemPublicId: imagemPublicId,// Adiciona o Public ID da imagem
         id: generateUniqueId(),
         cor: corSelecionada,
         tamanho: tamanhoSelecionado
       };
+      
 
-      if (product === 'camisa') {
-        if (corSelecionada && tamanhoSelecionado) {
-          // ... (lógica para camisas)
-        } else {
-          console.log("Por favor, selecione uma cor e um tamanho para a camisa.");
-          return; 
-        }
-      }
-
-      addProductToCart(productToAdd); 
+      addProductToCart(productToAdd);
     } else {
       console.log("Por favor, selecione um produto.");
     }
@@ -128,19 +118,40 @@ export default function PersonalizarProduto() {
 
   // ... (resto do seu código JSX) ...
 
-  {imagemSelecionada && (
-    <Image
-      cloudName="dwgjwhkui" // Substitua pelo seu Cloud Name
-      publicId={imagemPublicId}
-      width="300"
-      crop="scale"
-    >
-      <Transformation quality="auto" fetchFormat="auto" />
-    </Image>
-  )}
+  {
+    imagemSelecionada && (
+      <Image
+        cloudName="dwgjwhkui" // Substitua pelo seu Cloud Name
+        publicId={imagemPublicId}
+        width="300"
+        crop="scale"
+      >
+        <Transformation quality="auto" fetchFormat="auto" />
+      </Image>
+    )
+  }
 
 
+  const handleEstampaPreProntaClick = async (estampa) => {
+    setImagemSelecionada(estampa.imagem);
+    setEstampaSelecionada(estampa);
 
+    if (product === 'camisa') {
+      if (corSelecionada && tamanhoSelecionado) {
+        // ... (lógica para camisas)
+      } else {
+        console.log("Por favor, selecione uma cor e um tamanho para a camisa.");
+        return;
+      }
+    }
+    try {
+      const response = await fetch(estampa.imagem);
+      const blob = await response.blob();
+      await handleImageUpload(blob); // Chama a função de upload com o blob da imagem
+    } catch (error) {
+      console.error("Erro ao obter a imagem pré-pronta:", error);
+    }
+  }
 
 
 
@@ -151,7 +162,7 @@ export default function PersonalizarProduto() {
     return `${timestamp}-${randomNum}`;
   }
 
-  
+
 
   return (
     <>
@@ -171,6 +182,7 @@ export default function PersonalizarProduto() {
                 <p>Sua estampa</p>
               </Dropdown.Toggle>
               <Dropdown.Menu>
+
                 {!imagemSelecionada && ( // Exibir botão apenas se não houver imagem
                   <button
                     onClick={() => inputFileRef.current.click()}
@@ -206,10 +218,7 @@ export default function PersonalizarProduto() {
                   {estampasPreProntas.map((estampa) => (
                     <Dropdown.Item
                       key={estampa.nome}
-                      onClick={() => {
-                        setImagemSelecionada(estampa.imagem);
-                        setEstampaSelecionada(estampa); // Atualiza o estado da estampa selecionada
-                      }}
+                      onClick={() => handleEstampaPreProntaClick(estampa)} // Chama a nova função
                     >
                       <img src={estampa.imagem} alt={estampa.nome} />
                     </Dropdown.Item>
@@ -273,17 +282,17 @@ export default function PersonalizarProduto() {
           </Dropdown>
 
           <Dropdown> {/* Dropdown para cores */}
-        <Dropdown.Toggle variant="success" id="dropdown-cor">
-          {corSelecionada || "Selecione uma cor"}
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-          {coresDisponiveis.map((cor) => (
-            <Dropdown.Item key={cor} onClick={() => setCorSelecionada(cor)}>
-              {cor}
-            </Dropdown.Item>
-          ))}
-        </Dropdown.Menu>
-      </Dropdown>
+            <Dropdown.Toggle variant="success" id="dropdown-cor">
+              {corSelecionada || "Selecione uma cor"}
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              {coresDisponiveis.map((cor) => (
+                <Dropdown.Item key={cor} onClick={() => setCorSelecionada(cor)}>
+                  {cor}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
         </>
       )}
 
