@@ -47,7 +47,7 @@ export default function Produto() {
           </div>
         </Link>
         <section className="descricao-produto w-[80%] rounded-[12px] mt-5 p-4 bg-white shadow-md"> {/* Seção de descrição */}
-          <h2 className="text-[#733A8E] text-2xl font-semibold mb-3">Detalhes do Produto</h2>
+          <h2 className="text-[#733A8E] text-2xl font-semibold mb-3">Detalhes</h2>
 
           <div className="mb-4"> {/* Subseção: Material */}
             <h3 className="text-lg font-medium text-gray-800">Material:</h3>
@@ -66,7 +66,7 @@ export default function Produto() {
               {product === 'camisa' && 'Frente e verso da camisa.'}
               {product === 'caneca' && 'Área externa da caneca.'}
               {product === 'almofada' && 'Frente da almofada.'}
-              {product === 'chaveiro' && 'Tecido macio e enchimento de fibra siliconada antialérgica.'}
+              {product === 'chaveiro' && 'frente e verso da almofada'}
               {/* ... adicione informações sobre a área de customização de outros produtos ... */}
             </p>
           </div>
@@ -84,6 +84,12 @@ export default function Produto() {
                 <>
                   <li>Porcelana, plástico, mágica, colher</li><br />
                   <li>Cores: Preto/vermelho(Mágica) Vermelho/Azul(Colher)</li>
+                </>
+              )}
+              {product === 'chaveiro' && (
+                <>
+                  <li>7x7cm</li><br />
+                  <li>Cores: branco</li>
                 </>
               )}
               {/* ... adicione opções de configuração de outros produtos ... */}

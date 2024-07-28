@@ -82,47 +82,47 @@ export default function Cabecalho() {
             <CiUser className='w-[40px] h-auto text-[#733A8E]' />
           </Link>
 
-          <div onClick={toggleCart} className="relative cursor-pointer"> 
-        <CiShoppingCart className='w-[40px] h-auto text-[#733A8E]' />
-        {showCart && ( 
-          <div
-            ref={cartRef}
-            className="absolute top-full right-0 bg-white shadow-md rounded-md p-2 min-w-[300px] z-10"
-          >
-            <h2 className="text-lg font-semibold mb-2">Carrinho de Compras</h2>
-            {cartItems.length === 0 ? (
-              <p>Seu carrinho está vazio.</p>
-            ) : (
-              <>
-                <ul className="divide-y divide-gray-200">
-                  {cartItems.map((item, index) => (
-                    <li className="py-2 flex items-center justify-between" key={index}>
-                      <div className="flex items-center">
-                        <Link to={`/item/${item.id}`} onClick={(e) => { e.preventDefault(); navigate(`/item/${item.id}`); }}>
-                          <img src={item.imagemSelecionada || item.imagem} alt={item.tipoProduto} className="w-10 h-10 mr-2" /> {/* Alteração aqui */}
-                          <div>
-                            <p className="font-medium">{item.tipoProduto}</p>
-                            <p className="text-sm text-gray-500">
-                              {item.quantidade} x R$ {(item.precoTotal / item.quantidade).toFixed(2)} = R$ {item.precoTotal.toFixed(2)}
-                              {item.cor && <span className="ml-2 text-gray-700">Cor: {item.cor}</span>}
-                              {item.tamanho && <span className="ml-2 text-gray-700">Tamanho: {item.tamanho}</span>}
-                            </p>
-                          </div>
-                        </Link>
-                      </div>
+          <div onClick={toggleCart} className="relative cursor-pointer">
+            <CiShoppingCart className='w-[40px] h-auto text-[#733A8E]' />
+            {showCart && ( 
+        <div
+          ref={cartRef}
+          className="absolute top-full right-0 bg-white shadow-md rounded-md p-2 min-w-[300px] z-10"
+        >
+          <h2 className="text-lg font-semibold mb-2">Carrinho de Compras</h2>
+          {cartItems.length === 0 ? (
+            <p>Seu carrinho está vazio.</p>
+          ) : (
+            <>
+              <ul className="divide-y divide-gray-200">
+                {cartItems.map((item, index) => (
+                  <li className="py-2 flex items-center justify-between" key={index}>
+                    <div className="flex items-center"> 
+                      <Link to={`/item/${item.id}`} onClick={(e) => { e.preventDefault(); navigate(`/item/${item.id}`); }}> 
+                        <img src={item.imagemSelecionada || item.imagem} alt={item.tipoProduto} className="w-10 h-10 mr-2" />
+                        <div>
+                          <p className="font-medium">{item.tipoProduto}</p>
+                          <p className="text-sm text-gray-500">
+                            {item.quantidade} x R$ {(item.precoTotal / item.quantidade).toFixed(2)} = R$ {item.precoTotal.toFixed(2)}
+                            {item.cor && <span className="ml-2 text-gray-700">Cor: {item.cor}</span>}
+                            {item.tamanho && <span className="ml-2 text-gray-700">Tamanho: {item.tamanho}</span>} 
+                          </p>
+                        </div>
+                      </Link>
+                    </div>
 
-                      <button onClick={() => removeFromCart(item.id)}>
-                        <MdClose className="w-5 h-5 text-red-500 hover:text-red-700" />
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-                <button onClick={handleFinalizarPedido} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-2 w-full">
-                  Finalizar Pedido
-                </button>
-              </>
-                )}
-              </div>
+                    <button onClick={() => removeFromCart(item.id)}> 
+                      <MdClose className="w-5 h-5 text-red-500 hover:text-red-700" />
+                    </button>
+                  </li>
+                ))}
+              </ul>
+              <button onClick={handleFinalizarPedido} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-2 w-full">
+                Finalizar Pedido
+              </button>
+            </>
+          )}
+        </div>
             )}
           </div>
         </div>

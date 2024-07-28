@@ -16,10 +16,10 @@ export default function PersonalizarProduto() {
   const produtos = [
     { id: 1, nome: 'Poliester', preco: 39.90, imagem: "/camisa.png", categoria: 'camisa' },
 
-    { id: 3, nome: 'Porcelana', preco: 10.0, imagem: "/canecaPorcelana.png", categoria: 'caneca' },
-    { id: 4, nome: 'Plástico', preco: 8.0, imagem: "/caneca_transparente.webp", categoria: 'caneca' },
-    { id: 5, nome: 'Mágica', preco: 15.0, imagem: "/canecaMagica.png", categoria: 'caneca' },
-    { id: 6, nome: 'Colher', preco: 12.0, imagem: "/canecaColher.webp", categoria: 'caneca' },
+    { id: 3, nome: 'Caneca Porcelana', preco: 35.0, imagem: "/canecaPorcelana.png", categoria: 'caneca' },
+    { id: 4, nome: 'Caneca Plástica', preco: 29.0, imagem: "/caneca_transparente.webp", categoria: 'caneca' },
+    { id: 5, nome: 'Caneca Mágica', preco: 40.0, imagem: "/canecaMagica.png", categoria: 'caneca' },
+    { id: 6, nome: 'Caneca de Colher', preco: 40.0, imagem: "/canecaColher.webp", categoria: 'caneca' },
 
     { id: 7, nome: 'Almofada dois lados 28x20cm', preco: 19.90, imagem: "/src/assets/almofada.png", categoria: 'almofada' },
     { id: 8, nome: 'Almofada dois lados 40x28', preco: 49.90, imagem: "/src/assets/almofada.png", categoria: 'almofada' },
@@ -32,7 +32,7 @@ export default function PersonalizarProduto() {
     // ... outros tipos de azulejos
     { id: 13, nome: 'Agenda 2024', preco: 14.90, imagem: "/src/assets/agenda.png", categoria: 'agenda' },
     // ... outros tipos de agendas
-    { id: 14, nome: 'Chaveiro Acrílico', preco: 12.90, imagem: "/src/assets/almochaveiro.png", categoria: 'chaveiro' },
+    { id: 14, nome: 'Almochaveiro', preco: 4, imagem: "/src/assets/almochaveiro.png", categoria: 'chaveiro' },
     // ... outros tipos de chaveiros
   ];
   const { quantidade } = useContext(QuantidadeContext); // Consuma o contexto
@@ -50,18 +50,18 @@ export default function PersonalizarProduto() {
   const [imagemSelecionada, setImagemSelecionada] = useState(null);
   const inputFileRef = useRef(null);
   const { product } = useParams();
-  const [estampaSelecionada, setEstampaSelecionada] = useState(null);
+  const [estampaSelecionada] = useState(null);
   const { showModal, handleCloseModal } = useContext(CartContext);
 
   // Lógica para determinar os produtos com base no parâmetro da rota (product)
 
 
 
-  const [produtoSelecionado, setProdutoSelecionado] = useState(null);
+  const [setProdutoSelecionado] = useState(null);
 
   const handleProdutoClick = (produto) => {
     setPreco(produto.preco);
-    setProdutoSelecionado(produto.id); // Armazena o ID do produto
+    setProdutoSelecionado(produto); // Armazena o ID do produto
   };
 
 
@@ -71,7 +71,7 @@ export default function PersonalizarProduto() {
     // ...
   ];
   const [setShowModal] = useState(false);
-  const [showNotification, setShowNotification] = useState(false);
+  const [showNotification] = useState(false);
 
   const [imagemPublicId, setImagemPublicId] = useState(null);
 
@@ -104,6 +104,7 @@ export default function PersonalizarProduto() {
       }
     }
   };
+
 
   const handleEstampaPreProntaClick = async (estampa) => {
     try {
@@ -143,12 +144,13 @@ export default function PersonalizarProduto() {
   };
 
   function handleSubmit() {
+    const produtoSelecionado = produtos.find((produto) => produto.preco === preco);
     if (produtoSelecionado) {
       const productToAdd = {
         tipoProduto: produtoSelecionado.nome,
         quantidade,
-        precoTotal: parseFloat(preco) * parseInt(quantidade, 10),
-        imagem: imagemSelecionada || produtoSelecionado.imagem,
+        precoTotal: preco * quantidade,
+        imagem: imagemSelecionada,
         imagemPublicId: imagemPublicId,
         id: generateUniqueId(),
         cor: corSelecionada,
@@ -258,10 +260,10 @@ export default function PersonalizarProduto() {
               </Dropdown.Menu>
             </Dropdown>
           </div>
-          <div className=" bg-white">
+          <div className=" bg-white " >
             <div>
-              <Dropdown>
-                <Dropdown.Toggle variant="success" id="dropdown-basic">
+              <Dropdown >
+                <Dropdown.Toggle variant="success" id="dropdown-basic" >
                   <p>Estampa pré-pronta</p>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
@@ -302,9 +304,9 @@ export default function PersonalizarProduto() {
             <div
               key={produto.id}
               className={`
-                transition-all duration-[150ms] rounded-lg cursor-pointer relative
-                ${produtoSelecionado === produto.id ? "border-green-950 border-[5px]" : "border-black border-2"}
-              `}
+        transition-all duration-[150ms] rounded-lg cursor-pointer relative
+        ${preco === produto.preco ? "border-green-950 border-[5px]" : "border-black border-2"}
+      `}
               onClick={() => handleProdutoClick(produto)} // Passa o objeto completo
             >
               <div className="bg-white rounded-t-md border-b border-gray-300">
@@ -361,7 +363,7 @@ export default function PersonalizarProduto() {
 
 
       <div className="flex items-center justify-center" onClick={handleSubmit}>
-        <button className="bg-[purple] rounded">
+        <button className="bg-[purple] rounded text-white p-2">
           Adicionar ao carrinho
         </button>
       </div>
