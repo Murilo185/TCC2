@@ -63,7 +63,7 @@ export default function Produto() {
           <div className="mb-4"> {/* Subseção: Área de Customização */}
             <h3 className="text-lg font-medium text-gray-800">Área de Customização:</h3>
             <p>
-              {product === 'camisa' && 'Frente e verso da camisa.'}
+              {product === 'camisa' && 'Frente da camisa tamanho A4'}
               {product === 'caneca' && 'Área externa da caneca.'}
               {product === 'almofada' && 'Frente da almofada.'}
               {product === 'chaveiro' && 'frente e verso da almofada'}

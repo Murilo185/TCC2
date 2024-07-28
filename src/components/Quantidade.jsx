@@ -13,7 +13,7 @@ export default function Quantidade() {
 
   return (
     <div className="mt-4">
-      <p className="text-center">Quantidade:</p>
+      <h4 className="text-xl font-semibold mb-2 text-center">Escolha a quantidade</h4> 
       <div className="grid grid-cols-3 gap-4 items-center transition-all duration-[1500ms]">
         {[1, 5, 10, 20, 50].map((qtd) => ( // Começa em 20
           <button
