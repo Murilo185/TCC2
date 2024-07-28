@@ -77,9 +77,9 @@ export default function SignIn() {
                     Faça login com google
                 </div>
 
-                <p className="mt-[40px] mb-[60px] text-center w-full text-[#733a8e]">Esqueceu sua senha? <span href="#" className="text-[#3B7A58]">Recupere sua senha</span>
+                <p className="mt-[40px] mb-[60px] text-center w-full text-[#733a8e]">Esqueceu sua senha? <a href="#" className="text-[#3B7A58]">Recupere sua senha</a>
                 </p>
-                <p className="mt-[40px] mb-[60px] text-center w-full text-[#733a8e]">Não tem uma conta ainda? <span href="#" className="text-[#3B7A58]">Cadastre-se</span>
+                <p className="mt-[40px] mb-[60px] text-center w-full text-[#733a8e]">Não tem uma conta ainda? <a href="/sign-up" className="text-[#3B7A58]">Cadastre-se</a>
                 </p>
 
             </form>

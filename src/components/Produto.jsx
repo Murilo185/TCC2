@@ -46,6 +46,51 @@ export default function Produto() {
             Personalize seu produto
           </div>
         </Link>
+        <section className="descricao-produto w-[80%] rounded-[12px] mt-5 p-4 bg-white shadow-md"> {/* Seção de descrição */}
+          <h2 className="text-[#733A8E] text-2xl font-semibold mb-3">Detalhes do Produto</h2>
+
+          <div className="mb-4"> {/* Subseção: Material */}
+            <h3 className="text-lg font-medium text-gray-800">Material:</h3>
+            <p>
+              {product === 'camisa' && 'Tecido 100% poliéster, macio e confortável.'}
+              {product === 'caneca' && 'Cerâmica de alta qualidade, resistente a micro-ondas e lava-louças.'}
+              {product === 'almofada' && 'Tecido macio e enchimento de fibra siliconada antialérgica.'}
+              {product === 'chaveiro' && 'Tecido macio e enchimento de fibra siliconada antialérgica.'}
+              {/* ... adicione informações sobre o material de outros produtos ... */}
+            </p>
+          </div>
+
+          <div className="mb-4"> {/* Subseção: Área de Customização */}
+            <h3 className="text-lg font-medium text-gray-800">Área de Customização:</h3>
+            <p>
+              {product === 'camisa' && 'Frente e verso da camisa.'}
+              {product === 'caneca' && 'Área externa da caneca.'}
+              {product === 'almofada' && 'Frente da almofada.'}
+              {product === 'chaveiro' && 'Tecido macio e enchimento de fibra siliconada antialérgica.'}
+              {/* ... adicione informações sobre a área de customização de outros produtos ... */}
+            </p>
+          </div>
+
+          <div className="mb-4"> {/* Subseção: Opções de Configuração */}
+            <h3 className="text-lg font-medium text-gray-800">Opções de Configuração:</h3>
+            <ul className="list-disc list-inside">
+              {product === 'camisa' && (
+                <>
+                  <li>Tamanhos: P, M, G, GG</li>
+                  <li>Cores: Branco, Preto, Verde, Vermelho, Azul, Amarelo</li>
+                </>
+              )}
+              {product === 'caneca' && (
+                <>
+                  <li>Porcelana, plástico, mágica, colher</li><br />
+                  <li>Cores: Preto/vermelho(Mágica) Vermelho/Azul(Colher)</li>
+                </>
+              )}
+              {/* ... adicione opções de configuração de outros produtos ... */}
+            </ul>
+          </div>
+        </section>
+
 
         
       </div>
