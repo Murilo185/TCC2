@@ -22,17 +22,18 @@ export default function PersonalizarProduto() {
     { id: 6, nome: 'Caneca de Colher', preco: 40.0, imagem: "/canecaColher.webp", categoria: 'caneca' },
 
     { id: 7, nome: 'Almofada dois lados 28x20cm', preco: 19.90, imagem: "/src/assets/almofada.png", categoria: 'almofada' },
-    { id: 8, nome: 'Almofada dois lados 40x28', preco: 49.90, imagem: "/src/assets/almofada.png", categoria: 'almofada' },
-    { id: 9, nome: 'Almofada cubo 15x15', preco: 19.90, imagem: "/src/assets/almofada.png", categoria: 'almofada' },
-    { id: 10, nome: 'Almofada cubo 20x20', preco: 29.90, imagem: "/src/assets/almofada.png", categoria: 'almofada' },
+    { id: 8, nome: 'Almofada dois lados 40x28cm', preco: 49.90, imagem: "/src/assets/almofada.png", categoria: 'almofada' },
+    { id: 9, nome: 'Almofada cubo 15x15cm', preco: 19.90, imagem: "/src/assets/almofada.png", categoria: 'almofada' },
+    { id: 10, nome: 'Almofada cubo 20x20cm', preco: 29.90, imagem: "/src/assets/almofada.png", categoria: 'almofada' },
 
     { id: 11, nome: 'Caderno capa dura', preco: 19.90, imagem: "/src/assets/caderno.png", categoria: 'caderno' },
     // ... outros tipos de cadernos
-    { id: 12, nome: 'Azulejo 10x10', preco: 19.90, imagem: "/src/assets/azulejo.png", categoria: 'azulejo' },
+    { id: 12, nome: 'Azulejo 15x15cm', preco: 30, imagem: "/src/assets/azulejo.png", categoria: 'azulejo' },
+    { id: 13, nome: 'Azulejo 10x10cm', preco: 50, imagem: "/src/assets/azulejo.png", categoria: 'azulejo' },
     // ... outros tipos de azulejos
-    { id: 13, nome: 'Agenda 2024', preco: 14.90, imagem: "/src/assets/agenda.png", categoria: 'agenda' },
+    { id: 13, nome: '17x9,4cm', preco: 14.90, imagem: "/src/assets/agenda.png", categoria: 'agenda' },
     // ... outros tipos de agendas
-    { id: 14, nome: 'Almochaveiro', preco: 4, imagem: "/src/assets/almochaveiro.png", categoria: 'chaveiro' },
+    { id: 14, nome: '7x7cm', preco: 4, imagem: "/src/assets/almochaveiro.png", categoria: 'chaveiro' },
     // ... outros tipos de chaveiros
   ];
   const { product } = useParams();
@@ -252,8 +253,13 @@ export default function PersonalizarProduto() {
         </Modal.Footer>
       </Modal>
 
-
-      <h1 className="text-center">Vamos criar sua {product}!</h1>
+    {product === 'caneca' && <h1 className='text-center'>Vamos criar sua caneca!</h1>}
+    {product === 'agenda' && <h1 className='text-center'>Vamos criar sua agenda!</h1>}
+    {product === 'chaveiro' && <h1 className='text-center'>Vamos criar seu chaveiro!</h1>}
+    {product === 'Almofada' && <h1 className='text-center'>Vamos criar sua almofada!</h1>}
+    {product === 'camisa' && <h1 className='text-center'>Vamos criar sua camisa!</h1>}
+    {product === 'caderno' && <h1 className='text-center'>Vamos criar seu caderno!</h1>}
+    {product === 'azulejo' && <h1 className='text-center'>Vamos criar seu azulejo!</h1>}
       <div className='h-[2px] bg-[purple] flex-grow-[1]'></div>
       <br />
 

@@ -31,14 +31,14 @@ export default function Produto() {
 
         <p className="text-[#3B7A58] text-[32px] font-semibold text-center mb-4">
           <span className="text-[22px] font-medium">a partir de</span>
-          <br />
+          <br />R$
           {product === 'camisa' && '39,90'}
           {product === 'almofada' && '19,90'}
-          {product === 'azulejo' && '19,90'}
-          {product === 'chaveiro' && '12,90'}
-          {product === 'caneca' && '19,90'}
+          {product === 'azulejo' && '30,00'}
+          {product === 'chaveiro' && '4,00'}
+          {product === 'caneca' && '29,00'}
           {product === 'caderno' && '19,90'}
-          {product === 'agenda' && '14,90'}
+          {product === 'agenda' && '20'}
         </p>
 
         <Link to={`/PersonalizarProduto/${product}`}> {/* Corrigido aqui */}
@@ -56,6 +56,7 @@ export default function Produto() {
               {product === 'caneca' && 'Cerâmica de alta qualidade, resistente a micro-ondas e lava-louças.'}
               {product === 'almofada' && 'Tecido macio e enchimento de fibra siliconada antialérgica.'}
               {product === 'chaveiro' && 'Tecido macio e enchimento de fibra siliconada antialérgica.'}
+              {product === 'agenda' && 'Capa dura, 50 folhas, 17x9,4 centimetros'}
               {/* ... adicione informações sobre o material de outros produtos ... */}
             </p>
           </div>
@@ -66,39 +67,43 @@ export default function Produto() {
               {product === 'camisa' && 'Frente da camisa tamanho A4'}
               {product === 'caneca' && 'Área externa da caneca.'}
               {product === 'almofada' && 'Frente da almofada.'}
-              {product === 'chaveiro' && 'frente e verso da almofada'}
+              {product === 'chaveiro' && 'Frente e verso da almofada'}
+              {product === 'agenda' && 'Capa e contra capa'}
               {/* ... adicione informações sobre a área de customização de outros produtos ... */}
             </p>
           </div>
 
           <div className="mb-4"> {/* Subseção: Opções de Configuração */}
-            <h3 className="text-lg font-medium text-gray-800">Opções de Configuração:</h3>
-            <ul className="list-disc list-inside">
-              {product === 'camisa' && (
-                <>
-                  <li>Tamanhos: P, M, G, GG</li>
-                  <li>Cores: Branco, Preto, Verde, Vermelho, Azul, Amarelo</li>
-                </>
-              )}
-              {product === 'caneca' && (
-                <>
-                  <li>Porcelana, plástico, mágica, colher</li><br />
-                  <li>Cores: Preto/vermelho(Mágica) Vermelho/Azul(Colher)</li>
-                </>
-              )}
-              {product === 'chaveiro' && (
-                <>
-                  <li>7x7cm</li><br />
-                  <li>Cores: branco</li>
-                </>
-              )}
-              {/* ... adicione opções de configuração de outros produtos ... */}
-            </ul>
-          </div>
+  {product !== 'chaveiro' && (
+    <>
+      <h3 className="text-lg font-medium text-gray-800">Opções de Configuração:</h3>
+      <ul className="list-disc list-inside">
+        {product === 'camisa' && (
+          <>
+            <li>Tamanhos: P, M, G, GG</li>
+            <li>Cores: Branco, Preto, Verde, Vermelho, Azul, Amarelo</li>
+          </>
+        )}
+        {product === 'caneca' && (
+          <>
+            <li>Porcelana, plástico, mágica, colher</li><br />
+            <li>Cores: Preto/vermelho(Mágica) Vermelho/Azul(Colher)</li>
+          </>
+        )}
+        {product === 'agenda' && (
+          <>
+            <li>Tamanhos: 17x9,4cm</li>
+          </>
+        )}
+        {/* ... adicione opções de configuração de outros produtos ... */}
+      </ul>
+    </>
+  )}
+</div>
         </section>
 
 
-        
+
       </div>
       <Footer />
     </>
