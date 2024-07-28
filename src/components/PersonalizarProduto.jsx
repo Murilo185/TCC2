@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from 'react';
+import React, { useContext, useState, useRef, useEffect } from 'react';
 import { CartContext } from "../contexts/cartContext";
 import { useParams } from 'react-router-dom';
 import Quantidade from "./Quantidade";
@@ -8,23 +8,45 @@ import Footer from "./Footer";
 import Dropdown from 'react-bootstrap/Dropdown';
 import { Image, Transformation } from 'cloudinary-react';
 import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button'; 
+import Button from 'react-bootstrap/Button';
 
 
 export default function PersonalizarProduto() {
+
+  const produtos = [
+    { id: 1, nome: 'Poliester', preco: 39.90, imagem: "/camisa.png", categoria: 'camisa' },
+
+    { id: 3, nome: 'Porcelana', preco: 10.0, imagem: "/canecaPorcelana.png", categoria: 'caneca' },
+    { id: 4, nome: 'Plástico', preco: 8.0, imagem: "/caneca_transparente.webp", categoria: 'caneca' },
+    { id: 5, nome: 'Mágica', preco: 15.0, imagem: "/canecaMagica.png", categoria: 'caneca' },
+    { id: 6, nome: 'Colher', preco: 12.0, imagem: "/canecaColher.webp", categoria: 'caneca' },
+
+    { id: 7, nome: 'Almofada dois lados 28x20cm', preco: 19.90, imagem: "/src/assets/almofada.png", categoria: 'almofada' },
+    { id: 8, nome: 'Almofada dois lados 40x28', preco: 49.90, imagem: "/src/assets/almofada.png", categoria: 'almofada' },
+    { id: 9, nome: 'Almofada cubo 15x15', preco: 19.90, imagem: "/src/assets/almofada.png", categoria: 'almofada' },
+    { id: 10, nome: 'Almofada cubo 20x20', preco: 29.90, imagem: "/src/assets/almofada.png", categoria: 'almofada' },
+
+    { id: 11, nome: 'Caderno capa dura', preco: 19.90, imagem: "/src/assets/caderno.png", categoria: 'caderno' },
+    // ... outros tipos de cadernos
+    { id: 12, nome: 'Azulejo 10x10', preco: 19.90, imagem: "/src/assets/azulejo.png", categoria: 'azulejo' },
+    // ... outros tipos de azulejos
+    { id: 13, nome: 'Agenda 2024', preco: 14.90, imagem: "/src/assets/agenda.png", categoria: 'agenda' },
+    // ... outros tipos de agendas
+    { id: 14, nome: 'Chaveiro Acrílico', preco: 12.90, imagem: "/src/assets/almochaveiro.png", categoria: 'chaveiro' },
+    // ... outros tipos de chaveiros
+  ];
   const { quantidade } = useContext(QuantidadeContext); // Consuma o contexto
 
 
   const [tamanhoSelecionado, setTamanhoSelecionado] = useState(null);
   const tamanhosDisponiveis = ['P', 'M', 'G', 'GG']; // Tamanhos de camisa disponíveis
 
-  const coresDisponiveis = ['Branco', 'Preto', 'Verde', 'Vermelho', 'Azul', 'Amarelo']; 
-
+  const coresDisponiveis = ['Branco', 'Preto', 'Verde', 'Vermelho', 'Azul', 'Amarelo'];
 
 
   const [corSelecionada, setCorSelecionada] = useState(null); // Inicialmente nenhuma cor selecionada
   const { addProductToCart } = useContext(CartContext);
-  const [preco, setPreco] = useState(0);
+  const [preco, setPreco] = useState(produtos[0]?.preco || 0);
   const [imagemSelecionada, setImagemSelecionada] = useState(null);
   const inputFileRef = useRef(null);
   const { product } = useParams();
@@ -32,37 +54,17 @@ export default function PersonalizarProduto() {
   const { showModal, handleCloseModal } = useContext(CartContext);
 
   // Lógica para determinar os produtos com base no parâmetro da rota (product)
-  const produtos = product === 'camisa' ? [
-    { nome: 'Poliester', preco: 39.90, imagem: "/camisa.png" }, 
 
-    // ... outros tipos de camisas
-  ] : product === 'caneca' ? [
-    { nome: 'Porcelana', preco: 10.0, imagem: "/canecaPorcelana.png" },
-    { nome: 'Plástico', preco: 8.0, imagem: "/caneca_transparente.webp" },
-    { nome: 'Mágica', preco: 15.0, imagem: "/canecaMagica.png" },
-    { nome: 'Colher', preco: 12.0, imagem: "/canecaColher.webp" },
-  ] : product === 'almofada' ? [
-    { nome: 'Almofada de algodão', preco: 19.90, imagem: "/src/assets/almofada.png" },
-    // ... outros tipos de almofadas
-  ] : product === 'caderno' ? [
-    { nome: 'Caderno capa dura', preco: 19.90, imagem: "/src/assets/caderno.png" },
-    // ... outros tipos de cadernos
-  ] : product === 'azulejo' ? [
-    { nome: 'Azulejo 10x10', preco: 19.90, imagem: "/src/assets/azulejo.png" },
-    // ... outros tipos de azulejos
-  ] : product === 'agenda' ? [
-    { nome: 'Agenda 2024', preco: 14.90, imagem: "/src/assets/agenda.png" },
-    // ... outros tipos de agendas
-  ] : product === 'chaveiro' ? [
-    { nome: 'Chaveiro Acrílico', preco: 12.90, imagem: "/src/assets/almochaveiro.png" },
-    // ... outros tipos de chaveiros
-  ] : [];
 
-  const handleProdutoClick = (produtoPreco) => {
-    setPreco(produtoPreco);
+
+  const [produtoSelecionado, setProdutoSelecionado] = useState(null);
+
+  const handleProdutoClick = (produto) => {
+    setPreco(produto.preco);
+    setProdutoSelecionado(produto.id); // Armazena o ID do produto
   };
-  
-  // Adicione este array no topo do seu componente PersonalizarProduto
+
+
   const estampasPreProntas = [
     { nome: 'Estampa 1', imagem: '/src/assets/estampasProntas/caneca1.jpg' },
     { nome: 'Estampa 2', imagem: '/src/assets/estampasProntas/caneca2.jpg' },
@@ -79,7 +81,7 @@ export default function PersonalizarProduto() {
     if (file) {
       const formData = new FormData();
       formData.append('file', file);
-      formData.append('upload_preset','preset1'); // Substitua pelo nome do seu Upload Preset
+      formData.append('upload_preset', 'preset1'); // Substitua pelo nome do seu Upload Preset
 
       try {
         const response = await fetch(
@@ -95,7 +97,7 @@ export default function PersonalizarProduto() {
         const data = await response.json();
         setImagemSelecionada(data.secure_url);
         setImagemPublicId(data.public_id);
-        
+
       } catch (error) {
         console.error("Erro ao fazer upload da imagem:", error);
         // Lide com o erro de forma mais amigável para o usuário (ex: exibindo um alerta)
@@ -129,11 +131,11 @@ export default function PersonalizarProduto() {
       if (!uploadResponse.ok) {
         throw new Error(`Erro no upload: ${uploadResponse.status} ${uploadResponse.statusText}`);
       }
-      
+
       const data = await uploadResponse.json();
       setImagemSelecionada(data.secure_url); // Atualiza o estado com a URL da imagem
       setImagemPublicId(data.public_id); // Atualiza o estado com o public_id da imagem
-      
+
     } catch (error) {
       console.error("Erro ao enviar a imagem pré-pronta:", error);
       alert("Ocorreu um erro ao selecionar a estampa pré-pronta. Por favor, tente novamente.");
@@ -141,14 +143,12 @@ export default function PersonalizarProduto() {
   };
 
   function handleSubmit() {
-    const produtoSelecionado = produtos.find((produto) => produto.preco === preco);
-
     if (produtoSelecionado) {
       const productToAdd = {
         tipoProduto: produtoSelecionado.nome,
         quantidade,
-        precoTotal: preco * quantidade,
-        imagem: imagemSelecionada,
+        precoTotal: parseFloat(preco) * parseInt(quantidade, 10),
+        imagem: imagemSelecionada || produtoSelecionado.imagem,
         imagemPublicId: imagemPublicId,
         id: generateUniqueId(),
         cor: corSelecionada,
@@ -160,7 +160,7 @@ export default function PersonalizarProduto() {
           // ... (lógica para camisas)
         } else {
           console.log("Por favor, selecione uma cor e um tamanho para a camisa.");
-          return; 
+          return;
         }
       }
       addProductToCart(productToAdd);
@@ -169,23 +169,27 @@ export default function PersonalizarProduto() {
       console.log("Por favor, selecione um produto.");
     }
   }
-  {showNotification && ( // Exibe a notificação se showNotification for true
-    <div className="fixed bottom-4 right-4 bg-green-500 text-white py-2 px-4 rounded-md">
-      Item adicionado ao carrinho!
-    </div>
-  )}
+  {
+    showNotification && ( // Exibe a notificação se showNotification for true
+      <div className="fixed bottom-4 right-4 bg-green-500 text-white py-2 px-4 rounded-md">
+        Item adicionado ao carrinho!
+      </div>
+    )
+  }
   // ... (resto do seu código JSX) ...
 
-  {imagemSelecionada && (
-    <Image
-      cloudName="dwgjwhkui" // Substitua pelo seu Cloud Name
-      publicId={imagemPublicId}
-      width="300"
-      crop="scale"
-    >
-      <Transformation quality="auto" fetchFormat="auto" />
-    </Image>
-  )}
+  {
+    imagemSelecionada && (
+      <Image
+        cloudName="dwgjwhkui" // Substitua pelo seu Cloud Name
+        publicId={imagemPublicId}
+        width="300"
+        crop="scale"
+      >
+        <Transformation quality="auto" fetchFormat="auto" />
+      </Image>
+    )
+  }
 
 
 
@@ -199,7 +203,7 @@ export default function PersonalizarProduto() {
     return `${timestamp}-${randomNum}`;
   }
 
-  
+
 
   return (
     <>
@@ -256,21 +260,21 @@ export default function PersonalizarProduto() {
           </div>
           <div className=" bg-white">
             <div>
-            <Dropdown>
-              <Dropdown.Toggle variant="success" id="dropdown-basic">
-                <p>Estampa pré-pronta</p>
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                {estampasPreProntas.map((estampa) => (
-                  <Dropdown.Item
-                    key={estampa.nome}
-                    onClick={() => handleEstampaPreProntaClick(estampa)} // Chama a função ao clicar
-                  >
-                    <img src={estampa.imagem} alt={estampa.nome} />
-                  </Dropdown.Item>
-                ))}
-              </Dropdown.Menu>
-            </Dropdown>
+              <Dropdown>
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                  <p>Estampa pré-pronta</p>
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  {estampasPreProntas.map((estampa) => (
+                    <Dropdown.Item
+                      key={estampa.nome}
+                      onClick={() => handleEstampaPreProntaClick(estampa)} // Chama a função ao clicar
+                    >
+                      <img src={estampa.imagem} alt={estampa.nome} />
+                    </Dropdown.Item>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
             </div>
 
           </div>
@@ -292,24 +296,26 @@ export default function PersonalizarProduto() {
 
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-2 justify-center">
-        {produtos.map((produto) => (
-          <div // Container principal do produto
-            key={produto.nome}
-            className={`
-        transition-all duration-[150ms] rounded-lg cursor-pointer relative
-        ${preco === produto.preco ? "border-green-950 border-[5px]" : "border-black border-2"}
-      `}
-            onClick={() => handleProdutoClick(produto.preco)}
-          >
-            <div className="bg-white rounded-t-md border-b border-gray-300"> {/* Adiciona border-b border-gray-300 */}
-              <img src={produto.imagem} alt="" className="rounded-t-md" />
+        {produtos
+          .filter((produto) => produto.categoria === product)
+          .map((produto) => (
+            <div
+              key={produto.id}
+              className={`
+                transition-all duration-[150ms] rounded-lg cursor-pointer relative
+                ${produtoSelecionado === produto.id ? "border-green-950 border-[5px]" : "border-black border-2"}
+              `}
+              onClick={() => handleProdutoClick(produto)} // Passa o objeto completo
+            >
+              <div className="bg-white rounded-t-md border-b border-gray-300">
+                <img src={produto.imagem} alt="" className="rounded-t-md" />
+              </div>
+              <div className="bg-white rounded-b-md p-2 text-center">
+                <p className="text-center font-medium">{produto.nome}</p>
+                <p className="text-center">R$ {produto.preco.toFixed(2)}</p>
+              </div>
             </div>
-            <div className="bg-white rounded-b-md p-2 text-center">
-              <p className="text-center font-medium">{produto.nome}</p>
-              <p className="text-center">R$ {produto.preco.toFixed(2)}</p>
-            </div>
-          </div>
-        ))}
+          ))}
       </div>
 
       {product === 'camisa' && ( // Exibir apenas se for a página da camisa
@@ -328,17 +334,17 @@ export default function PersonalizarProduto() {
           </Dropdown>
 
           <Dropdown> {/* Dropdown para cores */}
-        <Dropdown.Toggle variant="success" id="dropdown-cor">
-          {corSelecionada || "Selecione uma cor"}
-        </Dropdown.Toggle>
-        <Dropdown.Menu>
-          {coresDisponiveis.map((cor) => (
-            <Dropdown.Item key={cor} onClick={() => setCorSelecionada(cor)}>
-              {cor}
-            </Dropdown.Item>
-          ))}
-        </Dropdown.Menu>
-      </Dropdown>
+            <Dropdown.Toggle variant="success" id="dropdown-cor">
+              {corSelecionada || "Selecione uma cor"}
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              {coresDisponiveis.map((cor) => (
+                <Dropdown.Item key={cor} onClick={() => setCorSelecionada(cor)}>
+                  {cor}
+                </Dropdown.Item>
+              ))}
+            </Dropdown.Menu>
+          </Dropdown>
         </>
       )}
 

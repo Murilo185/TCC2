@@ -47,7 +47,7 @@ export default function Produto() {
           </div>
         </Link>
 
-        {/* ... (descrição e outros elementos) ... */}
+        
       </div>
       <Footer />
     </>
