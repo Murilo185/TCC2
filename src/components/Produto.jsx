@@ -41,15 +41,15 @@ export default function Produto() {
           {product === 'agenda' && '20'}
         </p>
 
-        <Link to={`/PersonalizarProduto/${product}`}> {/* Corrigido aqui */}
+        <Link to={`/PersonalizarProduto/${product}`}>
           <div className='bg-[#3B7A58] text-white w-[80%] flex items-center justify-center py-4 font-bold text-[18px] rounded-[8px]'>
             Personalize seu produto
           </div>
         </Link>
-        <section className="descricao-produto w-[80%] rounded-[12px] mt-5 p-4 bg-white shadow-md"> {/* Seção de descrição */}
+        <section className="descricao-produto w-[80%] rounded-[12px] mt-5 p-4 bg-white shadow-md">
           <h2 className="text-[#733A8E] text-2xl font-semibold mb-3">Detalhes</h2>
 
-          <div className="mb-4"> {/* Subseção: Material */}
+          <div className="mb-4">
             <h3 className="text-lg font-medium text-gray-800">Material:</h3>
             <p>
               {product === 'camisa' && 'Tecido 100% poliéster, macio e confortável.'}
@@ -57,11 +57,10 @@ export default function Produto() {
               {product === 'almofada' && 'Tecido macio e enchimento de fibra siliconada antialérgica.'}
               {product === 'chaveiro' && 'Tecido macio e enchimento de fibra siliconada antialérgica.'}
               {product === 'agenda' && 'Capa dura, 50 folhas, 17x9,4 centimetros'}
-              {/* ... adicione informações sobre o material de outros produtos ... */}
             </p>
           </div>
 
-          <div className="mb-4"> {/* Subseção: Área de Customização */}
+          <div className="mb-4">
             <h3 className="text-lg font-medium text-gray-800">Área de Customização:</h3>
             <p>
               {product === 'camisa' && 'Frente da camisa tamanho A4'}
@@ -69,11 +68,10 @@ export default function Produto() {
               {product === 'almofada' && 'Frente da almofada.'}
               {product === 'chaveiro' && 'Frente e verso da almofada'}
               {product === 'agenda' && 'Capa e contra capa'}
-              {/* ... adicione informações sobre a área de customização de outros produtos ... */}
             </p>
           </div>
 
-          <div className="mb-4"> {/* Subseção: Opções de Configuração */}
+          <div className="mb-4">
   {product !== 'chaveiro' && (
     <>
       <h3 className="text-lg font-medium text-gray-800">Opções de Configuração:</h3>
@@ -95,7 +93,7 @@ export default function Produto() {
             <li>Tamanhos: 17x9,4cm</li>
           </>
         )}
-        {/* ... adicione opções de configuração de outros produtos ... */}
+       
       </ul>
     </>
   )}

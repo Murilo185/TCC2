@@ -11,7 +11,7 @@ function RemoverDoCarrinho({ productId }) {
 
   return (
     <button onClick={handleRemoveClick}>
-      X {/* Ou qualquer ícone que você preferir */}
+      X
     </button>
   );
 }
