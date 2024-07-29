@@ -9,35 +9,35 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { Image, Transformation } from 'cloudinary-react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-
+import "./PersonalizarProduto.css"
 
 export default function PersonalizarProduto() {
 
   const produtos = [
     { id: 1, nome: 'Poliester', preco: 39.90, imagem: "/camisa.png", categoria: 'camisa' },
 
-    { id: 3, nome: 'Caneca Porcelana', preco: 35.0, imagem: "/canecaPorcelana.png", categoria: 'caneca', maxEstampas: 1 },
-    { id: 4, nome: 'Caneca Plástica', preco: 29.0, imagem: "/caneca_transparente.webp", categoria: 'caneca', maxEstampas: 1 },
-    { id: 5, nome: 'Caneca Mágica', preco: 40.0, imagem: "/canecaMagica.png", categoria: 'caneca', maxEstampas: 1 },
-    { id: 6, nome: 'Caneca de Colher', preco: 40.0, imagem: "/canecaColher.webp", categoria: 'caneca', maxEstampas: 1 },
+    { id: 2, nome: 'Caneca Porcelana', preco: 35.0, imagem: "/canecaPorcelana.png", categoria: 'caneca', maxEstampas: 1 },
+    { id: 3, nome: 'Caneca Plástica', preco: 29.0, imagem: "/caneca_transparente.webp", categoria: 'caneca', maxEstampas: 1 },
+    { id: 4, nome: 'Caneca Mágica', preco: 40.0, imagem: "/canecaMagica.png", categoria: 'caneca', maxEstampas: 1 },
+    { id: 5, nome: 'Caneca de Colher', preco: 40.0, imagem: "/canecaColher.webp", categoria: 'caneca', maxEstampas: 1 },
 
-    { id: 7, nome: 'Almofada dois lados 28x20cm', preco: 19.90, imagem: "/src/assets/almofada.png", categoria: 'almofada', maxEstampas: 2 },
-    { id: 8, nome: 'Almofada dois lados 40x28cm', preco: 49.90, imagem: "/src/assets/almofada.png", categoria: 'almofada', maxEstampas: 2 },
-    { id: 9, nome: 'Almofada cubo 15x15cm', preco: 19.90, imagem: "/src/assets/almofada.png", categoria: 'almofada', maxEstampas: 6 },
-    { id: 10, nome: 'Almofada cubo 20x20cm', preco: 29.90, imagem: "/src/assets/almofada.png", categoria: 'almofada', maxEstampas: 6 },
+    { id: 6, nome: 'Almofada dois lados 28x20cm', preco: 19.90, imagem: "/src/assets/almofada.png", categoria: 'almofada', maxEstampas: 2 },
+    { id: 7, nome: 'Almofada dois lados 40x28cm', preco: 49.90, imagem: "/src/assets/almofada.png", categoria: 'almofada', maxEstampas: 2 },
+    { id: 8, nome: 'Almofada cubo 15x15cm', preco: 19.90, imagem: "/src/assets/almofada.png", categoria: 'almofada', maxEstampas: 6 },
+    { id: 9, nome: 'Almofada cubo 20x20cm', preco: 29.90, imagem: "/src/assets/almofada.png", categoria: 'almofada', maxEstampas: 6 },
 
-    { id: 11, nome: 'Caderno capa dura', preco: 19.90, imagem: "/src/assets/caderno.png", categoria: 'caderno', maxEstampas: 2 },
-    
-    { id: 12, nome: 'Azulejo 15x15cm', preco: 30, imagem: "/src/assets/azulejo.png", categoria: 'azulejo', maxEstampas: 1 },
-    { id: 13, nome: 'Azulejo 10x10cm', preco: 50, imagem: "/src/assets/azulejo.png", categoria: 'azulejo', maxEstampas: 1 },
-    
+    { id: 10, nome: 'Caderno capa dura', preco: 19.90, imagem: "/src/assets/caderno.png", categoria: 'caderno', maxEstampas: 2 },
+
+    { id: 11, nome: 'Azulejo 15x15cm', preco: 30, imagem: "/src/assets/azulejo.png", categoria: 'azulejo', maxEstampas: 1 },
+    { id: 12, nome: 'Azulejo 10x10cm', preco: 50, imagem: "/src/assets/azulejo.png", categoria: 'azulejo', maxEstampas: 1 },
+
     { id: 13, nome: '17x9,4cm', preco: 14.90, imagem: "/src/assets/agenda.png", categoria: 'agenda', maxEstampas: 2 },
-    
+
     { id: 14, nome: '7x7cm', preco: 4, imagem: "/src/assets/almochaveiro.png", categoria: 'chaveiro', maxEstampas: 2 },
-   
+
   ];
   const { product } = useParams();
-  const { quantidade } = useContext(QuantidadeContext); 
+  const { quantidade } = useContext(QuantidadeContext);
   const defaultProduct = produtos.find(p => p.categoria === product) || produtos[0];
   const [tipoProdutoSelecionado, setTipoProdutoSelecionado] = useState(defaultProduct.categoria);
   const coresDisponiveis = ['Branco', 'Preto', 'Verde', 'Vermelho', 'Azul', 'Amarelo'];
@@ -49,7 +49,7 @@ export default function PersonalizarProduto() {
     'Caneca Plástica': ['Branca', 'Azul', 'Vermelha'],
     'Caneca Mágica': ['Vermelha', 'Preta'],
     'Caneca de Colher': ['Branca', 'Vermelha', 'Preta'],
-    
+
   };
   const [tamanhoSelecionado, setTamanhoSelecionado] = useState(null);
   const tamanhosDisponiveis = ['P', 'M', 'G', 'GG'];
@@ -57,6 +57,7 @@ export default function PersonalizarProduto() {
   const [corSelecionada, setCorSelecionada] = useState(defaultCor);
   const { addProductToCart } = useContext(CartContext);
   const [preco, setPreco] = useState(defaultProduct.preco);
+  const [id, setId] = useState(defaultProduct.id);
   const [imagemSelecionada, setImagemSelecionada] = useState(null);
   const inputFileRef = useRef(null);
   const [estampas, setEstampas] = useState([]);
@@ -73,6 +74,7 @@ export default function PersonalizarProduto() {
     setPreco(produto.preco);
     setProdutoSelecionado(produto);
     setTipoProdutoSelecionado(produto.nome);
+    setId(produto.id);
     if (opcoesCoresCanecas[produto.nome]) {
       setCorSelecionada(opcoesCoresCanecas[produto.nome][0]); // Define a cor padrão para canecas
     } else {
@@ -88,7 +90,7 @@ export default function PersonalizarProduto() {
     { nome: 'Estampa 2', imagem: '/src/assets/estampasProntas/caneca2.jpg' },
     // ...
   ];
-  
+
 
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
@@ -184,7 +186,7 @@ export default function PersonalizarProduto() {
       </div>
     )
   }
-  
+
 
   {
     imagemSelecionada && (
@@ -237,7 +239,7 @@ export default function PersonalizarProduto() {
       <div className='h-[2px] bg-[purple] flex-grow-[1]'></div>
       <br />
 
-      <div className="bg-[#999999]">
+      <div className="bg-[#999999] radi">
         <p>estampa</p>
         <div className="flex items-center justify-center">
           <div>
@@ -306,23 +308,25 @@ export default function PersonalizarProduto() {
         ) : null}
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-2 justify-center">
+      <h2 className='mb-2'>Tipos produto</h2>
+      <div className=" px-10 py-2 bg-[gray] flex flex-row flex-wrap items-center justify-center">
         {produtos
           .filter((produto) => produto.categoria === product)
           .map((produto) => (
             <div
               key={produto.id}
               className={`
-            transition-all duration-[150ms] rounded-lg cursor-pointer relative
-            ${preco === produto.preco ? "border-green-950 border-[5px]" : "border-black border-2"}
+            ${produto.categoria == 'camisa' && 'w-full'} 
+            ${produto.categoria == 'caneca' && 'w-[50%]'} flex flex-col items-centertransition-all duration-[150ms] rounded-lg cursor-pointer relative
+            ${id === produto.id ? "border-green-950 border-[5px]" : "border-black border-2"}
           `}
               onClick={() => handleProdutoClick(produto)}
             >
               <div className="bg-white rounded-t-md border-b border-gray-300">
-                <img src={produto.imagem} alt="" className="rounded-t-md" />
+                <img src={produto.imagem} alt="" className="rounded-t-md " />
               </div>
               <div className="bg-white rounded-b-md p-2 text-center">
-                <p className="text-center font-medium">{produto.nome}</p>
+                <p className="text-center font-medium text-[20px]">{produto.nome}</p>
                 <p className="text-center">R$ {produto.preco.toFixed(2)}</p>
               </div>
             </div>
@@ -347,7 +351,7 @@ export default function PersonalizarProduto() {
         </div>
       )}
 
-      
+
 
       {product === 'camisa' && (
         <>
