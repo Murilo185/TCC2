@@ -58,7 +58,7 @@ export default function SignUp() {
             >
                 <label className="capitalize  text-[18px] w-full font-bold mb-[4px] text-[#733a8E]">Nome completo</label>
                 <input
-                    className="text-[18px] text-[#000000] placeholder:text-[#E6E6E6] border border-[#E6E6E6] p-2 py-3 rounded-[10px] mb-[30px] focus:outline-none"
+                    className="text-[18px] text-[#000000] placeholder:text-[#808080] border border-[#E6E6E6] p-2 py-3 rounded-[10px] mb-[30px] focus:outline-none"
                     type="text"
                     placeholder="Coloque seu nome completo"
                     value={nameValue}
@@ -67,7 +67,7 @@ export default function SignUp() {
                 
                 <label className="capitalize  text-[18px] w-full font-bold mb-[4px] text-[#733a8E]">email</label>
                 <input
-                    className="text-[18px] text-[#000000] placeholder:text-[#E6E6E6] border border-[#E6E6E6] p-2 py-3 rounded-[10px] mb-[30px] focus:outline-none"
+                    className="text-[18px] text-[#000000] placeholder:text-[#808080] border border-[#E6E6E6] p-2 py-3 rounded-[10px] mb-[30px] focus:outline-none"
                     type="email"
                     placeholder="Coloque seu endereço de email"
                     value={emailValue}
@@ -76,14 +76,14 @@ export default function SignUp() {
                 
                 <label className="capitalize  text-[18px] w-full font-bold mb-[4px] text-[#733a8E]">senha</label>
                 <input
-                    className="text-[18px] text-[#000000] placeholder:text-[#E6E6E6] border border-[#E6E6E6] p-2 py-3 rounded-[10px] mb-[30px] focus:outline-none"
+                    className="text-[18px] text-[#000000] placeholder:text-[#808080] border border-[#E6E6E6] p-2 py-3 rounded-[10px] mb-[30px] focus:outline-none"
                     type="password"
                     placeholder="Coloque sua senha"
                     value={passwordValue}
                     onChange={(e) => handleInputPassword(e)}
                 />
 
-                <p className="mb-[20px] text-[14px] font-bold">Ao cadastrar-se você esta concordando com nossos <span className="text-[14px] text-[#3B7A58]">Termos, Privacidade, Politica</span> u uso de Cookies</p>
+                <p className="mb-[20px] text-[14px] font-bold">Ao cadastrar-se você esta concordando com nossos <span className="text-[14px] text-[#3B7A58]">Termos, Privacidade, Politica</span> e uso de Cookies</p>
 
                 <input className="mt-[20px] capitalize w-full bg-[#E6E6E6] text-[#FFFFFF] text-[20px] py-3 rounded-[8px]" type="submit" value='Crie sua conta' />
 
@@ -97,7 +97,7 @@ export default function SignUp() {
                     Faça login com google
                 </div>
 
-                <p className="mt-[40px] mb-[60px] text-center w-full text-[#733a8e]">Já tem uma conta <span className="text-[#3B7A58]"><a href="./sign-in">Entre</a></span>
+                <p className="mt-[40px] mb-[60px] text-center w-full text-[#733a8e]">Já tem uma conta? <span className="text-[#3B7A58]"><a href="./sign-in">Entre aqui!</a></span>
                 </p>
 
             </form>

@@ -91,7 +91,7 @@ export default function PersonalizarProduto() {
     // ...
   ];
 
-
+// Constante de upload de imagem personalizada
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
 
@@ -240,7 +240,7 @@ export default function PersonalizarProduto() {
       <br />
 
       <div className="bg-[#999999] radi">
-        <p>estampa</p>
+        <p>Estampa</p>
         <div className="flex items-center justify-center">
           <div>
             <Dropdown>
@@ -394,7 +394,7 @@ export default function PersonalizarProduto() {
       </p>
 
       <div className="flex items-center justify-center" onClick={handleSubmit}>
-        <button className="bg-[purple] rounded text-white p-2">
+        <button className="bg-[purple] rounded text-white p-2 mb-20">
           Adicionar ao carrinho
         </button>
       </div>

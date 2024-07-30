@@ -37,7 +37,7 @@ export default function SignIn() {
         <Cabecalho />
         <div className="w-full px-[10%] h-screen bg-white flex flex-col items-center justify-start">
             <h1 className="mt-[50px] mb-[14px] w-full text-left text-[22px] font-bold text-[#733A8E]">Faça login com sua conta</h1>
-            <p className="mb-[20px] w-full text-left text-[20px] text-[#808080]">é bom ter você de volta</p>
+            <p className="mb-[20px] w-full text-left text-[20px] text-[#808080]">É bom tê-lo de volta</p>
 
             <form
                 className="w-full flex flex-col justify-center"
@@ -48,7 +48,7 @@ export default function SignIn() {
             >
                 <label className="capitalize  text-[18px] w-full font-bold mb-[4px] text-[#733a8E]">email</label>
                 <input
-                    className="text-[18px] text-[#000000] placeholder:text-[#E6E6E6] border border-[#E6E6E6] p-2 py-3 rounded-[10px] mb-[30px] focus:outline-none"
+                    className="text-[18px] text-[#000000] placeholder:text-[#808080] border border-[#E6E6E6] p-2 py-3 rounded-[10px] mb-[30px] focus:outline-none"
                     type="email"
                     placeholder="Coloque seu email"
                     value={emailValue}
@@ -57,7 +57,7 @@ export default function SignIn() {
                 
                 <label className="capitalize  text-[18px] w-full font-bold mb-[4px] text-[#733a8E]">senha</label>
                 <input
-                    className="text-[18px] text-[#000000] placeholder:text-[#E6E6E6] border border-[#E6E6E6] p-2 py-3 rounded-[10px] mb-[30px] focus:outline-none"
+                    className="text-[18px] text-[#000000] placeholder:text-[#808080] border border-[#E6E6E6] p-2 py-3 rounded-[10px] mb-[30px] focus:outline-none"
                     type="password"
                     placeholder="Coloque sua senha"
                     value={passwordValue}
