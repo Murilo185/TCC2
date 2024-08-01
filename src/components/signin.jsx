@@ -14,7 +14,7 @@ export default function SignIn() {
     function handleInputPassword(e) {
         setPasswordValue(e.target.value)
     }
-    //rodolfoGay@gmail.com
+    //rodolfoGay@gmail.com <---- marcosViado@gmail.com
 
     function signIn(){
         axios.get(`http://localhost:3000/login/${emailValue}`)
@@ -64,6 +64,7 @@ export default function SignIn() {
                     onChange={(e) => handleInputPassword(e)}
                 />
 
+
                 <input className="mt-[20px] capitalize w-full bg-[#E6E6E6] text-[#FFFFFF] text-[20px] py-3 rounded-[8px]" type="submit" value='login' />
 
                 <div className="mt-[30px] flex justify-center items-center w-full">
@@ -73,7 +74,7 @@ export default function SignIn() {
                 </div>
 
                 <div
-                    className="mt-[20px] w-full text-center bg-transparent border-[1px] border-[#E6E6E6] text-[#000000] text-[18px] py-3 rounded-[8px]" >
+                    className="mt-[20px] w-full text-center bg-transparent border-[1px] border-[#E6E6E6] text-[#000000] text-[18px] py-3 rounded-[8px]" src="/static/images/google.png" >
                     Faça login com google
                 </div>
 

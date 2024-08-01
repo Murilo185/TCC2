@@ -3,7 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Login from './components/LoginRegistro.jsx';
+
 import TelaPrincipal from './components/telaprincipal.jsx';
 import Produto from './components/Produto.jsx';
 import SignIn from './components/signin.jsx';
@@ -22,10 +22,7 @@ const router = createBrowserRouter([
         <TelaPrincipal />
       </>
   },
-  {
-    path: "/login",
-    element: <Login />
-  },
+ 
   {
     path: "/sign-in",
     element: <SignIn />
