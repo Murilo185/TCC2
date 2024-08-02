@@ -68,6 +68,7 @@ export default function Cabecalho() {
     const mensagemCodificada = encodeURIComponent(mensagem);
 
     window.location.href = `https://wa.me/${numeroTelefone}?text=${mensagemCodificada}`;
+    window.location.href = `mailto:ljpresenteunico@gmail.com?body=${mensagemCodificada}`;
   }
 
   return (
