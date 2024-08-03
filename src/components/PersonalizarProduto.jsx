@@ -230,19 +230,19 @@ export default function PersonalizarProduto() {
         </Modal.Footer>
       </Modal>
 
-      {product === 'caneca' && <h1 className='text-center'>Vamos criar sua caneca!</h1>}
-      {product === 'agenda' && <h1 className='text-center'>Vamos criar sua agenda!</h1>}
-      {product === 'chaveiro' && <h1 className='text-center'>Vamos criar seu chaveiro!</h1>}
-      {product === 'Almofada' && <h1 className='text-center'>Vamos criar sua almofada!</h1>}
-      {product === 'camisa' && <h1 className='text-center'>Vamos criar sua camisa!</h1>}
-      {product === 'caderno' && <h1 className='text-center'>Vamos criar seu caderno!</h1>}
-      {product === 'azulejo' && <h1 className='text-center'>Vamos criar seu azulejo!</h1>}
+      {product === 'caneca' && <h1 className='text-center font-semibold'>Vamos criar sua caneca!</h1>}
+      {product === 'agenda' && <h1 className='text-center font-semibold'>Vamos criar sua agenda!</h1>}
+      {product === 'chaveiro' && <h1 className='text-center font-semibold'>Vamos criar seu chaveiro!</h1>}
+      {product === 'Almofada' && <h1 className='text-center font-semibold'>Vamos criar sua almofada!</h1>}
+      {product === 'camisa' && <h1 className='text-center font-semibold'>Vamos criar sua camisa!</h1>}
+      {product === 'caderno' && <h1 className='text-center font-semibold'>Vamos criar seu caderno!</h1>}
+      {product === 'azulejo' && <h1 className='text-center font-semibold'>Vamos criar seu azulejo!</h1>}
       <div className='h-[2px] bg-[purple] flex-grow-[1]'></div>
       <br />
 
       <div className="bg-[#999999] radi">
-        <p>Estampa</p>
-        <div className="flex items-center justify-center">
+      
+        <div className="flex items-center justify-center space-x-4 py-2 ">
           <div>
             <Dropdown>
               <Dropdown.Toggle variant="success" id="dropdown-basic">
@@ -274,12 +274,13 @@ export default function PersonalizarProduto() {
               </Dropdown.Menu>
             </Dropdown>
           </div>
-          <div className=" bg-white ">
+          <div className=" ">
             <div>
               <Dropdown >
                 <Dropdown.Toggle variant="success" id="dropdown-basic" >
                   <p>Estampa pré-pronta</p>
                 </Dropdown.Toggle>
+            
                 <Dropdown.Menu>
                   {estampasPreProntas.map((estampa) => (
                     <Dropdown.Item
@@ -300,7 +301,7 @@ export default function PersonalizarProduto() {
         
 
         {estampaSelecionada || imagemSelecionada ? (
-          <div className="mt-4">
+          <div className="mt-2 mb-5">
             <h2 className="text-lg font-semibold text-center">Sua estampa:</h2>
             <div className="flex justify-center">
               <img
@@ -314,8 +315,8 @@ export default function PersonalizarProduto() {
       </div>
       
 
-      <h2 className='mb-2'>Tipos produto</h2>
-      <div className=" px-10 py-2 bg-[gray] flex flex-row flex-wrap items-center justify-center">
+      <h2 className='mb-2 flex items-center justify-center space-x-4 py-2'>Tipos de produto</h2>
+      <div className=" px-10 py-2 bg-[gray] flex flex-row flex-wrap items-center justify-center space-x-10">
         {produtos
           .filter((produto) => produto.categoria === product)
           .map((produto) => (
@@ -340,7 +341,7 @@ export default function PersonalizarProduto() {
       </div>
       {opcoesCoresCanecas[tipoProdutoSelecionado] && (
         <div className="mt-4">
-          <h4 className="text-xl font-semibold mb-2 text-center">Escolha a cor</h4>
+          <h4 className="text-xl font-semibold mb-2 text-center font-coolvetica" >Escolha a cor</h4>
           <Dropdown>
             <Dropdown.Toggle variant="success" id="dropdown-basic">
               {corSelecionada || 'Selecione uma cor'}
