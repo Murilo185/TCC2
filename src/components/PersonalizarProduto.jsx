@@ -14,7 +14,7 @@ import "./PersonalizarProduto.css"
 export default function PersonalizarProduto() {
 
   const produtos = [
-    { id: 1, nome: 'Poliester', preco: 39.90, imagem: "/camisa.png", categoria: 'camisa' },
+    { id: 1, nome: 'Poliester', preco: 39.90, imagem: "/Poliester.png", categoria: 'camisa' },
 
     { id: 2, nome: 'Caneca Porcelana', preco: 35.0, imagem: "/Caneca Porcelana.png", categoria: 'caneca', maxEstampas: 1 },
     { id: 3, nome: 'Caneca Plástica', preco: 29.0, imagem: "/Caneca Plástica.png", categoria: 'caneca', maxEstampas: 1 },
@@ -161,24 +161,24 @@ export default function PersonalizarProduto() {
   };
 
   function handleSubmit() {
-    const produtoSelecionado = produtos.find((produto) => produto.preco === preco);
-    if (produtoSelecionado) {
-      const productToAdd = {
-        tipoProduto: produtoSelecionado.nome,
-        quantidade,
-        precoTotal: preco * quantidade,
-        imagem: imagemSelecionada,
-        imagemPublicId: imagemPublicId,
-        id: generateUniqueId(),
-        cor: corSelecionada,
-        tamanho: tamanhoSelecionado
-      };
+    const produtoSelecionado = produtos.find((produto) => produto.id === id);
+  if (produtoSelecionado) {
+    const productToAdd = {
+      tipoProduto: produtoSelecionado.nome,
+      quantidade,
+      precoTotal: preco * quantidade,
+      imagem: imagemSelecionada,
+      imagemPublicId: imagemPublicId,
+      id: generateUniqueId(),
+      cor: corSelecionada,
+      tamanho: tamanhoSelecionado
+    };
 
-      addProductToCart(productToAdd);
-      setShowModal(true);
-    } else {
-      console.log("Por favor, selecione um produto.");
-    }
+    addProductToCart(productToAdd);
+    setShowModal(true);
+  } else {
+    console.log("Por favor, selecione um produto.");
+  }
   }
   {
     showNotification && ( // Exibe a notificação se showNotification for true
