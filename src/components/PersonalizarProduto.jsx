@@ -293,10 +293,14 @@ export default function PersonalizarProduto() {
             </div>
           </div>
         </div>
+        
+
+
+        
 
         {estampaSelecionada || imagemSelecionada ? (
           <div className="mt-4">
-            <h2 className="text-lg font-semibold text-center">Sua Arte:</h2>
+            <h2 className="text-lg font-semibold text-center">Sua estampa:</h2>
             <div className="flex justify-center">
               <img
                 src={estampaSelecionada?.imagem || imagemSelecionada}
@@ -307,6 +311,7 @@ export default function PersonalizarProduto() {
           </div>
         ) : null}
       </div>
+      
 
       <h2 className='mb-2'>Tipos produto</h2>
       <div className=" px-10 py-2 bg-[gray] flex flex-row flex-wrap items-center justify-center">
