@@ -9,6 +9,7 @@ import agenda from '../assets/agenda.png';
 import chaveiro from '../assets/almochaveiro.png';
 import whatsapp from '../assets/whatsapp.svg';
 import Footer from './Footer.jsx';
+import { PiWhatsappLogo } from "react-icons/pi";
 import UncontrolledExample from './carrossell.jsx';
 import { Link } from 'react-router-dom';
 
@@ -84,7 +85,7 @@ export default function TelaPrincipal() {
         </div>
       </div>
 
-      <img src={whatsapp} alt="Whatsapp" id='whatsapp' />
+      <PiWhatsappLogo className='text-[46px] text-red' />
       <Footer />
     </>
   );

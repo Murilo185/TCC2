@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AiOutlineMail, AiOutlineInstagram, AiOutlineFacebook } from "react-icons/ai";
+import ButtonMailto from './BotãoEmail';
+import { useContext, useState, useRef, useEffect } from 'react';
 
 export default function Footer(){
     return(
@@ -12,7 +14,9 @@ export default function Footer(){
             <h2 className='text-white text-[20px] font-semibold mb-1 capitalize'>contatos</h2>
             
             <div className="flex flex-row gap-[4px] mb-3">
-                <AiOutlineMail className='text-[46px] text-white'/>
+            
+           <a href="mailto:ljpresenteunico@gmail.com"> <AiOutlineMail className='text-[46px] text-white'/></a>
+          
                 <AiOutlineInstagram className='text-[46px] text-white'/>
                 <AiOutlineFacebook className='text-[46px] text-white'/>
             </div>
