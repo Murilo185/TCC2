@@ -27,14 +27,14 @@ export default function PersonalizarProduto() {
     { id: 8, nome: 'Almofada cubo 15x15cm', preco: 19.90, imagem: "/almofada.png", categoria: 'almofada', maxEstampas: 6 },
     { id: 9, nome: 'Almofada cubo 20x20cm', preco: 29.90, imagem: "/almofada.png", categoria: 'almofada', maxEstampas: 6 },
 
-    { id: 10, nome: 'Caderno capa dura', preco: 19.90, imagem: "/caderno.png", categoria: 'caderno', maxEstampas: 2 },
+    { id: 10, nome: 'Caderno A4', preco: 19.90, imagem: "/Caderno A4.png", categoria: 'caderno', maxEstampas: 2 },
 
-    { id: 11, nome: 'Azulejo 15x15cm', preco: 30, imagem: "/azulejo.png", categoria: 'azulejo', maxEstampas: 1 },
-    { id: 12, nome: 'Azulejo 10x10cm', preco: 50, imagem: "/azulejo.png", categoria: 'azulejo', maxEstampas: 1 },
+    { id: 11, nome: 'Azulejo 15x15cm', preco: 30, imagem: "/Azulejo 15x15cm.png", categoria: 'azulejo', maxEstampas: 1 },
+    { id: 12, nome: 'Azulejo 10x10cm', preco: 50, imagem: "/Azulejo 10x10cm.png", categoria: 'azulejo', maxEstampas: 1 },
 
-    { id: 13, nome: '17x9,4cm', preco: 14.90, imagem: "/agenda.png", categoria: 'agenda', maxEstampas: 2 },
+    { id: 13, nome: 'Agenda 17x9,4cm', preco: 14.90, imagem: "/Agenda 17x9,4cm.png", categoria: 'agenda', maxEstampas: 2 },
 
-    { id: 14, nome: '7x7cm', preco: 4, imagem: "/almochaveiro.png", categoria: 'chaveiro', maxEstampas: 2 },
+    { id: 14, nome: 'Almochaveiro 7x7cm', preco: 4, imagem: "/Almochaveiro 7x7cm.png", categoria: 'chaveiro', maxEstampas: 2 },
 
   ];
   const { product } = useParams();
