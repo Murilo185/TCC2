@@ -325,6 +325,7 @@ export default function PersonalizarProduto() {
           ${produto.categoria === 'camisa' && 'w-full'}
           ${produto.categoria === 'caneca' && 'w-[50%]'}
           ${produto.categoria === 'almofada' && 'w-[50%]'}
+          ${produto.categoria === 'azulejo' && 'w-[50%]'}
           flex flex-col items-center transition-all duration-[150ms] rounded-lg cursor-pointer relative
           ${id === produto.id ? 'border-green-950 border-[5px]' : 'border-black border-2'}
           mb-4  // Adicione esta classe para margem inferior
