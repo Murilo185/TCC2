@@ -24,8 +24,8 @@ export default function PersonalizarProduto() {
     { id: 6, nome: 'Almofada dois lados 28x20cm', preco: 19.90, imagem: "/almofada.png", categoria: 'almofada', maxEstampas: 2 },
     { id: 7, nome: 'Almofada dois lados 40x28cm', preco: 49.90, imagem: "/almofada.png", categoria: 'almofada', maxEstampas: 2 },
 
-    { id: 8, nome: 'Almofada cubo 15x15cm', preco: 19.90, imagem: "/almofada.png", categoria: 'almofada', maxEstampas: 6 },
-    { id: 9, nome: 'Almofada cubo 20x20cm', preco: 29.90, imagem: "/almofada.png", categoria: 'almofada', maxEstampas: 6 },
+    { id: 8, nome: 'Almofada cubo 15x15cm', preco: 19.90, imagem: "/Almofada cubo 15x15cm.png", categoria: 'almofada', maxEstampas: 6 },
+    { id: 9, nome: 'Almofada cubo 20x20cm', preco: 29.90, imagem: "/Almofada cubo 20x20cm.png", categoria: 'almofada', maxEstampas: 6 },
 
     { id: 10, nome: 'Caderno A4', preco: 19.90, imagem: "/Caderno A4.png", categoria: 'caderno', maxEstampas: 2 },
 
@@ -324,6 +324,8 @@ export default function PersonalizarProduto() {
               className={`
             ${produto.categoria == 'camisa' && 'w-full'} 
             ${produto.categoria == 'caneca' && 'w-[50%]'} flex flex-col items-centertransition-all duration-[150ms] rounded-lg cursor-pointer relative
+            ${id === produto.id ? "border-green-950 border-[5px]" : "border-black border-2"}
+            ${produto.categoria == 'almofada' && 'w-[50%]'} flex flex-col items-centertransition-all duration-[150ms] rounded-lg cursor-pointer relative
             ${id === produto.id ? "border-green-950 border-[5px]" : "border-black border-2"}
           `}
               onClick={() => handleProdutoClick(produto)}
