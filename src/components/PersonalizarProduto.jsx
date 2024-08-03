@@ -315,31 +315,32 @@ export default function PersonalizarProduto() {
       
 
       <h2 className='mb-2'>Tipos produto</h2>
-      <div className=" px-10 py-2 bg-[gray] flex flex-row flex-wrap items-center justify-center">
-        {produtos
-          .filter((produto) => produto.categoria === product)
-          .map((produto) => (
-            <div
-              key={produto.id}
-              className={`
-            ${produto.categoria == 'camisa' && 'w-full'} 
-            ${produto.categoria == 'caneca' && 'w-[50%]'} flex flex-col items-centertransition-all duration-[150ms] rounded-lg cursor-pointer relative
-            ${id === produto.id ? "border-green-950 border-[5px]" : "border-black border-2"}
-            ${produto.categoria == 'almofada' && 'w-[50%]'} flex flex-col items-centertransition-all duration-[150ms] rounded-lg cursor-pointer relative
-            ${id === produto.id ? "border-green-950 border-[5px]" : "border-black border-2"}
-          `}
-              onClick={() => handleProdutoClick(produto)}
-            >
-              <div className="bg-white rounded-t-md border-b border-gray-300">
-                <img src={produto.imagem} alt="" className="rounded-t-md " />
-              </div>
-              <div className="bg-white rounded-b-md p-2 text-center">
-                <p className="text-center font-medium text-[20px]">{produto.nome}</p>
-                <p className="text-center">R$ {produto.preco.toFixed(2)}</p>
-              </div>
-            </div>
-          ))}
+      <div className="px-10 py-2 bg-[gray] flex flex-row flex-wrap items-center justify-center pt-10">
+  {produtos 
+    .filter((produto) => produto.categoria === product)
+    .map((produto) => (
+      <div
+        key={produto.id}
+        className={`
+          ${produto.categoria === 'camisa' && 'w-full'}
+          ${produto.categoria === 'caneca' && 'w-[50%]'}
+          ${produto.categoria === 'almofada' && 'w-[50%]'}
+          flex flex-col items-center transition-all duration-[150ms] rounded-lg cursor-pointer relative
+          ${id === produto.id ? 'border-green-950 border-[5px]' : 'border-black border-2'}
+          mb-4  // Adicione esta classe para margem inferior
+        `}
+        onClick={() => handleProdutoClick(produto)}
+      >
+        <div className="bg-white rounded-t-md border-b border-gray-300">
+          <img src={produto.imagem} alt="" className="rounded-t-md" />
+        </div>
+        <div className="bg-white rounded-b-md p-2 text-center w-full">
+          <p className="text-center font-medium text-[20px] w-full">{produto.nome}</p>
+          <p className="text-center">R$ {produto.preco.toFixed(2)}</p>
+        </div>
       </div>
+    ))}
+</div>
       {opcoesCoresCanecas[tipoProdutoSelecionado] && (
         <div className="mt-4">
           <h4 className="text-xl font-semibold mb-2 text-center">Escolha a cor</h4>
@@ -361,35 +362,35 @@ export default function PersonalizarProduto() {
 
 
 
-      {product === 'camisa' && (
-        <>
-          <Dropdown>
-            <Dropdown.Toggle variant="success" id="dropdown-tamanho">
-              {tamanhoSelecionado || "Selecione um tamanho"}
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              {tamanhosDisponiveis.map((tamanho) => (
-                <Dropdown.Item key={tamanho} onClick={() => setTamanhoSelecionado(tamanho)}>
-                  {tamanho}
-                </Dropdown.Item>
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
+{product === 'camisa' && (
+  <div className="flex flex-col items-center mt-4 space-y-4">
+    <Dropdown>
+      <Dropdown.Toggle variant="success" id="dropdown-tamanho">
+        {tamanhoSelecionado || "Selecione um tamanho"}
+      </Dropdown.Toggle>
+      <Dropdown.Menu>
+        {tamanhosDisponiveis.map((tamanho) => (
+          <Dropdown.Item key={tamanho} onClick={() => setTamanhoSelecionado(tamanho)}>
+            {tamanho}
+          </Dropdown.Item>
+        ))}
+      </Dropdown.Menu>
+    </Dropdown>
 
-          <Dropdown>
-            <Dropdown.Toggle variant="success" id="dropdown-cor">
-              {corSelecionada || "Selecione uma cor"}
-            </Dropdown.Toggle>
-            <Dropdown.Menu>
-              {coresDisponiveis.map((cor) => (
-                <Dropdown.Item key={cor} onClick={() => setCorSelecionada(cor)}>
-                  {cor}
-                </Dropdown.Item>
-              ))}
-            </Dropdown.Menu>
-          </Dropdown>
-        </>
-      )}
+    <Dropdown>
+      <Dropdown.Toggle variant="success" id="dropdown-cor">
+        {corSelecionada || "Selecione uma cor"}
+      </Dropdown.Toggle>
+      <Dropdown.Menu>
+        {coresDisponiveis.map((cor) => (
+          <Dropdown.Item key={cor} onClick={() => setCorSelecionada(cor)}>
+            {cor}
+          </Dropdown.Item>
+        ))}
+      </Dropdown.Menu>
+    </Dropdown>
+  </div>
+)}
 
 
 
