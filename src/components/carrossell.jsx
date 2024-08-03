@@ -1,7 +1,7 @@
 import Carousel from 'react-bootstrap/Carousel';
-import img1 from '../assets/carrossell1.png';
-import img2 from '../assets/almochaveiro.png'
-import img3 from '../assets/camisa.png'
+import img1 from '/carrossell1.png';
+import img2 from '/almochaveiro.png'
+import img3 from '/Poliester.png'
 import './carrosell.css'
 
 function UncontrolledExample() {

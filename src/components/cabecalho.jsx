@@ -25,7 +25,7 @@ const EmailIcon = ({ mensagem }) => {
 
   return (
     <a href={linkEmail}>
-      <FaEnvelope className="w-10 h-10 text-red-500" />
+      <FaEnvelope className="w-10 h-10 text-green-500" />
     </a>
   );
 };
@@ -105,7 +105,16 @@ export default function Cabecalho() {
                         <li className="py-2 flex items-center justify-between" key={index}>
                           <div className="flex items-center">
                             <Link to={`/item/${item.id}`} onClick={(e) => { e.preventDefault(); navigate(`/item/${item.id}`); }}>
-                              <img src={item.imagemSelecionada || item.imagem} alt={item.tipoProduto} className="w-10 h-10 mr-2" />
+                              {/* Adicionando console.log para depuração */}
+                              {console.log('Imagem selecionada:', item.imagemSelecionada)}
+                              {console.log('Imagem padrão:', item.imagem)}
+                            
+                              <img
+                                src={item.imagemSelecionada || item.imagem || `/${item.tipoProduto}.png`} // Adicionando fallback
+                                alt={item.tipoProduto}
+                                className="w-10 h-10 mr-2"
+                                onError={(e) => e.target.src = 'caminho/para/imagem/padrao.jpg'} // fallback para imagem padrão
+                              />
                               <div>
                                 <p className="font-medium">{item.tipoProduto}</p>
                                 <p className="text-sm text-gray-500">
@@ -136,6 +145,7 @@ export default function Cabecalho() {
       {showIcons && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div ref={iconsRef} className="bg-white p-4 rounded-md shadow-lg flex space-x-4">
+            <p>Escolha uma das opções</p>
             <WhatsAppIcon mensagem={mensagem} />
             <EmailIcon mensagem={mensagem} />
           </div>

@@ -16,24 +16,25 @@ export default function PersonalizarProduto() {
   const produtos = [
     { id: 1, nome: 'Poliester', preco: 39.90, imagem: "/camisa.png", categoria: 'camisa' },
 
-    { id: 2, nome: 'Caneca Porcelana', preco: 35.0, imagem: "/canecaPorcelana.png", categoria: 'caneca', maxEstampas: 1 },
-    { id: 3, nome: 'Caneca Plástica', preco: 29.0, imagem: "/caneca_transparente.webp", categoria: 'caneca', maxEstampas: 1 },
-    { id: 4, nome: 'Caneca Mágica', preco: 40.0, imagem: "/canecaMagica.png", categoria: 'caneca', maxEstampas: 1 },
-    { id: 5, nome: 'Caneca de Colher', preco: 40.0, imagem: "/canecaColher.webp", categoria: 'caneca', maxEstampas: 1 },
+    { id: 2, nome: 'Caneca Porcelana', preco: 35.0, imagem: "/Caneca Porcelana.png", categoria: 'caneca', maxEstampas: 1 },
+    { id: 3, nome: 'Caneca Plástica', preco: 29.0, imagem: "/Caneca Plástica.png", categoria: 'caneca', maxEstampas: 1 },
+    { id: 4, nome: 'Caneca Mágica', preco: 40.0, imagem: "/Caneca Mágica.png", categoria: 'caneca', maxEstampas: 1 },
+    { id: 5, nome: 'Caneca de Colher', preco: 45.0, imagem: "/Caneca de Colher.png", categoria: 'caneca', maxEstampas: 1 },
 
-    { id: 6, nome: 'Almofada dois lados 28x20cm', preco: 19.90, imagem: "/src/assets/almofada.png", categoria: 'almofada', maxEstampas: 2 },
-    { id: 7, nome: 'Almofada dois lados 40x28cm', preco: 49.90, imagem: "/src/assets/almofada.png", categoria: 'almofada', maxEstampas: 2 },
-    { id: 8, nome: 'Almofada cubo 15x15cm', preco: 19.90, imagem: "/src/assets/almofada.png", categoria: 'almofada', maxEstampas: 6 },
-    { id: 9, nome: 'Almofada cubo 20x20cm', preco: 29.90, imagem: "/src/assets/almofada.png", categoria: 'almofada', maxEstampas: 6 },
+    { id: 6, nome: 'Almofada dois lados 28x20cm', preco: 19.90, imagem: "/almofada.png", categoria: 'almofada', maxEstampas: 2 },
+    { id: 7, nome: 'Almofada dois lados 40x28cm', preco: 49.90, imagem: "/almofada.png", categoria: 'almofada', maxEstampas: 2 },
 
-    { id: 10, nome: 'Caderno capa dura', preco: 19.90, imagem: "/src/assets/caderno.png", categoria: 'caderno', maxEstampas: 2 },
+    { id: 8, nome: 'Almofada cubo 15x15cm', preco: 19.90, imagem: "/almofada.png", categoria: 'almofada', maxEstampas: 6 },
+    { id: 9, nome: 'Almofada cubo 20x20cm', preco: 29.90, imagem: "/almofada.png", categoria: 'almofada', maxEstampas: 6 },
 
-    { id: 11, nome: 'Azulejo 15x15cm', preco: 30, imagem: "/src/assets/azulejo.png", categoria: 'azulejo', maxEstampas: 1 },
-    { id: 12, nome: 'Azulejo 10x10cm', preco: 50, imagem: "/src/assets/azulejo.png", categoria: 'azulejo', maxEstampas: 1 },
+    { id: 10, nome: 'Caderno capa dura', preco: 19.90, imagem: "/caderno.png", categoria: 'caderno', maxEstampas: 2 },
 
-    { id: 13, nome: '17x9,4cm', preco: 14.90, imagem: "/src/assets/agenda.png", categoria: 'agenda', maxEstampas: 2 },
+    { id: 11, nome: 'Azulejo 15x15cm', preco: 30, imagem: "/azulejo.png", categoria: 'azulejo', maxEstampas: 1 },
+    { id: 12, nome: 'Azulejo 10x10cm', preco: 50, imagem: "/azulejo.png", categoria: 'azulejo', maxEstampas: 1 },
 
-    { id: 14, nome: '7x7cm', preco: 4, imagem: "/src/assets/almochaveiro.png", categoria: 'chaveiro', maxEstampas: 2 },
+    { id: 13, nome: '17x9,4cm', preco: 14.90, imagem: "/agenda.png", categoria: 'agenda', maxEstampas: 2 },
+
+    { id: 14, nome: '7x7cm', preco: 4, imagem: "/almochaveiro.png", categoria: 'chaveiro', maxEstampas: 2 },
 
   ];
   const { product } = useParams();

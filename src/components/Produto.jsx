@@ -1,11 +1,11 @@
 import { useParams, Link } from "react-router-dom";
-import Img1 from '../assets/agenda.png';
-import Img2 from '../assets/almochaveiro.png';
-import Img3 from '../assets/almofada.png';
-import Img4 from '../assets/azulejo.png';
-import Img5 from '../assets/caderno.png';
-import Img6 from '../assets/camisa.png';
-import Img7 from '../assets/caneca.png';
+import Img1 from '/agenda.png';
+import Img2 from '/almochaveiro.png';
+import Img3 from '/almofada.png';
+import Img4 from '/azulejo.png';
+import Img5 from '/caderno.png';
+import Img6 from '/Poliester.png';
+import Img7 from '/Caneca Porcelana.png';
 import Cabecalho from "./cabecalho";
 import Footer from "./Footer";
 import './Produto.css';
