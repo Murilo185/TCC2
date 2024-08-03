@@ -113,7 +113,6 @@ export default function Cabecalho() {
                                 src={item.imagemSelecionada || item.imagem || `/${item.tipoProduto}.png`} // Adicionando fallback
                                 alt={item.tipoProduto}
                                 className="w-10 h-10 mr-2"
-                                onError={(e) => e.target.src = 'caminho/para/imagem/padrao.jpg'} // fallback para imagem padrão
                               />
                               <div>
                                 <p className="font-medium">{item.tipoProduto}</p>
