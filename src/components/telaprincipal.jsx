@@ -85,7 +85,6 @@ export default function TelaPrincipal() {
         </div>
       </div>
 
-      <PiWhatsappLogo className='text-[46px] text-red' />
       <Footer />
     </>
   );
