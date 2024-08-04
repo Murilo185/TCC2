@@ -27,8 +27,8 @@ export default function TelaPrincipal() {
         <div className='h-[2px] bg-[purple] flex-grow-[1]'></div>
       </div>
 
-      <div id="containner" className='w-0'>
-        <div id="camisa">
+      <div id="containner" className='flex flex-wrap justify-center items-center gap-1'>
+        <div id="camisa" className='w-40 flex flex-col items-center p-4 rounded-md shadow-md'>
           <Link to="/produto/camisa">
             <img src={camisa} alt="Camisa" />
           </Link>
@@ -36,7 +36,7 @@ export default function TelaPrincipal() {
           <p className="Descricao">A partir de <span>39</span>,90</p>
         </div>
 
-        <div id="Caneca">
+        <div id="Caneca" className='w-40 flex flex-col items-center p-4 rounded-md shadow-md'>
           <Link to="/produto/caneca">
             <img src={caneca} alt="Caneca" />
           </Link>
@@ -44,7 +44,7 @@ export default function TelaPrincipal() {
           <p className="Descricao">A partir de <span>19</span>,90</p>
         </div>
 
-        <div id="Almofada">
+        <div id="Almofada" className='w-40 flex flex-col items-center p-4 rounded-md shadow-md'>
           <Link to="/produto/almofada">
             <img src={almofada} alt="Almofada" />
           </Link>
@@ -52,7 +52,7 @@ export default function TelaPrincipal() {
           <p className="Descricao">A partir de <span>19</span>,90</p>
         </div>
 
-        <div id="Caderno">
+        <div id="Caderno" className='w-40 flex flex-col items-center p-4 rounded-md shadow-md'>
           <Link to="/produto/caderno">
             <img src={caderno} alt="Caderno" />
           </Link>
@@ -60,7 +60,7 @@ export default function TelaPrincipal() {
           <p className="Descricao">A partir de <span>19</span>,90</p>
         </div>
 
-        <div id="Azulejo">
+        <div id="Azulejo" className='w-40 flex flex-col items-center p-4 rounded-md shadow-md'>
           <Link to="/produto/azulejo">
             <img src={azulejo} alt="Azulejo" />
           </Link>
@@ -68,7 +68,7 @@ export default function TelaPrincipal() {
           <p className="Descricao">A partir de <span>19</span>,90</p>
         </div>
 
-        <div id="Agenda">
+        <div id="Agenda" className='w-40 flex flex-col items-center p-4 rounded-md shadow-md'>
           <Link to="/produto/agenda">
             <img src={agenda} alt="Agenda" />
           </Link>
@@ -76,7 +76,7 @@ export default function TelaPrincipal() {
           <p className="Descricao">A partir de <span>14</span>,90</p>
         </div>
 
-        <div id="Chaveiro">
+        <div id="Chaveiro" className='w-40 flex flex-col items-center p-4 rounded-md shadow-md'>
           <Link to="/produto/chaveiro">
             <img src={chaveiro} alt="Chaveiro" />
           </Link>

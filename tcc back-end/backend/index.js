@@ -9,8 +9,8 @@ app.use(cors())
 const port = 3000
 
 //CONFIGURAÇÕES DO MONGODB
-const user_name = 'Murilo'
-const password = '3DjPv6bFfK6MCg5h'
+const user_name = 'TCC'
+const password = 'f8XFhMUQUUd4AaEV'
 
 //MODELO DO OBJETO DO BANCO DE DADOS
 const Person = mongoose.model('Person', {

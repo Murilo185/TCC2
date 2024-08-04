@@ -50,12 +50,11 @@ span{
     padding-bottom: 20px;
     padding-top: 10px;
     margin: 2px 2px;
-    background-color: bla;
     justify-content: flex-start;
     align-items: center;
     border-radius: 10px;
     display: flex;
-    background-color: rgb(172, 171, 171);
+    background-color: rgb(173, 172, 187);
 }
 
 #containner >div>a>img{
