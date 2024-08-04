@@ -1,9 +1,9 @@
 import { useParams, Link } from "react-router-dom";
-import Img1 from '/agenda.png';
-import Img2 from '/almochaveiro.png';
+import Img1 from '/Agenda 17x9,4cm.png';
+import Img2 from '/Almochaveiro 7x7cm.png';
 import Img3 from '/almofada.png';
-import Img4 from '/azulejo.png';
-import Img5 from '/caderno.png';
+import Img4 from '/Azulejo 10x10cm.png';
+import Img5 from '/Caderno A4.png';
 import Img6 from '/Poliester.png';
 import Img7 from '/Caneca Porcelana.png';
 import Cabecalho from "./cabecalho";
