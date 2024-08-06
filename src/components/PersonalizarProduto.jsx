@@ -52,6 +52,9 @@ export default function PersonalizarProduto() {
     'Caneca de Colher': ['Branca', 'Vermelha', 'Preta'],
 
   };
+  const OpcoesCoresCamisa = {
+    'Poliester': ['Branca'],
+  };
   const [tamanhoSelecionado, setTamanhoSelecionado] = useState(null);
   const tamanhosDisponiveis = ['P', 'M', 'G', 'GG'];
 
@@ -81,6 +84,11 @@ export default function PersonalizarProduto() {
     } else {
       setCorSelecionada(null); // Reseta a cor para outros produtos
     }
+    if (OpcoesCoresCamisa[produto.nome]) {
+      setCorSelecionada(OpcoesCoresCamisa[produto.nome][0]); // Define a cor padrão para canecas
+    } else {
+      setCorSelecionada(null); // Reseta a cor para outros produtos
+    }
   };
 
 
@@ -92,7 +100,7 @@ export default function PersonalizarProduto() {
     // ...
   ];
 
-// Constante de upload de imagem personalizada
+  // Constante de upload de imagem personalizada
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
 
@@ -162,23 +170,23 @@ export default function PersonalizarProduto() {
 
   function handleSubmit() {
     const produtoSelecionado = produtos.find((produto) => produto.id === id);
-  if (produtoSelecionado) {
-    const productToAdd = {
-      tipoProduto: produtoSelecionado.nome,
-      quantidade,
-      precoTotal: preco * quantidade,
-      imagem: imagemSelecionada,
-      imagemPublicId: imagemPublicId,
-      id: generateUniqueId(),
-      cor: corSelecionada,
-      tamanho: tamanhoSelecionado
-    };
+    if (produtoSelecionado) {
+      const productToAdd = {
+        tipoProduto: produtoSelecionado.nome,
+        quantidade,
+        precoTotal: preco * quantidade,
+        imagem: imagemSelecionada,
+        imagemPublicId: imagemPublicId,
+        id: generateUniqueId(),
+        cor: corSelecionada,
+        tamanho: tamanhoSelecionado
+      };
 
-    addProductToCart(productToAdd);
-    setShowModal(true);
-  } else {
-    console.log("Por favor, selecione um produto.");
-  }
+      addProductToCart(productToAdd);
+      setShowModal(true);
+    } else {
+      console.log("Por favor, selecione um produto.");
+    }
   }
   {
     showNotification && ( // Exibe a notificação se showNotification for true
@@ -241,11 +249,10 @@ export default function PersonalizarProduto() {
       <br />
 
       <div className="bg-[#999999] radi">
-        <p>Estampa</p>
         <div className="flex items-center justify-center">
-          <div>
+          <div className='px-2'>
             <Dropdown>
-              <Dropdown.Toggle variant="success" id="dropdown-basic">
+              <Dropdown.Toggle variant="success" id="dropdown-basic" >
                 <p>Sua estampa</p>
               </Dropdown.Toggle>
               <Dropdown.Menu>
@@ -294,10 +301,10 @@ export default function PersonalizarProduto() {
             </div>
           </div>
         </div>
-        
 
 
-        
+
+
 
         {estampaSelecionada || imagemSelecionada ? (
           <div className="mt-4">
@@ -312,86 +319,90 @@ export default function PersonalizarProduto() {
           </div>
         ) : null}
       </div>
-      
+
 
       <h2 className='mb-2'>Tipos produto</h2>
-      <div className="px-10 py-2 bg-[gray] flex flex-row flex-wrap items-center justify-center pt-10">
-  {produtos 
-    .filter((produto) => produto.categoria === product)
-    .map((produto) => (
-      <div
-        key={produto.id}
-        className={`
-          ${produto.categoria === 'camisa' && 'w-full'}
-          ${produto.categoria === 'caneca' && 'w-[50%]'}
+      <div className=" py-2 bg-[gray] flex flex-row flex-wrap items-center justify-center px-10 pt-10 md:px-[500px] rounded">
+        {produtos
+          .filter((produto) => produto.categoria === product)
+          .map((produto) => (
+            <div
+              key={produto.id}
+              className={`
+          ${produto.categoria === 'camisa' && 'w-[50%]'}
+          ${produto.categoria === 'caneca' && 'max-w-[100px]'}
           ${produto.categoria === 'almofada' && 'w-[50%]'}
           ${produto.categoria === 'azulejo' && 'w-[50%]'}
-          flex flex-col items-center transition-all duration-[150ms] rounded-lg cursor-pointer relative
-          ${id === produto.id ? 'border-green-950 border-[5px]' : 'border-black border-2'}
-          mb-4  // Adicione esta classe para margem inferior
+          flex flex-col items-center tran sition-all duration-[150ms] rounded-lg cursor-pointer relative sm:w-140
+          ${id === produto.id ? 'border-green-950 border-[4px]' : 'border-black border-2'}
+          
         `}
-        onClick={() => handleProdutoClick(produto)}
-      >
-        <div className="bg-white rounded-t-md border-b border-gray-300">
-          <img src={produto.imagem} alt="" className="rounded-t-md" />
-        </div>
-        <div className="bg-white rounded-b-md p-2 text-center w-full">
-          <p className="text-center font-medium text-[20px] w-full">{produto.nome}</p>
-          <p className="text-center">R$ {produto.preco.toFixed(2)}</p>
-        </div>
+              onClick={() => handleProdutoClick(produto)}
+            >
+              <div className="bg-white rounded-t-md border-b border-gray-300">
+                <img src={produto.imagem} alt="" className="rounded-t-md" />
+              </div>
+              <div className="bg-white rounded-b-md p-2 text-center w-full">
+                <p className="text-center font-medium text-[20px] w-full">{produto.nome}</p>
+                <p className="text-center">R$ {produto.preco.toFixed(2)}</p>
+              </div>
+            </div>
+          ))}
       </div>
-    ))}
-</div>
-      {opcoesCoresCanecas[tipoProdutoSelecionado] && (
-        <div className="mt-4">
-          <h4 className="text-xl font-semibold mb-2 text-center">Escolha a cor</h4>
-          <Dropdown>
-            <Dropdown.Toggle variant="success" id="dropdown-basic">
-              {corSelecionada || 'Selecione uma cor'}
-            </Dropdown.Toggle>
 
+
+      {product === 'caneca' && (
+        <div className="my-4 text-center">
+          <h4>Selecione a cor da caneca:</h4>
+          <div className="flex flex-wrap justify-center gap-2">
+            {opcoesCoresCanecas[tipoProdutoSelecionado]?.map((cor) => (
+              <button
+                key={cor}
+                className={`py-1 px-3 border ${corSelecionada === cor ? 'bg-green-700 text-white' : 'bg-white text-black'}`}
+                onClick={() => setCorSelecionada(cor)}
+              >
+                {cor}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+      {product === 'camisa' && (
+        <div className="my-4 text-center">
+          <h4>Selecione a cor da camisa:</h4>
+          <div className="flex flex-wrap justify-center gap-2">
+            {OpcoesCoresCamisa[tipoProdutoSelecionado]?.map((cor) => (
+              <button
+                key={cor}
+                className={`py-1 px-3 border ${corSelecionada === cor ? 'bg-green-700 text-white' : 'bg-white text-black'}`}
+                onClick={() => setCorSelecionada(cor)}
+              >
+                {cor}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+
+      {product === 'camisa' && (
+       
+        <div className="flex flex-col items-center mt-4 space-y-4">
+          <p>Selecione o tamanho</p>
+          <Dropdown>
+            <Dropdown.Toggle variant="success" id="dropdown-tamanho">
+              {tamanhoSelecionado || "Selecione um tamanho"}
+            </Dropdown.Toggle>
             <Dropdown.Menu>
-              {opcoesCoresCanecas[tipoProdutoSelecionado].map((cor) => (
-                <Dropdown.Item key={cor} onClick={() => setCorSelecionada(cor)}>
-                  {cor}
+              {tamanhosDisponiveis.map((tamanho) => (
+                <Dropdown.Item key={tamanho} onClick={() => setTamanhoSelecionado(tamanho)}>
+                  {tamanho}
                 </Dropdown.Item>
               ))}
             </Dropdown.Menu>
           </Dropdown>
         </div>
       )}
-
-
-
-{product === 'camisa' && (
-  <div className="flex flex-col items-center mt-4 space-y-4">
-    <Dropdown>
-      <Dropdown.Toggle variant="success" id="dropdown-tamanho">
-        {tamanhoSelecionado || "Selecione um tamanho"}
-      </Dropdown.Toggle>
-      <Dropdown.Menu>
-        {tamanhosDisponiveis.map((tamanho) => (
-          <Dropdown.Item key={tamanho} onClick={() => setTamanhoSelecionado(tamanho)}>
-            {tamanho}
-          </Dropdown.Item>
-        ))}
-      </Dropdown.Menu>
-    </Dropdown>
-
-    <Dropdown>
-      <Dropdown.Toggle variant="success" id="dropdown-cor">
-        {corSelecionada || "Selecione uma cor"}
-      </Dropdown.Toggle>
-      <Dropdown.Menu>
-        {coresDisponiveis.map((cor) => (
-          <Dropdown.Item key={cor} onClick={() => setCorSelecionada(cor)}>
-            {cor}
-          </Dropdown.Item>
-        ))}
-      </Dropdown.Menu>
-    </Dropdown>
-  </div>
-)}
 
 
 
