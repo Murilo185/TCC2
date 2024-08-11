@@ -9,7 +9,6 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { Image, Transformation } from 'cloudinary-react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
-import "./PersonalizarProduto.css"
 
 export default function PersonalizarProduto() {
 
@@ -248,9 +247,9 @@ export default function PersonalizarProduto() {
       <div className='h-[2px] bg-[purple] flex-grow-[1]'></div>
       <br />
 
-      <div className="bg-[#999999] radi">
+      <div className="bg-[#999999] w-full md:w-[50%] mx-auto rounded-[10px] mb-2">
         <div className="flex items-center justify-center">
-          <div className='px-2'>
+          <div className='px-2 py-2'>
             <Dropdown>
               <Dropdown.Toggle variant="success" id="dropdown-basic" >
                 <p>Sua estampa</p>
@@ -281,7 +280,7 @@ export default function PersonalizarProduto() {
               </Dropdown.Menu>
             </Dropdown>
           </div>
-          <div className=" bg-white ">
+          <div>
             <div>
               <Dropdown >
                 <Dropdown.Toggle variant="success" id="dropdown-basic" >
@@ -321,34 +320,37 @@ export default function PersonalizarProduto() {
       </div>
 
 
-      <h2 className='mb-2'>Tipos produto</h2>
-      <div className=" py-2 bg-[gray] flex flex-row flex-wrap items-center justify-center px-10 pt-10 md:px-[500px] rounded">
-        {produtos
-          .filter((produto) => produto.categoria === product)
-          .map((produto) => (
-            <div
-              key={produto.id}
-              className={`
-          ${produto.categoria === 'camisa' && 'w-[50%]'}
-          ${produto.categoria === 'caneca' && 'max-w-[100px]'}
-          ${produto.categoria === 'almofada' && 'w-[50%]'}
-          ${produto.categoria === 'azulejo' && 'w-[50%]'}
-          flex flex-col items-center tran sition-all duration-[150ms] rounded-lg cursor-pointer relative sm:w-140
-          ${id === produto.id ? 'border-green-950 border-[4px]' : 'border-black border-2'}
-          
-        `}
-              onClick={() => handleProdutoClick(produto)}
-            >
-              <div className="bg-white rounded-t-md border-b border-gray-300">
-                <img src={produto.imagem} alt="" className="rounded-t-md" />
+      <div className='flex flex-col items-center justify-start '>
+        <div className="py-2 bg-[gray] w-[48%] flex flex-row flex-wrap items-center justify-center sm:px-1 md:px-2  rounded gap-2 ">
+          {produtos
+            .filter((produto) => produto.categoria === product)
+            .map((produto) => (
+              <div
+                key={produto.id}
+                className={`
+            w-5/12
+            flex flex-col items-center transition-all duration-[150ms] rounded-lg cursor-pointer relative
+            ${id === produto.id ? 'border-green-950 border-[4px]' : 'border-black border-2'}
+          `}
+                onClick={() => handleProdutoClick(produto)}
+              >
+                {/* Div de imagem */}
+                <div className="bg-white rounded-t-md border-b border-gray-300 sm:bg-blue-900">
+                  <img src={produto.imagem} alt="" className="rounded-t-md" />
+                </div>
+                <div className="bg-white rounded-b-md p-2 text-center w-full">
+                  {/* Nome do produto */}
+                  <div className="text-center font-medium text-[17px] w-full h-[100px] flex items-center justify-center p-1 ">
+                    {produto.nome}
+                  </div>
+                  <p className="text-center">R$ {produto.preco.toFixed(2)}</p>
+                </div>
               </div>
-              <div className="bg-white rounded-b-md p-2 text-center w-full">
-                <p className="text-center font-medium text-[20px] w-full">{produto.nome}</p>
-                <p className="text-center">R$ {produto.preco.toFixed(2)}</p>
-              </div>
-            </div>
-          ))}
+            ))}
+        </div>
       </div>
+
+
 
 
       {product === 'caneca' && (
@@ -386,7 +388,7 @@ export default function PersonalizarProduto() {
 
 
       {product === 'camisa' && (
-       
+
         <div className="flex flex-col items-center mt-4 space-y-4">
           <p>Selecione o tamanho</p>
           <Dropdown>
