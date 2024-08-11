@@ -1,7 +1,7 @@
 import Carousel from 'react-bootstrap/Carousel';
-import img1 from '/carrossell1.png';
-import img2 from '/Almochaveiro 7x7cm.png';
-import img3 from '/Poliester.png';
+import img1 from '/carrossell1.jpg';
+import img2 from '/carrossell1.png';
+import img3 from '/agendacarrossell1.jpg';
 
 function UncontrolledExample() {
   return (
@@ -11,7 +11,7 @@ function UncontrolledExample() {
           <img
             src={img1}
             alt="Primeiro Slide"
-            className="w-full h-[300px] object-cover" // Ajuste a altura conforme necessário
+            className="w-[30%] mx-auto object-cover" // Ajuste a altura conforme necessário
           />
         </Carousel.Item>
 
@@ -19,7 +19,7 @@ function UncontrolledExample() {
           <img
             src={img2}
             alt="Segundo Slide"
-            className="w-full h-[300px] object-cover"
+            className="w-[30%] mx-auto object-cover"
           />
         </Carousel.Item>
 
@@ -27,7 +27,7 @@ function UncontrolledExample() {
           <img
             src={img3}
             alt="Terceiro Slide"
-            className="w-full h-[300px] object-cover"
+            className="w-[30%] mx-auto object-cover"
           />
         </Carousel.Item>
       </Carousel>
