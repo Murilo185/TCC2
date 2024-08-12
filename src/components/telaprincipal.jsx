@@ -14,25 +14,27 @@ import UncontrolledExample from './carrossell.jsx';
 import { Link } from 'react-router-dom';
 
 
+
 export default function TelaPrincipal() {
 
   return (
     <>
+    
       <Cabecalho />
 
       <UncontrolledExample />
 
-      <div className='flex flex-row items-center justify-center bg-[#e7e5ec]'>
+      <div className='flex flex-row items-center justify-center bg-[#e7e5ec] font-fonte1'>
         <h2 className='pr-[20px] c-[purple] text-purple-950'>Produtos</h2>
         <div className='h-[2px] bg-[purple] flex-grow-[1]'></div>
       </div>
 
-      <div id="containner" className='flex flex-wrap justify-center items-center gap-1'>
+      <div id="containner" className='flex flex-wrap justify-center items-center gap-1 text-sm text-center'>
         <div id="camisa" className='w-40 flex flex-col items-center p-4 rounded-md shadow-md'>
           <Link to="/produto/camisa">
             <img src={camisa} alt="Camisa" />
           </Link>
-          <p className="nomeProduto ">Camisa</p>
+          <p className="nomeProduto py-2 font-fonte1">Camisa</p>
           <p className="Descricao">A partir de <span>39</span>,90</p>
         </div>
 
@@ -40,15 +42,15 @@ export default function TelaPrincipal() {
           <Link to="/produto/caneca">
             <img src={caneca} alt="Caneca" />
           </Link>
-          <p className='nomeProduto'>Caneca</p>
-          <p className="Descricao">A partir de <span>19</span>,90</p>
+          <p className='nomeProduto py-2'>Caneca</p>
+          <p className="Descricao">A partir de <span>29</span>,90</p>
         </div>
 
         <div id="Almofada" className='w-40 flex flex-col items-center p-4 rounded-md shadow-md'>
           <Link to="/produto/almofada">
             <img src={almofada} alt="Almofada" />
           </Link>
-          <p className='nomeProduto'>Almofada</p>
+          <p className='nomeProduto py-2'>Almofada</p>
           <p className="Descricao">A partir de <span>19</span>,90</p>
         </div>
 
@@ -56,7 +58,7 @@ export default function TelaPrincipal() {
           <Link to="/produto/caderno">
             <img src={caderno} alt="Caderno" />
           </Link>
-          <p className='nomeProduto'>Caderno</p>
+          <p className='nomeProduto py-2'>Caderno</p>
           <p className="Descricao">A partir de <span>19</span>,90</p>
         </div>
 
@@ -64,7 +66,7 @@ export default function TelaPrincipal() {
           <Link to="/produto/azulejo">
             <img src={azulejo} alt="Azulejo" />
           </Link>
-          <p className='nomeProduto'>Azulejo</p>
+          <p className='nomeProduto py-2'>Azulejo</p>
           <p className="Descricao">A partir de <span>19</span>,90</p>
         </div>
 
@@ -72,7 +74,7 @@ export default function TelaPrincipal() {
           <Link to="/produto/agenda">
             <img src={agenda} alt="Agenda" />
           </Link>
-          <p className='nomeProduto'>Agenda</p>
+          <p className='nomeProduto py-2'>Agenda</p>
           <p className="Descricao">A partir de <span>14</span>,90</p>
         </div>
 
@@ -80,7 +82,7 @@ export default function TelaPrincipal() {
           <Link to="/produto/chaveiro">
             <img src={chaveiro} alt="Chaveiro" />
           </Link>
-          <p className='nomeProduto'>Chaveiro</p>
+          <p className='nomeProduto py-2'>Chaveiro</p>
           <p className="Descricao">A partir de <span>12</span>,90</p>
         </div>
       </div>

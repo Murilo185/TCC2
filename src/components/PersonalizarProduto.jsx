@@ -340,10 +340,10 @@ export default function PersonalizarProduto() {
                 </div>
                 <div className="bg-white rounded-b-md p-2 text-center w-full">
                   {/* Nome do produto */}
-                  <div className="text-center font-medium text-[17px] w-full h-[100px] flex items-center justify-center p-1 ">
+                  <div className="text-center font-medium text-sm w-full h-[50px] flex items-center justify-center p-1 ">
                     {produto.nome}
                   </div>
-                  <p className="text-center">R$ {produto.preco.toFixed(2)}</p>
+                  <p className="text-center text-sm">R$ {produto.preco.toFixed(2)}</p>
                 </div>
               </div>
             ))}

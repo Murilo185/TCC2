@@ -42,7 +42,7 @@ export default function Produto() {
         </p>
 
         <Link to={`/PersonalizarProduto/${product}`}>
-          <div className='bg-[#3B7A58] text-white w-[80%] flex items-center justify-center py-4 font-bold text-[18px] rounded-[8px]'>
+          <div className='bg-[#3B7A58] text-white w-[100%] flex items-center justify-center px-4 py-4 font-bold text-[18px] rounded-[8px]'>
             Personalize seu produto
           </div>
         </Link>

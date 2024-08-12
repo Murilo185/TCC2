@@ -5,30 +5,25 @@ import img3 from '/agendacarrossell1.jpg';
 
 function UncontrolledExample() {
   return (
-    <div className="container mx-auto">
-      <Carousel>
+    <div className=" container mx-auto ">
+      <Carousel data-bs-theme="dark" slide={true} interval={3500}>
+        
         <Carousel.Item>
-          <img
-            src={img1}
-            alt="Primeiro Slide"
-            className="w-[30%] mx-auto object-cover" // Ajuste a altura conforme necessário
-          />
+          <div className='w-[50%] h-[300px] bg-slate-800 mx-auto object-cover' style={{ backgroundImage: `url(${img1})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} >
+
+          </div>
         </Carousel.Item>
 
         <Carousel.Item>
-          <img
-            src={img2}
-            alt="Segundo Slide"
-            className="w-[30%] mx-auto object-cover"
-          />
+          <div className='w-[50%] h-[300px] bg-slate-800 mx-auto object-cover' style={{ backgroundImage: `url(${img2})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} >
+
+          </div>
         </Carousel.Item>
 
         <Carousel.Item>
-          <img
-            src={img3}
-            alt="Terceiro Slide"
-            className="w-[30%] mx-auto object-cover"
-          />
+          <div className='w-[50%] h-[300px] bg-slate-800 mx-auto object-cover' style={{ backgroundImage: `url(${img3})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} >
+
+          </div>
         </Carousel.Item>
       </Carousel>
     </div>
