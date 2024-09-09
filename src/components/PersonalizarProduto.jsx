@@ -84,7 +84,8 @@ export default function PersonalizarProduto() {
       setCorSelecionada(null); // Reseta a cor para outros produtos
     }
     if (OpcoesCoresCamisa[produto.nome]) {
-      setCorSelecionada(OpcoesCoresCamisa[produto.nome][0]); // Define a cor padrão para canecas
+      
+      setCorSelecionada(OpcoesCoresCamisa[produto.nome][0]);
     } else {
       setCorSelecionada(null); // Reseta a cor para outros produtos
     }
@@ -250,35 +251,35 @@ export default function PersonalizarProduto() {
       <div className="bg-[#999999] w-full md:w-[50%] mx-auto rounded-[10px] mb-2">
         <div className="flex items-center justify-center">
           <div className='px-2 py-2'>
-          <Dropdown>
-  <Dropdown.Toggle variant="success" id="dropdown-basic">
-    <p>Sua estampa</p>
-  </Dropdown.Toggle>
-  <Dropdown.Menu>
-    {!imagemSelecionada && !estampaSelecionada && (
-      <button
-        onClick={() => inputFileRef.current.click()}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      >
-        Enviar sua imagem aqui
-      </button>
-    )}
-    {imagemSelecionada && (
-      <button
-      onClick={() => inputFileRef.current.click()}
-      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-    >
-      Enviar sua imagem aqui
-    </button>
-    )}
-    <input
-      type="file"
-      ref={inputFileRef}
-      style={{ display: 'none' }}
-      onChange={handleImageUpload}
-    />
-  </Dropdown.Menu>
-</Dropdown>
+            <Dropdown>
+              <Dropdown.Toggle variant="success" id="dropdown-basic">
+                <p>Sua estampa</p>
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                {!imagemSelecionada && !estampaSelecionada && (
+                  <button
+                    onClick={() => inputFileRef.current.click()}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  >
+                    Enviar sua imagem aqui
+                  </button>
+                )}
+                {imagemSelecionada && (
+                  <button
+                    onClick={() => inputFileRef.current.click()}
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  >
+                    Enviar sua imagem aqui
+                  </button>
+                )}
+                <input
+                  type="file"
+                  ref={inputFileRef}
+                  style={{ display: 'none' }}
+                  onChange={handleImageUpload}
+                />
+              </Dropdown.Menu>
+            </Dropdown>
           </div>
           <div>
             <div>
@@ -329,13 +330,13 @@ export default function PersonalizarProduto() {
                 key={produto.id}
                 className={`
             w-5/12
-            flex flex-col items-center transition-all duration-[150ms] rounded-lg cursor-pointer relative
+            flex flex-col items-center transition-all duration-[150ms] rounded-lg cursor-pointer relative 
             ${id === produto.id ? 'border-green-950 border-[4px]' : 'border-black border-2'}
           `}
                 onClick={() => handleProdutoClick(produto)}
               >
                 {/* Div de imagem */}
-                <div className="bg-white rounded-t-md border-b border-gray-300 sm:bg-blue-900">
+                <div className="bg-[#9998ac] rounded-t-md border-b border-gray-300">
                   <img src={produto.imagem} alt="" className="rounded-t-md" />
                 </div>
                 <div className="bg-white rounded-b-md p-2 text-center w-full">
@@ -371,7 +372,7 @@ export default function PersonalizarProduto() {
       )}
       {product === 'camisa' && (
         <div className="my-4 text-center">
-          <h4>Selecione a cor da camisa:</h4>
+          <h4>Selecione a cor da camisa</h4>
           <div className="flex flex-wrap justify-center gap-2">
             {OpcoesCoresCamisa[tipoProdutoSelecionado]?.map((cor) => (
               <button
@@ -390,7 +391,6 @@ export default function PersonalizarProduto() {
       {product === 'camisa' && (
 
         <div className="flex flex-col items-center mt-4 space-y-4">
-          <p>Selecione o tamanho</p>
           <Dropdown>
             <Dropdown.Toggle variant="success" id="dropdown-tamanho">
               {tamanhoSelecionado || "Selecione um tamanho"}
