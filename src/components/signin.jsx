@@ -67,17 +67,6 @@ export default function SignIn() {
 
                 <input className="mt-[20px] capitalize w-full bg-[#E6E6E6] text-[#FFFFFF] text-[20px] py-3 rounded-[8px]" type="submit" value='login' />
 
-                <div className="mt-[30px] flex justify-center items-center w-full">
-                    <div className="flex-grow-[1] bg-[#3B7A58] h-[2px]"></div>
-                    <p className="text-[18px] px-3 text-[#3B7A58] font-bold">Ou</p>
-                    <div className="flex-grow-[1] bg-[#3B7A58] h-[2px]"></div>
-                </div>
-
-                <div
-                    className="mt-[20px] w-full text-center bg-transparent border-[1px] border-[#E6E6E6] text-[#000000] text-[18px] py-3 rounded-[8px]" src="/static/images/google.png" >
-                    Faça login com google
-                </div>
-
                 <p className="mt-[40px] mb-[60px] text-center w-full text-[#733a8e]">Esqueceu sua senha? <a href="#" className="text-[#3B7A58]">Recupere sua senha</a>
                 </p>
                 <p className="mt-[40px] mb-[60px] text-center w-full text-[#733a8e]">Não tem uma conta ainda? <a href="/sign-up" className="text-[#3B7A58]">Cadastre-se</a>
