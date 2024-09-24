@@ -13,6 +13,7 @@ import { CartProvider } from './contexts/cartContext.jsx';
 import Cabecalho from './components/cabecalho.jsx';
 import DetalheItemCarrinho from './components/DetalheItemCarrinho.jsx';
 import { QuantidadeProvider } from './contexts/quantidadeContext.jsx';
+import User from './components/User.jsx';
 
 const router = createBrowserRouter([
   {
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
     path: "/item/:itemId",
     element: <DetalheItemCarrinho />, // Rota para a página de detalhes do item
   },
+  {
+    path:"/User",
+    element: <User />
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
