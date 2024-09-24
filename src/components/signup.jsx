@@ -7,6 +7,9 @@ export default function SignUp() {
     const [nameValue, setNameValue] = useState('')
     const [emailValue, setEmailValue] = useState('')
     const [passwordValue, setPasswordValue] = useState('')
+    const [cepValue, setCepValue] = useState('')
+    const [complementoValue, setComplementoValue] = useState('')
+    const [numeroValue, setNumeroValue] = useState('')
 
     function handleInputEmail(e) {
         setEmailValue(e.target.value)
@@ -18,6 +21,18 @@ export default function SignUp() {
     
     function handleInputName(e) {
         setNameValue(e.target.value)
+    }
+    
+    function handleInputCEP(e) {
+        setCepValue(e.target.value)
+    }
+    
+    function handleInputComplemento(e) {
+        setComplementoValue(e.target.value)
+    }
+    
+    function handleInputNumero(e) {
+        setNumeroValue(e.target.value)
     }
 
     function signUp(){
@@ -82,6 +97,39 @@ export default function SignUp() {
                     value={passwordValue}
                     onChange={(e) => handleInputPassword(e)}
                 />
+                
+                <label className="uppercase text-[18px] w-full font-bold mb-[4px] text-[#733a8E]">cep</label>
+                <input
+                    className="text-[18px] text-[#000000] placeholder:text-[#808080] border border-[#E6E6E6] p-2 py-3 rounded-[10px] mb-[30px] focus:outline-none"
+                    type="text"
+                    placeholder="Coloque seu CEP"
+                    value={cepValue}
+                    onChange={(e) => handleInputCEP(e)}
+                />
+                
+                <div className='w-full flex items-center justify-between flex-row relative gap-2 px-2 mb-4'>
+                    <div className='flex w-[48%] items-center justify-start flex-col'>
+                        <label className='uppercase font-bold text-[#733a8E]'>N°</label>
+                        <input
+                            className='w-full text-[16px] py-3 text-[#000000] border border-[#e6e6e6] rounded-[10px] px-1 focus:outline-none' 
+                            type="text"
+                            placeholder="Coloque sua N°"
+                            value={numeroValue}
+                            onChange={(e) => handleInputNumero(e)}
+                        />
+                    </div>
+                    
+                    <div className='flex w-[48%] items-center justify-start flex-col'>
+                        <label className='capitalize font-bold text-[#733a8E]'>complemento</label>
+                        <input
+                            className='w-full text-[16px] py-3 text-[#000000] border border-[#e6e6e6] rounded-[10px] px-1 focus:outline-none' 
+                            type="text"
+                            placeholder="Coloque seu complemento"
+                            value={complementoValue}
+                            onChange={(e) => handleInputComplemento(e)}
+                        />
+                    </div>
+                </div>
 
                 <p className="mb-[20px] text-[14px] font-bold">Ao cadastrar-se você esta concordando com nossos <span className="text-[14px] text-[#3B7A58]">Termos, Privacidade, Politica</span> e uso de Cookies</p>
 

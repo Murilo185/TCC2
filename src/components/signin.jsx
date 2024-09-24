@@ -1,11 +1,16 @@
-import { useState, useEffect } from 'react'
 import axios from 'axios'
 import Cabecalho from './cabecalho'
+
+import React, { useState, useContext } from 'react';
+
+import { CartContext } from '../contexts/cartContext.jsx';
 
 export default function SignIn() {
 
     const [emailValue, setEmailValue] = useState('')
     const [passwordValue, setPasswordValue] = useState('')
+
+    const { persUser } = useContext(CartContext);
 
     function handleInputEmail(e) {
         setEmailValue(e.target.value)
@@ -14,15 +19,15 @@ export default function SignIn() {
     function handleInputPassword(e) {
         setPasswordValue(e.target.value)
     }
-    //rodolfoGay@gmail.com <---- marcosViado@gmail.com
 
     function signIn(){
-        axios.get(`http://localhost:3000/login/${emailValue}`)
+        axios.get(`https://tcc2-backend2.onrender.com/login/${emailValue}`)
             .then(function (response) {
                 setEmailValue('')
                 setPasswordValue('')
                 
                 alert(`${response.data.name}`)
+                persUser(response.data.name, response.data.email, response.data.password)
                 console.log(response.data);
             })
             .catch(function (error) {

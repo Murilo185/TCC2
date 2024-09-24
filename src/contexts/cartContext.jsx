@@ -5,8 +5,37 @@ export const CartContext = createContext();
 export const CartProvider = ({ children }) => {
   const [showModal, setShowModal] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  
+  const [user, setUsersetUser] = useState({
+    nome: localStorage.getItem('usuarioPU') ? JSON.parse(localStorage.getItem('usuarioPU')).nome : 'nome',
+    email: localStorage.getItem('usuarioPU') ? JSON.parse(localStorage.getItem('usuarioPU')).email : 'email',
+    senha: localStorage.getItem('usuarioPU') ? JSON.parse(localStorage.getItem('usuarioPU')).senha : 'senha',
+    cep: localStorage.getItem('usuarioPU') ? JSON.parse(localStorage.getItem('usuarioPU')).cep : 'cep',
+    numero: localStorage.getItem('usuarioPU') ? JSON.parse(localStorage.getItem('usuarioPU')).numero : 'numero',
+    complemento: localStorage.getItem('usuarioPU') ? JSON.parse(localStorage.getItem('usuarioPU')).complemento : 'complemento',
+  })
 
   const [showNotification, setShowNotification] = useState(false);
+
+  function persUser(nome, email, senha) {
+    localStorage.setItem('usuarioPU', JSON.stringify({
+      nome: nome,
+      email: email,
+      senha: senha,
+      cep: '02814-000',
+      numero: 1,
+      complemento: 'rua tal',
+    }))
+
+    setUsersetUser({
+      nome: nome,
+      email: email,
+      senha: senha,
+      cep: '02814-000',
+      numero: 1,
+      complemento: 'rua tal',
+    })
+  }
 
   const addProductToCart = (product) => {
     setCartItems((prevItems) => {
@@ -41,7 +70,7 @@ export const CartProvider = ({ children }) => {
   const handleCloseModal = () => setShowModal(false); // Função para fechar o modal
 
   return (
-    <CartContext.Provider value={{ cartItems, addProductToCart, removeFromCart, showModal, handleCloseModal, showNotification }}> 
+    <CartContext.Provider value={{ cartItems, addProductToCart, removeFromCart, showModal, handleCloseModal, showNotification, user, persUser }}> 
       {children}
     </CartContext.Provider>
   );

@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
+
+import { CartContext } from '../contexts/cartContext.jsx';
 
 const User = () => {
+
+  const { user, persUser } = useContext(CartContext);
+
   const purchaseHistory = [
     { id: 1, item: 'Produto 1', date: '2024-09-01' },
     { id: 2, item: 'Produto 2', date: '2024-09-10' },
@@ -9,7 +14,7 @@ const User = () => {
 
   return (
     <div className="p-4">
-      <p className="text-xl font-bold mb-4">Nome do Usuário:</p>
+      <p className="text-xl font-bold mb-4">Nome do Usuário: {user.nome}</p>
       <h2 className="text-xl font-semibold mb-2">Histórico de Compras</h2>
       <ul>
         {purchaseHistory.map((purchase) => (
@@ -19,6 +24,12 @@ const User = () => {
           </li>
         ))}
       </ul>
+      <div
+        className={`bg-[#3bb239] text-white text-center py-3 rounded-[6px] uppercase`}
+        onClick={() => persUser()}
+      >
+          atualizar
+      </div>
     </div>
   );
 };
