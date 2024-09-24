@@ -12,10 +12,22 @@ import Footer from './Footer.jsx';
 import { PiWhatsappLogo } from "react-icons/pi";
 import UncontrolledExample from './carrossell.jsx';
 import { Link } from 'react-router-dom';
-
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { CartContext } from '../contexts/cartContext.jsx';
+import { useEffect, useContext } from 'react'
 
 export default function TelaPrincipal() {
+
+  const { user, persUser, firstLogin, setFirstLogin } = useContext(CartContext);
+  const notify = () => toast(`Olá ${user.nome}`);
+
+  useEffect(() => {
+    if(firstLogin == false){
+      notify()
+      setFirstLogin(true)
+    }
+  },[])
 
   return (
     <>
@@ -88,6 +100,7 @@ export default function TelaPrincipal() {
       </div>
 
       <Footer />
+      <ToastContainer />
     </>
   );
 }

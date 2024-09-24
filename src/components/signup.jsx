@@ -1,8 +1,15 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import axios from 'axios'
 import Cabecalho from './cabecalho'
 
+import { useNavigate } from 'react-router-dom';
+
+import { CartContext } from '../contexts/cartContext.jsx';
+
 export default function SignUp() {
+    const navigate = useNavigate()
+
+    const { persUser, setFirstLogin } = useContext(CartContext);
 
     const [nameValue, setNameValue] = useState('')
     const [emailValue, setEmailValue] = useState('')
@@ -36,7 +43,7 @@ export default function SignUp() {
     }
 
     function signUp(){
-        axios.post(`http://localhost:3000/register`, {
+        axios.post(`https://tcc2-backend2.onrender.com/register`, {
             name: nameValue,
             email: emailValue,
             password: passwordValue,
@@ -48,7 +55,9 @@ export default function SignUp() {
                 setEmailValue('')
                 setPasswordValue('')
 
-                alert(response.data)
+                setFirstLogin(false)
+                persUser(response.data.name, response.data.email, response.data.password, response.data.complemento, response.data.historico_pedido)
+                navigate('/')
             })
             .catch(function (error) {
                 console.log(error);

@@ -1,16 +1,18 @@
 import axios from 'axios'
 import Cabecalho from './cabecalho'
+import { useNavigate } from 'react-router-dom';
 
 import React, { useState, useContext } from 'react';
 
 import { CartContext } from '../contexts/cartContext.jsx';
 
 export default function SignIn() {
+    const navigate = useNavigate()
 
     const [emailValue, setEmailValue] = useState('')
     const [passwordValue, setPasswordValue] = useState('')
 
-    const { persUser } = useContext(CartContext);
+    const { persUser, setFirstLogin } = useContext(CartContext);
 
     function handleInputEmail(e) {
         setEmailValue(e.target.value)
@@ -26,9 +28,11 @@ export default function SignIn() {
                 setEmailValue('')
                 setPasswordValue('')
                 
-                alert(`${response.data.name}`)
-                persUser(response.data.name, response.data.email, response.data.password)
+                persUser(response.data.name, response.data.email, response.data.password, response.data.complemento, response.data.historico_pedido)
                 console.log(response.data);
+                
+                setFirstLogin(false)
+                navigate('/')
             })
             .catch(function (error) {
                 alert('Erro interno no servidor')

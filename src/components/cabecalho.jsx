@@ -62,7 +62,7 @@ export default function Cabecalho() {
   useEffect(() => {
     let novaMensagem = "Gostaria de fazer um pedido:";
     cartItems.forEach((item) => {
-      novaMensagem += `* ${item.tipoProduto} (${item.cor}, ${item.tamanho}) - ${item.quantidade}x R$${item.precoTotal.toFixed(2)}\n`;
+      novaMensagem += `* ${item.tipoProduto} (${item.cor !== null && item.cor} ${item.tamanho ? `,${item.tamanho}` : ''}) - ${item.quantidade}x R$${item.precoTotal.toFixed(2)}\n`;
 
       if (item.imagemPublicId) {
         const imageUrl = `https://res.cloudinary.com/dwgjwhkui/image/upload/${item.imagemPublicId}`;
