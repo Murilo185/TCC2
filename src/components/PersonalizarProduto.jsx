@@ -179,9 +179,10 @@ export default function PersonalizarProduto() {
         imagemPublicId: imagemPublicId,
         id: generateUniqueId(),
         cor: corSelecionada,
-        tamanho: tamanhoSelecionado
+        tamanho: tamanhoSelecionado,
+        nome: produtoSelecionado.nome, // Adiciona o nome do produto
       };
-
+  
       addProductToCart(productToAdd);
       setShowModal(true);
     } else {
