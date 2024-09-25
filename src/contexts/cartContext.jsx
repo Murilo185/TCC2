@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect } from 'react';
 
 export const CartContext = createContext();
 
@@ -25,39 +25,24 @@ export const CartProvider = ({ children }) => {
 
   const storedUser = getUserFromStorage();
 
+
   const [cartItems, setCartItems] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [user, setUser] = useState({
-    nome: storedUser?.nome || 'nome',
-    email: storedUser?.email || 'email',
-    senha: storedUser?.senha || 'senha',
-    complemento: storedUser?.complemento || 'complemento',
-    cep: storedUser?.cep || 'cep',
-    historico_pedido: storedUser?.historico_pedido || [],
-    numero: storedUser?.numero || 'numero',
-  });
+  const [user, setUser] = useState(storedUser);
 
   const [showNotification, setShowNotification] = useState(false);
   const [firstLogin, setFirstLogin] = useState(getFirstLoginFromStorage);
 
   const persUser = (nome, email, senha, complemento, historicoPedido) => {
-    const usuario = {
-      nome: nome || user.nome,
-      email: email || user.email,
-      senha: senha || user.senha,
-      complemento: complemento || user.complemento,
-      historico_pedido: historicoPedido || user.historico_pedido,
-      cep: '02814-000',
-      numero: 1,
-    };
+    const usuario = { nome, email, senha, complemento, historico_pedido: historicoPedido };
+    localStorage.setItem('usuarioPU', JSON.stringify(usuario));
+    setUser(usuario);
+};
 
-    try {
-      localStorage.setItem('usuarioPU', JSON.stringify(usuario));
-      setUser(usuario);
-    } catch (error) {
-      console.error('Erro ao salvar usuário no localStorage:', error);
-    }
-  };
+const adicionarPedidoAoHistorico = (novoPedido) => {
+  const updatedHistorico = [...user.historico_pedido, novoPedido];
+  persUser(user.nome, user.email, user.senha, user.complemento, updatedHistorico);
+};
 
   const addProductToCart = (product) => {
     setCartItems((prevItems) => {
@@ -111,8 +96,9 @@ export const CartProvider = ({ children }) => {
         user,
         setUser,
         persUser,
+        adicionarPedidoAoHistorico, // Adicione esta linha
         firstLogin,
-        setFirstLogin: handleFirstLogin, // Usar handleFirstLogin para persistir no localStorage
+        setFirstLogin: handleFirstLogin,
       }}
     >
       {children}

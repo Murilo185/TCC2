@@ -47,23 +47,28 @@ export default function SignUp() {
             name: nameValue,
             email: emailValue,
             password: passwordValue,
+            cep: cepValue,
+            complemento: complementoValue,
+            numero: numeroValue,
         })
             .then(function (response) {
                 console.log(response.data);
                 
-                setNameValue('')
-                setEmailValue('')
-                setPasswordValue('')
-
-                setFirstLogin(false)
-                persUser(response.data.name, response.data.email, response.data.password, response.data.complemento, response.data.historico_pedido)
-                navigate('/')
+                setNameValue('');
+                setEmailValue('');
+                setPasswordValue('');
+                setCepValue('');
+                setComplementoValue('');
+                setNumeroValue('');
+    
+                setFirstLogin(false);
+                persUser(response.data.name, response.data.email, response.data.password, complementoValue, []); // O histórico de pedidos pode começar vazio
+                navigate('/');
             })
             .catch(function (error) {
                 console.log(error);
-
-                alert('Erro interno no servidor')
-            })
+                alert('Erro interno no servidor');
+            });
     }
 
     return(

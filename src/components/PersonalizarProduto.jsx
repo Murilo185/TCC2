@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from 'react';
+import  { useContext, useState, useRef } from 'react';
 import { CartContext } from "../contexts/cartContext";
 import { useParams } from 'react-router-dom';
 import Quantidade from "./Quantidade";
@@ -40,7 +40,6 @@ export default function PersonalizarProduto() {
   const { quantidade } = useContext(QuantidadeContext);
   const defaultProduct = produtos.find(p => p.categoria === product) || produtos[0];
   const [tipoProdutoSelecionado, setTipoProdutoSelecionado] = useState(defaultProduct.categoria);
-  const coresDisponiveis = ['Branco', 'Preto', 'Verde', 'Vermelho', 'Azul', 'Amarelo'];
 
   const defaultCor = (product === 'caneca') ? 'Branco' : null;
 
@@ -181,6 +180,7 @@ export default function PersonalizarProduto() {
         cor: corSelecionada,
         tamanho: tamanhoSelecionado,
         nome: produtoSelecionado.nome, // Adiciona o nome do produto
+        
       };
   
       addProductToCart(productToAdd);

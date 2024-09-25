@@ -5,6 +5,8 @@ import { useContext, useState, useRef, useEffect } from 'react';
 import { CartContext } from '../contexts/cartContext.jsx';
 import { MdClose } from 'react-icons/md';
 import { FaWhatsapp, FaEnvelope } from 'react-icons/fa';
+import axios from 'axios';
+
 
 const WhatsAppIcon = ({ mensagem }) => {
   const numeroTelefone = "5511939460815";
@@ -74,12 +76,37 @@ export default function Cabecalho() {
   }, [cartItems]);
 
   const handleFinalizarPedido = () => {
+    const novoPedido = {
+      items: cartItems.map(item => ({
+        id: item.id,
+        quantidade: item.quantidade,
+        precoTotal: item.precoTotal,
+        // Adicione outros atributos se necessário
+      })),
+      userId: user.id, // Inclui o ID do usuário
+      total: cartItems.reduce((total, item) => total + item.precoTotal, 0),
+    };
+
+    adicionarPedidoAoHistorico(novoPedido);
     const updatedHistorico = [...user.historico_pedido, ...cartItems];
     persUser(user.nome, user.email, user.senha, user.complemento, updatedHistorico);
     setShowIcons(true);
-  };
 
+    axios.post('https://tcc2-backend2.onrender.com/order/register', novoPedido)
+    .then(response => {
+      adicionarPedidoAoHistorico(novoPedido);
+      const updatedHistorico = [...user.historico_pedido, ...cartItems];
+      persUser(user.nome, user.email, user.senha, user.complemento, updatedHistorico);
+      setShowIcons(true);
+      console.log(response.data)
+    })
+    .catch(error => {
+      console.error('Erro ao finalizar o pedido:', error);
+    });
+  };
+  const { adicionarPedidoAoHistorico } = useContext(CartContext);
   return (
+
     <div className="w-full flex flex-col justify-center items-center relative">
       <div className="w-full flex justify-between bg-white py-3 px-5">
         <Link to="/">
@@ -87,7 +114,7 @@ export default function Cabecalho() {
         </Link>
 
         <div className="flex h-full items-center justify-end">
-          <Link to="/sign-up">
+          <Link to={user ? '/user' : '/sign-up'} onClick={(e) => { if (user) { e.preventDefault(); navigate('/user'); } }}>
             <CiUser className="w-[40px] h-auto text-[#733A8E]" />
           </Link>
 
