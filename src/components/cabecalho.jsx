@@ -78,27 +78,39 @@ export default function Cabecalho() {
   const handleFinalizarPedido = () => {
     const novoPedido = {
       items: cartItems.map(item => ({
+        nome: item.nome,
         id: item.id,
         quantidade: item.quantidade,
         precoTotal: item.precoTotal,
         // Adicione outros atributos se necessário
       })),
-      userId: user.id, // Inclui o ID do usuário
+      // userId: user.id, // Inclui o ID do usuário
       total: cartItems.reduce((total, item) => total + item.precoTotal, 0),
     };
 
-    adicionarPedidoAoHistorico(novoPedido);
+    // adicionarPedidoAoHistorico(novoPedido);
+
     const updatedHistorico = [...user.historico_pedido, ...cartItems];
     persUser(user.nome, user.email, user.senha, user.complemento, updatedHistorico);
     setShowIcons(true);
 
-    axios.post('https://tcc2-backend2.onrender.com/order/register', novoPedido)
+    const data =  new Date()
+    
+    console.log(`${data.getDate()}:${data.getMonth()}:${data.getFullYear()}`)
+
+    axios.post('https://tcc2-backend3.onrender.com/order/register', {
+      client_name: user.nome,
+      client_address: user.endereco,
+      payment_mode: 'cartão',
+      data: `${data.getDate()}:${data.getMonth()}:${data.getFullYear()}`,
+      print: 'sla',
+    })
     .then(response => {
       adicionarPedidoAoHistorico(novoPedido);
       const updatedHistorico = [...user.historico_pedido, ...cartItems];
       persUser(user.nome, user.email, user.senha, user.complemento, updatedHistorico);
       setShowIcons(true);
-      console.log(response.data)
+      console.log('E: '+response.data)
     })
     .catch(error => {
       console.error('Erro ao finalizar o pedido:', error);

@@ -34,7 +34,13 @@ export const CartProvider = ({ children }) => {
   const [firstLogin, setFirstLogin] = useState(getFirstLoginFromStorage);
 
   const persUser = (nome, email, senha, complemento, historicoPedido) => {
-    const usuario = { nome, email, senha, complemento, historico_pedido: historicoPedido };
+    const usuario = {
+      nome,
+      email,
+      senha,
+      complemento,
+      historico_pedido: historicoPedido
+    };
     localStorage.setItem('usuarioPU', JSON.stringify(usuario));
     setUser(usuario);
 };

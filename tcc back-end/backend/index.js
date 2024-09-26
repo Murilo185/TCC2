@@ -12,8 +12,6 @@ const port = 3000
 const user_name = 'TCC'
 const password = 'f8XFhMUQUUd4AaEV'
 
-
-
 //MODELO DO OBJETO DO BANCO DE DADOS
 const Person = mongoose.model('Person', {
     name: {

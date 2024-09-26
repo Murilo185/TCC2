@@ -3,8 +3,6 @@ import { CartContext } from '../contexts/cartContext.jsx';
 import Cabecalho from './cabecalho';
 import { useNavigate } from 'react-router-dom';
 
-
-
 const User = () => {
   const { user, setUser } = useContext(CartContext);
   const navigate = useNavigate();
@@ -64,7 +62,7 @@ const User = () => {
                   </li>
                   <li className="flex justify-between">
                     <p className="font-medium">Preço Unitário:</p>
-                    <p>R$ {pedido.preco?.toFixed(2)}</p>
+                    <p>R$ {pedido.preco}</p>
                   </li>
                   {pedido.cor && (
                     <li className="flex justify-between">
@@ -80,7 +78,7 @@ const User = () => {
                   )}
                   <li className="flex justify-between">
                     <p className="font-semibold">Preço Total:</p>
-                    <p className="font-semibold">R$ {pedido.precoTotal.toFixed(2)}</p>
+                    <p className="font-semibold">R$ {pedido.precoTotal}</p>
                   </li>
                 </ul>
               </div>

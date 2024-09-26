@@ -21,7 +21,7 @@ export default function SignIn() {
     const signIn = (e) => {
         e.preventDefault();
     
-        axios.get(`https://tcc2-backend2.onrender.com/login/${emailValue}`)
+        axios.get(`https://tcc2-backend3.onrender.com/login/${emailValue}`)
             .then((response) => {
                 const { name, email, password, complemento, historico_pedido } = response.data;
     

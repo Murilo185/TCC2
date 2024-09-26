@@ -43,7 +43,7 @@ export default function SignUp() {
     }
 
     function signUp(){
-        axios.post(`https://tcc2-backend2.onrender.com/register`, {
+        axios.post(`https://tcc2-backend3.onrender.com/register`, {
             name: nameValue,
             email: emailValue,
             password: passwordValue,
