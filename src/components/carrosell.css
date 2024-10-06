@@ -8,11 +8,6 @@ carousel .item {
     background-color: transparent; /* Remove a cor de fundo padrão */
     border: 2px solid #fff; /* Adiciona uma borda branca */
   }
-  .carousel-item img {
-    width: 50pc; /* Ocupa toda a largura do contêiner */
-    height: auto; /* Mantém a proporção da imagem */
-    margin: auto;
-  }
   #whatsapp{
     position: absolute;
   }

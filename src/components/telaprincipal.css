@@ -1,50 +1,75 @@
-*{
-    margin: 0;
-    padding: 0;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+@font-face {
+    font-family: 'MinhaFonte';
+    src: url('../../fontes/Creamy_Sugary.otf');
 }
 
-#titprodutos{
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'MinhaFonte';
+}
+
+
+#titprodutos {
     display: flex;
     width: 100%;
 }
-body{
+
+body {
     margin: 0pc;
     padding: 0pc;
+    font-family: "Salsa";
+}
+
+.salsa-regular {
+    font-family: "Salsa", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+body{
+    font-family: "Salsa";
 }
 
 #column-wrapper {
-    text-align: center; /* Centraliza o conteúdo inline */
+    text-align: center;
+    /* Centraliza o conteúdo inline */
 }
-  
+
 #containner {
-    width: 70%; /* Ajuste conforme necessário */
-    display: flex; /* Permite centralizar com text-align */
+    width: 70%;
+    /* Ajuste conforme necessário */
+    display: flex;
+    /* Permite centralizar com text-align */
     flex-wrap: wrap;
     margin: auto;
     justify-content: center;
     background-color: rgba(231, 229, 236, 1);
 }
 
-.nomeProduto{
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+.nomeProduto {
     font-size: 20px;
     color: purple;
     font-weight: 800;
 }
 
-.Descricao{
+.Descricao {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 10px;
     font-weight: 600;
 }
-span{
+
+span {
     font-size: 15px;
     color: green;
 }
 
-#containner>div{
-    
+#containner>div {
+
     flex-direction: column;
     width: 40%;
     padding-bottom: 20px;
@@ -57,18 +82,18 @@ span{
     background-color: rgb(173, 172, 187);
 }
 
-#containner >div>a>img{
+#containner>div>a>img {
     width: 100px;
     border-radius: 10px;
 }
 
 
-#whatsapp{
+#whatsapp {
     width: 50px;
     margin-left: 300px;
 }
 
-#Rodape{
+#Rodape {
     background-color: purple;
     height: 100px;
     width: 100%;
@@ -79,10 +104,11 @@ span{
     padding: 0px;
 }
 
-#IconesContato{
+#IconesContato {
     justify-self: center;
 }
-#IconesContato>img{
+
+#IconesContato>img {
     justify-content: center;
     margin: 0px;
     width: 40px;
