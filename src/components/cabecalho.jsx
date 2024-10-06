@@ -4,11 +4,12 @@ import { CiUser, CiShoppingCart } from 'react-icons/ci';
 import { useContext, useState, useRef, useEffect } from 'react';
 import { CartContext } from '../contexts/cartContext.jsx';
 import { MdClose } from 'react-icons/md';
-import { FaWhatsapp, FaEnvelope } from 'react-icons/fa'; // Importando ícones do React Icons
+import { FaWhatsapp, FaEnvelope } from 'react-icons/fa';
+import axios from 'axios';
 
-// Componentes de ícones
+
 const WhatsAppIcon = ({ mensagem }) => {
-  const numeroTelefone = "5511939460815"; // Substitua pelo número da empresa
+  const numeroTelefone = "5511939460815";
   const mensagemCodificada = encodeURIComponent(mensagem);
   const linkWhatsApp = `https://wa.me/${numeroTelefone}?text=${mensagemCodificada}`;
 
@@ -32,12 +33,12 @@ const EmailIcon = ({ mensagem }) => {
 
 export default function Cabecalho() {
   const navigate = useNavigate();
-  const { removeFromCart, cartItems } = useContext(CartContext);
+  const { removeFromCart, cartItems, user, persUser } = useContext(CartContext);
   const [showCart, setShowCart] = useState(false);
   const cartRef = useRef(null);
-  const iconsRef = useRef(null); // Ref para a caixa de ícones
-  const [showIcons, setShowIcons] = useState(false); // Estado para controlar a visibilidade dos ícones
-  const [mensagem, setMensagem] = useState("Olá, gostaria de fazer um pedido:\n\n"); // Estado para a mensagem
+  const iconsRef = useRef(null);
+  const [showIcons, setShowIcons] = useState(false);
+  const [mensagem, setMensagem] = useState("Olá, gostaria de fazer um pedido:\n\n");
 
   const toggleCart = () => {
     setShowCart(!showCart);
@@ -60,15 +61,14 @@ export default function Cabecalho() {
   }, [cartItems]);
 
   useEffect(() => {
-    let novaMensagem = "Gostaria de fazer um pedido:";
+    let novaMensagem = "Gostaria de fazer um pedido:\n";
     cartItems.forEach((item) => {
-      novaMensagem += `* ${item.tipoProduto} (${item.cor}, ${item.tamanho}) - ${item.quantidade}x R$${item.precoTotal.toFixed(2)}\n`;
+      novaMensagem += `* ${item.tipoProduto} (${item.cor ? `${item.cor}` : ''} ${item.tamanho ? `, ${item.tamanho}` : ''}) - ${item.quantidade}x R$${item.precoTotal.toFixed(2)}\n`;
 
       if (item.imagemPublicId) {
         const imageUrl = `https://res.cloudinary.com/dwgjwhkui/image/upload/${item.imagemPublicId}`;
         novaMensagem += `   Imagem da estampa: ${imageUrl}\n`;
       }
-
       novaMensagem += "\n";
     });
     novaMensagem += `\nTotal: R$${cartItems.reduce((total, item) => total + item.precoTotal, 0).toFixed(2)}`;
@@ -76,23 +76,62 @@ export default function Cabecalho() {
   }, [cartItems]);
 
   const handleFinalizarPedido = () => {
-    setShowIcons(true); // Mostrar ícones ao finalizar pedido
-  };
+    const novoPedido = {
+      items: cartItems.map(item => ({
+        nome: item.nome,
+        id: item.id,
+        quantidade: item.quantidade,
+        precoTotal: item.precoTotal,
+        // Adicione outros atributos se necessário
+      })),
+      // userId: user.id, // Inclui o ID do usuário
+      total: cartItems.reduce((total, item) => total + item.precoTotal, 0),
+    };
 
+    // adicionarPedidoAoHistorico(novoPedido);
+
+    const updatedHistorico = [...user.historico_pedido, ...cartItems];
+    persUser(user.nome, user.email, user.senha, user.complemento, updatedHistorico);
+    setShowIcons(true);
+
+    const data =  new Date()
+    
+    console.log(`${data.getDate()}:${data.getMonth()}:${data.getFullYear()}`)
+
+    axios.post('https://tcc2-backend3.onrender.com/order/register', {
+      client_name: user.nome,
+      client_address: user.endereco,
+      payment_mode: 'cartão',
+      data: `${data.getDate()}:${data.getMonth()}:${data.getFullYear()}`,
+      print: 'sla',
+    })
+    .then(response => {
+      adicionarPedidoAoHistorico(novoPedido);
+      const updatedHistorico = [...user.historico_pedido, ...cartItems];
+      persUser(user.nome, user.email, user.senha, user.complemento, updatedHistorico);
+      setShowIcons(true);
+      console.log('E: '+response.data)
+    })
+    .catch(error => {
+      console.error('Erro ao finalizar o pedido:', error);
+    });
+  };
+  const { adicionarPedidoAoHistorico } = useContext(CartContext);
   return (
-    <div className='w-full flex flex-col justify-center items-center relative'>
-      <div className='w-full flex justify-between bg-white py-3 px-5'>
+
+    <div className="w-full flex flex-col justify-center items-center relative">
+      <div className="w-full flex justify-between bg-white py-3 px-5">
         <Link to="/">
-          <img src={logo} className='w-40' alt="Logo da loja" />
+          <img src={logo} className="w-40" alt="Logo da loja" />
         </Link>
 
-        <div className='flex h-full items-center justify-end'>
-          <Link to="/sign-up">
-            <CiUser className='w-[40px] h-auto text-[#733A8E]' />
+        <div className="flex h-full items-center justify-end">
+          <Link to={user ? '/user' : '/sign-up'} onClick={(e) => { if (user) { e.preventDefault(); navigate('/user'); } }}>
+            <CiUser className="w-[40px] h-auto text-[#733A8E]" />
           </Link>
 
           <div onClick={toggleCart} className="relative cursor-pointer">
-            <CiShoppingCart className='w-[40px] h-auto text-[#733A8E]' />
+            <CiShoppingCart className="w-[40px] h-auto text-[#733A8E]" />
             {showCart && (
               <div ref={cartRef} className="absolute top-full right-0 bg-white shadow-md rounded-md p-2 min-w-[300px] z-10">
                 <h2 className="text-lg font-semibold mb-2">Carrinho de Compras</h2>
@@ -105,12 +144,8 @@ export default function Cabecalho() {
                         <li className="py-2 flex items-center justify-between" key={index}>
                           <div className="flex items-center">
                             <Link to={`/item/${item.id}`} onClick={(e) => { e.preventDefault(); navigate(`/item/${item.id}`); }}>
-                              {/* Adicionando console.log para depuração */}
-                              {console.log('Imagem selecionada:', item.imagemSelecionada)}
-                              {console.log('Imagem padrão:', item.imagem)}
-                            
                               <img
-                                src={item.imagemSelecionada || item.imagem || `/${item.tipoProduto}.png`} // Adicionando fallback
+                                src={item.imagemSelecionada || item.imagem || `/${item.tipoProduto}.png`}
                                 alt={item.tipoProduto}
                                 className="w-10 h-10 mr-2"
                               />
@@ -124,15 +159,22 @@ export default function Cabecalho() {
                               </div>
                             </Link>
                           </div>
-                          <button onClick={() => removeFromCart(item.id)}>
-                            <MdClose className="w-5 h-5 text-red-500 hover:text-red-700" />
-                          </button>
+                          <MdClose
+                            className="cursor-pointer text-gray-500"
+                            onClick={() => removeFromCart(item.id)}
+                          />
                         </li>
                       ))}
                     </ul>
-                    <button onClick={handleFinalizarPedido} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-2 w-full">
-                      Finalizar Pedido
-                    </button>
+
+                    <div className="mt-4">
+                      <button
+                        className="w-full bg-green-500 text-white py-2 rounded-md"
+                        onClick={handleFinalizarPedido}
+                      >
+                        Finalizar Pedido
+                      </button>
+                    </div>
                   </>
                 )}
               </div>
@@ -142,9 +184,8 @@ export default function Cabecalho() {
       </div>
 
       {showIcons && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-          <div ref={iconsRef} className="bg-white p-4 rounded-md shadow-lg flex space-x-4">
-            <p>Escolha uma das opções</p>
+        <div ref={iconsRef} className="bg-white w-[150px] h-[150px] z-20 absolute top-[90px] right-[5px]">
+          <div className="flex items-center justify-center h-full">
             <WhatsAppIcon mensagem={mensagem} />
             <EmailIcon mensagem={mensagem} />
           </div>

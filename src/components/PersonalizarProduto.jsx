@@ -1,4 +1,4 @@
-import React, { useContext, useState, useRef } from 'react';
+import  { useContext, useState, useRef } from 'react';
 import { CartContext } from "../contexts/cartContext";
 import { useParams } from 'react-router-dom';
 import Quantidade from "./Quantidade";
@@ -9,16 +9,17 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import { Image, Transformation } from 'cloudinary-react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import { useEffect } from 'react';
 
 export default function PersonalizarProduto() {
 
   const produtos = [
     { id: 1, nome: 'Poliester', preco: 39.90, imagem: "/Poliester.png", categoria: 'camisa' },
 
-    { id: 2, nome: 'Caneca Porcelana', preco: 35.0, imagem: "/Caneca Porcelana.png", categoria: 'caneca', maxEstampas: 1 },
-    { id: 3, nome: 'Caneca Plástica', preco: 29.0, imagem: "/Caneca Plástica.png", categoria: 'caneca', maxEstampas: 1 },
-    { id: 4, nome: 'Caneca Mágica', preco: 40.0, imagem: "/Caneca Mágica.png", categoria: 'caneca', maxEstampas: 1 },
-    { id: 5, nome: 'Caneca de Colher', preco: 45.0, imagem: "/Caneca de Colher.png", categoria: 'caneca', maxEstampas: 1 },
+    { id: 2, nome: 'Caneca Porcelana', preco: 35.0, imagem: "/Caneca Porcelana.png", categoria: 'caneca', maxEstampas: 1, indColor: 0 },
+    { id: 3, nome: 'Caneca Plástica', preco: 29.0, imagem: "/Caneca Plástica.png", categoria: 'caneca', maxEstampas: 1, indColor: 1 },
+    { id: 4, nome: 'Caneca Mágica', preco: 40.0, imagem: "/Caneca Mágica.png", categoria: 'caneca', maxEstampas: 1, indColor: 2 },
+    { id: 5, nome: 'Caneca de Colher', preco: 45.0, imagem: "/Caneca de Colher.png", categoria: 'caneca', maxEstampas: 1, indColor: 3 },
 
     { id: 6, nome: 'Almofada dois lados 28x20cm', preco: 19.90, imagem: "/almofada.png", categoria: 'almofada', maxEstampas: 2 },
     { id: 7, nome: 'Almofada dois lados 40x28cm', preco: 49.90, imagem: "/almofada.png", categoria: 'almofada', maxEstampas: 2 },
@@ -40,7 +41,6 @@ export default function PersonalizarProduto() {
   const { quantidade } = useContext(QuantidadeContext);
   const defaultProduct = produtos.find(p => p.categoria === product) || produtos[0];
   const [tipoProdutoSelecionado, setTipoProdutoSelecionado] = useState(defaultProduct.categoria);
-  const coresDisponiveis = ['Branco', 'Preto', 'Verde', 'Vermelho', 'Azul', 'Amarelo'];
 
   const defaultCor = (product === 'caneca') ? 'Branco' : null;
 
@@ -49,15 +49,13 @@ export default function PersonalizarProduto() {
     'Caneca Plástica': ['Branca', 'Azul', 'Vermelha'],
     'Caneca Mágica': ['Vermelha', 'Preta'],
     'Caneca de Colher': ['Branca', 'Vermelha', 'Preta'],
-
-  };
-  const OpcoesCoresCamisa = {
-    'Poliester': ['Branca'],
-  };
+  }
+  const OpcoesCoresCamisa = ['Branca']
+  
   const [tamanhoSelecionado, setTamanhoSelecionado] = useState(null);
   const tamanhosDisponiveis = ['P', 'M', 'G', 'GG'];
 
-  const [corSelecionada, setCorSelecionada] = useState(defaultCor);
+  const [corSelecionada, setCorSelecionada] = useState(product == 'caneca' ? 'Branco' : 'Branco');
   const { addProductToCart } = useContext(CartContext);
   const [preco, setPreco] = useState(defaultProduct.preco);
   const [id, setId] = useState(defaultProduct.id);
@@ -70,10 +68,10 @@ export default function PersonalizarProduto() {
   const [showNotification] = useState(false);
   const [imagemPublicId, setImagemPublicId] = useState(null);
 
-
-  const [produtoSelecionado, setProdutoSelecionado] = useState(defaultProduct);
+  const [produtoSelecionado, setProdutoSelecionado] = useState(null);
 
   const handleProdutoClick = (produto) => {
+    console.log('oioi')
     setPreco(produto.preco);
     setProdutoSelecionado(produto);
     setTipoProdutoSelecionado(produto.nome);
@@ -84,20 +82,26 @@ export default function PersonalizarProduto() {
       setCorSelecionada(null); // Reseta a cor para outros produtos
     }
     if (OpcoesCoresCamisa[produto.nome]) {
-      setCorSelecionada(OpcoesCoresCamisa[produto.nome][0]); // Define a cor padrão para canecas
+      
+      setCorSelecionada(OpcoesCoresCamisa[produto.nome][0]);
     } else {
       setCorSelecionada(null); // Reseta a cor para outros produtos
     }
   };
 
+  useEffect(() => {
+    handleProdutoClick({ id: 2, nome: 'Caneca Porcelana', preco: 35.0, imagem: "/Caneca Porcelana.png", categoria: 'caneca', maxEstampas: 1, indColor: 0 })
+    setCorSelecionada('Branco')
+  },[])
 
-
-
+  
   const estampasPreProntas = [
     { nome: 'Estampa 1', imagem: '/src/assets/estampasProntas/caneca1.jpg' },
     { nome: 'Estampa 2', imagem: '/src/assets/estampasProntas/caneca2.jpg' },
     // ...
   ];
+  
+  // handleProdutoClick({ id: 3, nome: 'Caneca Plástica', preco: 29.0, imagem: "/Caneca Plástica.png", categoria: 'caneca', maxEstampas: 1, indColor: 1 })
 
   // Constante de upload de imagem personalizada
   const handleImageUpload = async (event) => {
@@ -178,9 +182,11 @@ export default function PersonalizarProduto() {
         imagemPublicId: imagemPublicId,
         id: generateUniqueId(),
         cor: corSelecionada,
-        tamanho: tamanhoSelecionado
+        tamanho: tamanhoSelecionado,
+        nome: produtoSelecionado.nome, // Adiciona o nome do produto
+        
       };
-
+  
       addProductToCart(productToAdd);
       setShowModal(true);
     } else {
@@ -194,7 +200,6 @@ export default function PersonalizarProduto() {
       </div>
     )
   }
-
 
   {
     imagemSelecionada && (
@@ -215,15 +220,8 @@ export default function PersonalizarProduto() {
     return `${timestamp}-${randomNum}`;
   }
 
-
-
-
   return (
     <>
-
-
-
-
       <Cabecalho />
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
@@ -251,11 +249,11 @@ export default function PersonalizarProduto() {
         <div className="flex items-center justify-center">
           <div className='px-2 py-2'>
             <Dropdown>
-              <Dropdown.Toggle variant="success" id="dropdown-basic" >
+              <Dropdown.Toggle variant="success" id="dropdown-basic">
                 <p>Sua estampa</p>
               </Dropdown.Toggle>
               <Dropdown.Menu>
-                {!imagemSelecionada && (
+                {!imagemSelecionada && !estampaSelecionada && (
                   <button
                     onClick={() => inputFileRef.current.click()}
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -264,12 +262,12 @@ export default function PersonalizarProduto() {
                   </button>
                 )}
                 {imagemSelecionada && (
-                  <img
-                    src={imagemSelecionada}
-                    alt=""
-                    className="w-16 h-16 object-cover cursor-pointer"
+                  <button
                     onClick={() => inputFileRef.current.click()}
-                  />
+                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  >
+                    Enviar sua imagem aqui
+                  </button>
                 )}
                 <input
                   type="file"
@@ -301,10 +299,6 @@ export default function PersonalizarProduto() {
           </div>
         </div>
 
-
-
-
-
         {estampaSelecionada || imagemSelecionada ? (
           <div className="mt-4">
             <h2 className="text-lg font-semibold text-center">Sua estampa:</h2>
@@ -329,13 +323,13 @@ export default function PersonalizarProduto() {
                 key={produto.id}
                 className={`
             w-5/12
-            flex flex-col items-center transition-all duration-[150ms] rounded-lg cursor-pointer relative
+            flex flex-col items-center transition-all duration-[150ms] rounded-lg cursor-pointer relative 
             ${id === produto.id ? 'border-green-950 border-[4px]' : 'border-black border-2'}
           `}
                 onClick={() => handleProdutoClick(produto)}
               >
                 {/* Div de imagem */}
-                <div className="bg-white rounded-t-md border-b border-gray-300 sm:bg-blue-900">
+                <div className="bg-[#9998ac] rounded-t-md border-b border-gray-300">
                   <img src={produto.imagem} alt="" className="rounded-t-md" />
                 </div>
                 <div className="bg-white rounded-b-md p-2 text-center w-full">
@@ -361,7 +355,10 @@ export default function PersonalizarProduto() {
               <button
                 key={cor}
                 className={`py-1 px-3 border ${corSelecionada === cor ? 'bg-green-700 text-white' : 'bg-white text-black'}`}
-                onClick={() => setCorSelecionada(cor)}
+                onClick={() => {
+                  console.log(cor)
+                  setCorSelecionada(cor)
+                }}
               >
                 {cor}
               </button>
@@ -369,18 +366,39 @@ export default function PersonalizarProduto() {
           </div>
         </div>
       )}
+
       {product === 'camisa' && (
         <div className="my-4 text-center">
-          <h4>Selecione a cor da camisa:</h4>
+          <h4>Selecione a cor da camisa</h4>
           <div className="flex flex-wrap justify-center gap-2">
-            {OpcoesCoresCamisa[tipoProdutoSelecionado]?.map((cor) => (
+            {OpcoesCoresCamisa.map((cor) => (
+              <>
+              {corSelecionada == cor ? (
+                <button
+                  key={cor}
+                  className={`py-1 px-3 border bg-green-700 text-white order-1`}
+                  onClick={() => setCorSelecionada(cor)}
+                >
+                  {cor}
+                </button>
+              ):(
+                <button
+                  key={cor}
+                  className={`py-1 px-3 borderbg-white text-black order-2`}
+                  onClick={() => setCorSelecionada(cor)}
+                >
+                  {cor}
+                </button>
+                )}
+
               <button
                 key={cor}
-                className={`py-1 px-3 border ${corSelecionada === cor ? 'bg-green-700 text-white' : 'bg-white text-black'}`}
+                className={`py-1 px-3 border ${corSelecionada === cor ? 'bg-green-700 text-white order-last' : 'bg-white text-black order-first'}`}
                 onClick={() => setCorSelecionada(cor)}
               >
                 {cor}
               </button>
+              </>
             ))}
           </div>
         </div>
@@ -390,7 +408,6 @@ export default function PersonalizarProduto() {
       {product === 'camisa' && (
 
         <div className="flex flex-col items-center mt-4 space-y-4">
-          <p>Selecione o tamanho</p>
           <Dropdown>
             <Dropdown.Toggle variant="success" id="dropdown-tamanho">
               {tamanhoSelecionado || "Selecione um tamanho"}

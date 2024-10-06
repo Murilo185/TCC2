@@ -25,6 +25,24 @@ const Person = mongoose.model('Person', {
     password: {
         type: String,
         required: false
+    },
+    historico_pedido: {
+        type: [Object], // Um array de objetos
+        required: false,
+    }
+});
+
+app.post("/update-historico", async (req, res) => {
+    const { userId, novaCompra } = req.body;
+
+    try {
+        await Person.updateOne(
+            { _id: userId },
+            { $push: { historico_pedido: novaCompra } }
+        );
+        res.status(200).send('Histórico atualizado com sucesso!');
+    } catch (error) {
+        res.status(500).send('Erro ao atualizar o histórico');
     }
 });
 
@@ -36,6 +54,7 @@ app.get("/users", async (req, res) => {
     //RETORNA OS DADOS PARA FEEDBACK DO USUÁRIO
     return res.send(person)
 })
+
 
 //ROTA PARA PEGAR USUÁRIO ESPECIFICO
 app.get("/login/:email",  async (req, res) => {

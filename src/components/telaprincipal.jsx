@@ -7,22 +7,33 @@ import caderno from '/Caderno A4.png';
 import azulejo from '/Azulejo 15x15cm.png';
 import agenda from '/Agenda 17x9,4cm.png';
 import chaveiro from '/Almochaveiro 7x7cm.png';
-import whatsapp from '../assets/whatsapp.svg';
 import Footer from './Footer.jsx';
-import { PiWhatsappLogo } from "react-icons/pi";
-import UncontrolledExample from './carrossell.jsx';
 import { Link } from 'react-router-dom';
-
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { CartContext } from '../contexts/cartContext.jsx';
+import { useEffect, useContext } from 'react';
+import UncontrolledExample from './carrossell.jsx';
 
 export default function TelaPrincipal() {
 
+  const { user, firstLogin, setFirstLogin } = useContext(CartContext);
+  const notify = () => toast(`Olá ${user.nome}`);
+
+  useEffect(() => {
+    if (firstLogin === false) {
+      notify();
+      setFirstLogin(true);
+    }
+  }, [firstLogin]);
+
   return (
     <>
-    
       <Cabecalho />
-
       <UncontrolledExample />
+      <div id="carousel">
+        {/* Substitua pelo componente de carrossel que você está usando */}
+      </div>
 
       <div className='flex flex-row items-center justify-center bg-[#e7e5ec] font-fonte1'>
         <h2 className='pr-[20px] c-[purple] text-purple-950'>Produtos</h2>
@@ -88,6 +99,7 @@ export default function TelaPrincipal() {
       </div>
 
       <Footer />
+      <ToastContainer />
     </>
   );
 }
